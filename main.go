@@ -1,17 +1,19 @@
 package main
 
 import (
+	"bytes"
         "flag"
 	"fmt"
+	"io/ioutil"
 	"os"
-	"os/signal"
-	"strings"
-	"time"
+//	"os/signal"
+//	"strings"
+//	"time"
 
-	"./config"
-	"./connector"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+        "github.com/yankiwi/aruba_exporter/config"
+        "github.com/yankiwi/aruba_exporter/connector"
+//	"github.com/prometheus/client_golang/prometheus"
+//	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
 )
 
@@ -77,7 +79,7 @@ func initialize() error {
 		return err
 	}
 
-	devices, err = devicesForConfig(c)
+	//devices, err = devicesForConfig(c)
 	if err != nil {
 		return err
 	}
@@ -90,7 +92,6 @@ func loadConfigFromFlags() *config.Config {
 	c := config.New()
 
 	c.Debug = *debug
-	c.LegacyCiphers = *legacyCiphers
 	c.Timeout = *sshTimeout
 	c.BatchSize = *sshBatchSize
 	c.Username = *sshUsername
@@ -101,11 +102,7 @@ func loadConfigFromFlags() *config.Config {
 	c.DevicesFromTargets(*sshHosts)
 
 	f := c.Features
-	f.BGP = bgpEnabled
-	f.Environment = environmentEnabled
-	f.Facts = factsEnabled
-	f.Interfaces = interfacesEnabled
-	f.Optics = opticsEnabled
+	log.Infoln(f)
 
 	return c
 }
