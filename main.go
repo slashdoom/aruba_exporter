@@ -108,9 +108,9 @@ func loadConfigFromFlags() *config.Config {
 }
 
 func printVersion() {
-	fmt.Println("cisco_exporter")
+	fmt.Println("aruba_exporter")
 	fmt.Printf("Version: %s\n", version)
-	fmt.Println("Author(s): Martin Poppen")
-	fmt.Println("Metric exporter for switches and routers running cisco IOS/NX-OS/IOS-XE")
+	fmt.Println("Author(s): Patrick Ryon")
+	fmt.Println("Metric exporter for Aruba switches, controllers and instant APs")
 }
 
