@@ -1,2 +1,2 @@
-package collector
+package connector
 
