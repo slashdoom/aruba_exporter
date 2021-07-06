@@ -58,21 +58,6 @@ func main() {
 
 }
 
-func loadConfig() (*config.Config, error) {
-	if len(*configFile) == 0 {
-		log.Infoln("Loading config flags")
-		return loadConfigFromFlags(), nil
-	}
-
-	log.Infoln("Loading config from", *configFile)
-	b, err := ioutil.ReadFile(*configFile)
-	if err != nil {
-		return nil, err
-	}
-
-	return config.Load(bytes.NewReader(b))
-}
-
 func initialize() error {
 	c, err := loadConfig()
 	if err != nil {
@@ -88,6 +73,21 @@ func initialize() error {
 	return nil
 }
 
+func loadConfig() (*config.Config, error) {
+	if len(*configFile) == 0 {
+		log.Infoln("Loading config flags")
+		return loadConfigFromFlags(), nil
+	}
+
+	log.Infoln("Loading config from", *configFile)
+	b, err := ioutil.ReadFile(*configFile)
+	if err != nil {
+		return nil, err
+	}
+
+	return config.Load(bytes.NewReader(b))
+}
+
 func loadConfigFromFlags() *config.Config {
 	c := config.New()
 
@@ -96,10 +96,9 @@ func loadConfigFromFlags() *config.Config {
 	c.BatchSize = *sshBatchSize
 	c.Username = *sshUsername
 	c.Password = *sshPassword
-
 	c.KeyFile = *sshKeyFile
-
 	c.DevicesFromTargets(*sshHosts)
+	log.Infoln(c)
 
 	f := c.Features
 	log.Infoln(f)
