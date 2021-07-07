@@ -24,7 +24,7 @@ var (
 	listenAddress      = flag.String("web.listen-address", ":9326", "Address on which to expose metrics and web interface.")
 	metricsPath        = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
 	sshHosts           = flag.String("ssh.targets", "", "Hosts to scrape")
-	sshUsername        = flag.String("ssh.user", "junos_exporter", "Username to use when connecting to junos devices using ssh")
+	sshUsername        = flag.String("ssh.user", "aruba_exporter", "Username to use when connecting to junos devices using ssh")
 	sshKeyFile         = flag.String("ssh.keyfile", "", "Public key file to use when connecting to junos devices using ssh")
 	sshPassword        = flag.String("ssh.password", "", "Password to use when connecting to junos devices using ssh")
 	sshTimeout         = flag.Int("ssh.timeout", 5, "Timeout to use for SSH connection")
