@@ -1,7 +1,7 @@
 package main
 
 import (
-  "github.com/yankiwi/aruba_exporter/collector"
+	"github.com/yankiwi/aruba_exporter/collector"
 	"github.com/yankiwi/aruba_exporter/config"
 	"github.com/yankiwi/aruba_exporter/connector"
 )
