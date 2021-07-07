@@ -120,16 +120,16 @@ func startServer() {
 	log.Infof("starting aruba_exporter (version: %s)\n", version)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>
-			<head>
-			  <title>Aruba Exporter (Version ` + version + `)</title>
-			</head>
-			<body>
-			  <h1>Aruba Exporter</h1>
-			  <p><a href="` + *metricsPath + `">Metrics</a></p>
-			  <h2>More information:</h2>
-			  <p><a href="https://github.com/yankiwi/aruba_exporter">github.com/yankiwi/aruba_exporter</a></p>
-			</body>
-			</html>`))
+  <head>
+    <title>Aruba Exporter (Version ` + version + `)</title>
+  </head>
+  <body>
+    <h1>Aruba Exporter</h1>
+    <p><a href="` + *metricsPath + `">Metrics</a></p>
+    <h2>More information:</h2>
+    <p><a href="https://github.com/yankiwi/aruba_exporter">github.com/yankiwi/aruba_exporter</a></p>
+  </body>
+</html>`))
 	})
 	http.HandleFunc(*metricsPath, handleMetricsRequest)
 
