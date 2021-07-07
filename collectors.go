@@ -28,6 +28,8 @@ func collectorsForDevices(devices []*connector.Device, cfg *config.Config) *coll
 
 func (c *collectors) initCollectorsForDevice(device *connector.Device) {
 	f := c.cfg.FeaturesForDevice(device.Host)
+	
+	c.addCollectorIfEnabledForDevice(device, "facts", f.Facts, facts.NewCollector)
 
 	c.devices[device.Host] = make([]collector.RPCCollector, 0)
 
