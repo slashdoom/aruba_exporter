@@ -73,6 +73,13 @@ func initialize() error {
 	return nil
 }
 
+func printVersion() {
+	fmt.Println("aruba_exporter")
+	fmt.Printf("Version: %s\n", version)
+	fmt.Println("Author(s): Patrick Ryon")
+	fmt.Println("Metric exporter for Aruba switches, controllers and instant APs")
+}
+
 func loadConfig() (*config.Config, error) {
 	if len(*configFile) == 0 {
 		log.Infoln("Loading config flags")
@@ -106,10 +113,34 @@ func loadConfigFromFlags() *config.Config {
 	return c
 }
 
-func printVersion() {
-	fmt.Println("aruba_exporter")
-	fmt.Printf("Version: %s\n", version)
-	fmt.Println("Author(s): Patrick Ryon")
-	fmt.Println("Metric exporter for Aruba switches, controllers and instant APs")
+func startServer() {
+	log.Infof("starting aruba_exporter (version: %s)\n", version)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(`<html>
+			<head>
+			  <title>Aruba Exporter (Version ` + version + `)</title>
+			</head>
+			<body>
+			  <h1>Aruba Exporter</h1>
+			  <p><a href="` + *metricsPath + `">Metrics</a></p>
+			  <h2>More information:</h2>
+			  <p><a href="https://github.com/yankiwi/aruba_exporter">github.com/yankiwi/aruba_exporter</a></p>
+			</body>
+			</html>`))
+	})
+	http.HandleFunc(*metricsPath, handleMetricsRequest)
+
+	log.Infof("Listening for %s on %s\n", *metricsPath, *listenAddress)
+	log.Fatal(http.ListenAndServe(*listenAddress, nil))
 }
 
+func handleMetricsRequest(w http.ResponseWriter, r *http.Request) {
+	reg := prometheus.NewRegistry()
+
+	//c := newCiscoCollector(devices)
+	//reg.MustRegister(c)
+
+	promhttp.HandlerFor(reg, promhttp.HandlerOpts{
+		ErrorLog:      log.NewErrorLogger(),
+		ErrorHandling: promhttp.ContinueOnError}).ServeHTTP(w, r)
+}
