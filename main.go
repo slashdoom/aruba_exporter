@@ -129,7 +129,8 @@ func startServer() {
     <h2>More information:</h2>
     <p><a href="https://github.com/yankiwi/aruba_exporter">github.com/yankiwi/aruba_exporter</a></p>
   </body>
-</html>`))
+</html>
+`))
 	})
 	http.HandleFunc(*metricsPath, handleMetricsRequest)
 
