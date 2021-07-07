@@ -64,7 +64,7 @@ func initialize() error {
 		return err
 	}
 
-	//devices, err = devicesForConfig(c)
+	devices, err = devicesForConfig(c)
 	if err != nil {
 		return err
 	}
