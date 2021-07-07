@@ -141,8 +141,8 @@ func startServer() {
 func handleMetricsRequest(w http.ResponseWriter, r *http.Request) {
 	reg := prometheus.NewRegistry()
 
-	//c := newCiscoCollector(devices)
-	//reg.MustRegister(c)
+	a := newArubaCollector(devices)
+	reg.MustRegister(a)
 
 	promhttp.HandlerFor(reg, promhttp.HandlerOpts{
 		ErrorLog:      log.NewErrorLogger(),
