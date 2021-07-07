@@ -7,13 +7,14 @@ import (
 	"io/ioutil"
 	"os"
 //	"os/signal"
+	"net/http"
 //	"strings"
 //	"time"
 
         "github.com/yankiwi/aruba_exporter/config"
         "github.com/yankiwi/aruba_exporter/connector"
-//	"github.com/prometheus/client_golang/prometheus"
-//	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
 )
 
