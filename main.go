@@ -56,6 +56,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not initialize exporter. %v", err)
 	}
+	
+	startServer()
 
 }
 
