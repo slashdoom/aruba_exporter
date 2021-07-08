@@ -13,12 +13,9 @@ import (
 const (
 	ArubaInstant string = "ArubaInstant"
 	ArubaController string = "ArubaController"
-	IOSXE string = "IOSXE"
-	NXOS  string = "NXOS"
-	IOS   string = "IOS"
 )
 
-// Client sends commands to a Cisco device
+// Client sends commands to a Aruba device
 type Client struct {
 	conn   *connector.SSHConnection
 	Debug  bool
@@ -42,12 +39,6 @@ func (c *Client) Identify() error {
 	log.Infof("show version output: %s\n", output)
 	
 	switch {
-	case strings.Contains(output, "IOS XE"):
-		c.OSType = IOSXE
-	case strings.Contains(output, "NX-OS"):
-		c.OSType = NXOS
-	case strings.Contains(output, "IOS Software"):
-		c.OSType = IOS
 	case strings.Contains(output, "ArubaOS (MODEL: Aruba"):
 		c.OSType = ArubaController
 	case strings.Contains(output, "ArubaOS (MODEL: "):
