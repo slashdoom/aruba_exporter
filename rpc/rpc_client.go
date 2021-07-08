@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"log"
-
 	"github.com/yankiwi/aruba_exporter/connector"
+	
+	"github.com/prometheus/common/log"
 )
 
 const (
@@ -36,6 +36,9 @@ func (c *Client) Identify() error {
 	if err != nil {
 		return err
 	}
+	
+	log.Debugf("show version output: %s\n", output)
+	
 	switch {
 	case strings.Contains(output, "IOS XE"):
 		c.OSType = IOSXE
@@ -46,17 +49,17 @@ func (c *Client) Identify() error {
 	default:
 		return errors.New("Unknown OS")
 	}
-	if c.Debug {
-		log.Printf("Host %s identified as: %s\n", c.conn.Host, c.OSType)
-	}
+
+	log.Debugf("Host %s identified as: %s\n", c.conn.Host, c.OSType)
+
 	return nil
 }
 
 // RunCommand runs a command on a Aruba device
 func (c *Client) RunCommand(cmd string) (string, error) {
-	if c.Debug {
-		log.Printf("Running command on %s: %s\n", c.conn.Host, cmd)
-	}
+
+	log.Debugf("Running command on %s: %s\n", c.conn.Host, cmd)
+
 	output, err := c.conn.RunCommand(fmt.Sprintf("%s", cmd))
 	if err != nil {
 		println(err.Error())
