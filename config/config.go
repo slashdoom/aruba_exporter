@@ -85,6 +85,9 @@ func Load(reader io.Reader) (*Config, error) {
 		if d.Features.Optics == nil {
 			d.Features.Optics = c.Features.Optics
 		}
+		if d.Features.System == nil {
+			d.Features.System = c.Features.System
+		}
 	}
 
 	return c, nil
@@ -107,6 +110,8 @@ func (c *Config) setDefaultValues() {
 	f.Interfaces = &interfaces
 	optics := true
 	f.Optics = &optics
+	system := true
+	f.System = &system
 }
 
 // DevicesFromTargets creates devices configs from targets list
