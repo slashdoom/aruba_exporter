@@ -31,26 +31,55 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 
 // ParseMemory parses cli output and tries to find current memory usage
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
-	if ostype == rpc.ArubaInstant && ostype != rpc.IOS {
-		return nil, errors.New("'show process memory' is not implemented for " + ostype)
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
+		return nil, errors.New("'show memory' is not implemented for " + ostype)
 	}
-	memoryRegexp, _ := regexp.Compile(`^\s*(\S*) Pool Total:\s*(\d+) Used:\s*(\d+) Free:\s*(\d+)\s*$`)
-
+	
 	items := []SystemMemory{}
 	lines := strings.Split(output, "\n")
-	for _, line := range lines {
-		matches := memoryRegexp.FindStringSubmatch(line)
-		if matches == nil {
-			continue
+	
+	if ostype == rpc.ArubaController {
+		memoryRegexp, _ := regexp.Compile(`^.*Memory (Kb): total:\s*(\d+), used:\s*(\d+), free:\s*(\d+)\s*$`)
+		
+		for _, line := range lines {
+			matches := memoryRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			item := SystemMemory{
+				Type:  matches[1],
+				Total: util.Str2float64(matches[2]),
+				Used:  util.Str2float64(matches[3]),
+				Free:  util.Str2float64(matches[4]),
+			}
+			items = append(items, item)
 		}
-		item := SystemMemory{
-			Type:  matches[1],
-			Total: util.Str2float64(matches[2]),
-			Used:  util.Str2float64(matches[3]),
-			Free:  util.Str2float64(matches[4]),
-		}
-		items = append(items, item)
 	}
+	if ostype == rpc.ArubaInstant {
+		totalMemRegexp, _ := regexp.Compile(`^.*MemTotal:\s*(\d+) kB.*$`)
+		freeMemRegexp, _ := regexp.Compile(`^.*MemFree:\s*(\d+) kB.*$`)
+		availMemRegexp, _ := regexp.Compile(`^.*MemAvailable:\s*(\d+) kB.*$`)
+		
+		for _, line := range lines {
+			totalMatches := totalMemRegexp.FindStringSubmatch(line)
+			freeMatches := freeMemRegexp.FindStringSubmatch(line)
+			availMatches := availMemRegexp.FindStringSubmatch(line)
+		}
+		if totalMatches != nil && freeMatches != nil && availMatches != nil {
+			totalMem := util.Str2float64(totalMatches[2])
+			freeMem := util.Str2float64(freeMatches[2])
+			usedMem := totalMem - util.Str2float64(availMatches[2])
+			
+			item := SystemMemory{
+				Type:  fmt.Sprintf("Memory (Kb): total: %d, used: %d, free: %d", totalMem, usedMem, freeMem),
+				Total: totalMem,
+				Used:  usedMem,
+				Free:  freeMem,
+			}
+			items = append(items, item)
+		}
+	}
+	                                   
 	return items, nil
 }
 
