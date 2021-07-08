@@ -3,7 +3,7 @@ package system
 import (
 	"log"
 
-  "github.com/yankiwi/aruba_exporter/collector"
+	"github.com/yankiwi/aruba_exporter/collector"
 	"github.com/yankiwi/aruba_exporter/rpc"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -46,7 +46,7 @@ func NewCollector() collector.RPCCollector {
 
 // Name returns the name of the collector
 func (*systemCollector) Name() string {
-	return "Facts"
+	return "System"
 }
 
 // Describe describes the metrics
