@@ -37,7 +37,7 @@ func (c *Client) Identify() error {
 		return err
 	}
 	
-	log.Debugf("show version output: %s\n", output)
+	log.Infof("show version output: %s\n", output)
 	
 	switch {
 	case strings.Contains(output, "IOS XE"):
@@ -50,7 +50,7 @@ func (c *Client) Identify() error {
 		return errors.New("Unknown OS")
 	}
 
-	log.Debugf("Host %s identified as: %s\n", c.conn.Host, c.OSType)
+	log.Infof("Host %s identified as: %s\n", c.conn.Host, c.OSType)
 
 	return nil
 }
@@ -58,7 +58,7 @@ func (c *Client) Identify() error {
 // RunCommand runs a command on a Aruba device
 func (c *Client) RunCommand(cmd string) (string, error) {
 
-	log.Debugf("Running command on %s: %s\n", c.conn.Host, cmd)
+	log.Infof("Running command on %s: %s\n", c.conn.Host, cmd)
 
 	output, err := c.conn.RunCommand(fmt.Sprintf("%s", cmd))
 	if err != nil {
