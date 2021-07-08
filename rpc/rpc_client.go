@@ -11,6 +11,8 @@ import (
 )
 
 const (
+	ArubaInstant string = "ArubaInstant"
+	ArubaController string = "ArubaController"
 	IOSXE string = "IOSXE"
 	NXOS  string = "NXOS"
 	IOS   string = "IOS"
@@ -46,6 +48,10 @@ func (c *Client) Identify() error {
 		c.OSType = NXOS
 	case strings.Contains(output, "IOS Software"):
 		c.OSType = IOS
+	case strings.Contains(output, "ArubaOS (MODEL: Aruba"):
+		c.OSType = ArubaController
+	case strings.Contains(output, "ArubaOS (MODEL: "):
+		c.OSType = ArubaInstant
 	default:
 		return errors.New("Unknown OS")
 	}
