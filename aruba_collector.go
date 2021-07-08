@@ -87,6 +87,7 @@ func (c *arubaCollector) collectForHost(device *connector.Device, ch chan<- prom
 		return
 	}
 
+	log.Infof("collectors: %s", c.collectors.collectorsForDevice(device))
 	for _, col := range c.collectors.collectorsForDevice(device) {
 		ct := time.Now()
 		log.Infof("collector: %s", col)
