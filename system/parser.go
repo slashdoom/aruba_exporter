@@ -15,9 +15,8 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 		return SystemVersion{}, errors.New("'show version' is not implemented for " + ostype)
 	}
 	versionRegexp := make(map[string]*regexp.Regexp)
-	versionRegexp[rpc.IOSXE], _ = regexp.Compile(`^.*, Version (.+) -.*$`)
-	versionRegexp[rpc.IOS], _ = regexp.Compile(`^.*, Version (.+),.*$`)
-	versionRegexp[rpc.NXOS], _ = regexp.Compile(`^\s+NXOS: version (.*)$`)
+	versionRegexp[rpc.ArubaInstant], _ = regexp.Compile(`^.*, Version (.*)$`)
+	versionRegexp[rpc.ArubaController], _ = regexp.Compile(`^.*, Version (.*)$`)
 
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
