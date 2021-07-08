@@ -1,4 +1,4 @@
-package facts
+package system
 
 import (
 	"errors"
@@ -10,9 +10,9 @@ import (
 )
 
 // ParseVersion parses cli output and tries to find the version number of the running OS
-func (c *systemCollector) ParseVersion(ostype string, output string) (VersionFact, error) {
+func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVersion, error) {
 	if ostype != rpc.IOSXE && ostype != rpc.NXOS && ostype != rpc.IOS {
-		return VersionFact{}, errors.New("'show version' is not implemented for " + ostype)
+		return SystemVersion{}, errors.New("'show version' is not implemented for " + ostype)
 	}
 	versionRegexp := make(map[string]*regexp.Regexp)
 	versionRegexp[rpc.IOSXE], _ = regexp.Compile(`^.*, Version (.+) -.*$`)
@@ -25,26 +25,26 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (VersionFac
 		if matches == nil {
 			continue
 		}
-		return VersionFact{Version: ostype + "-" + matches[1]}, nil
+		return SystemVersion{Version: ostype + "-" + matches[1]}, nil
 	}
-	return VersionFact{}, errors.New("Version string not found")
+	return SystemVersion{}, errors.New("Version string not found")
 }
 
 // ParseMemory parses cli output and tries to find current memory usage
-func (c *systemCollector) ParseMemory(ostype string, output string) ([]MemoryFact, error) {
+func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
 	if ostype != rpc.IOSXE && ostype != rpc.IOS {
 		return nil, errors.New("'show process memory' is not implemented for " + ostype)
 	}
 	memoryRegexp, _ := regexp.Compile(`^\s*(\S*) Pool Total:\s*(\d+) Used:\s*(\d+) Free:\s*(\d+)\s*$`)
 
-	items := []MemoryFact{}
+	items := []SystemMemory{}
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
 		matches := memoryRegexp.FindStringSubmatch(line)
 		if matches == nil {
 			continue
 		}
-		item := MemoryFact{
+		item := SystemMemory{
 			Type:  matches[1],
 			Total: util.Str2float64(matches[2]),
 			Used:  util.Str2float64(matches[3]),
@@ -56,9 +56,9 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]MemoryFac
 }
 
 // ParseCPU parses cli output and tries to find current CPU utilization
-func (c *systemCollector) ParseCPU(ostype string, output string) (CPUFact, error) {
+func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, error) {
 	if ostype != rpc.IOSXE && ostype != rpc.IOS {
-		return CPUFact{}, errors.New("'show process cpu' is not implemented for " + ostype)
+		return SystemCPU{}, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
 	memoryRegexp, _ := regexp.Compile(`^\s*CPU utilization for five seconds: (\d+)%\/(\d+)%; one minute: (\d+)%; five minutes: (\d+)%.*$`)
 
@@ -68,12 +68,12 @@ func (c *systemCollector) ParseCPU(ostype string, output string) (CPUFact, error
 		if matches == nil {
 			continue
 		}
-		return CPUFact{
+		return SystemCPU{
 			FiveSeconds: util.Str2float64(matches[1]),
 			Interrupts:  util.Str2float64(matches[2]),
 			OneMinute:   util.Str2float64(matches[3]),
 			FiveMinutes: util.Str2float64(matches[4]),
 		}, nil
 	}
-	return CPUFact{}, errors.New("Version string not found")
+	return SystemCPU{}, errors.New("Version string not found")
 }
