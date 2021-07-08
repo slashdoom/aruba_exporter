@@ -11,7 +11,7 @@ import (
 
 // ParseVersion parses cli output and tries to find the version number of the running OS
 func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVersion, error) {
-	if ostype != rpc.IOSXE && ostype != rpc.NXOS && ostype != rpc.IOS {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return SystemVersion{}, errors.New("'show version' is not implemented for " + ostype)
 	}
 	versionRegexp := make(map[string]*regexp.Regexp)
@@ -31,7 +31,7 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 
 // ParseMemory parses cli output and tries to find current memory usage
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
-	if ostype != rpc.IOSXE && ostype != rpc.IOS {
+	if ostype == rpc.ArubaInstant && ostype != rpc.IOS {
 		return nil, errors.New("'show process memory' is not implemented for " + ostype)
 	}
 	memoryRegexp, _ := regexp.Compile(`^\s*(\S*) Pool Total:\s*(\d+) Used:\s*(\d+) Free:\s*(\d+)\s*$`)
