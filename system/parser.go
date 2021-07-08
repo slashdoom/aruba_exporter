@@ -61,10 +61,13 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		freeMemRegexp, _ := regexp.Compile(`^.*MemFree:\s*(\d+) kB.*$`)
 		availMemRegexp, _ := regexp.Compile(`^.*MemAvailable:\s*(\d+) kB.*$`)
 		
+		totalMatches := nil
+		freeMatches := nil
+		availMatches := nil
 		for _, line := range lines {
-			totalMatches := totalMemRegexp.FindStringSubmatch(line)
-			freeMatches := freeMemRegexp.FindStringSubmatch(line)
-			availMatches := availMemRegexp.FindStringSubmatch(line)
+			totalMatches = totalMemRegexp.FindStringSubmatch(line)
+			freeMatches = freeMemRegexp.FindStringSubmatch(line)
+			availMatches = availMemRegexp.FindStringSubmatch(line)
 		}
 		if totalMatches != nil && freeMatches != nil && availMatches != nil {
 			totalMem := util.Str2float64(totalMatches[2])
