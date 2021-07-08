@@ -8,6 +8,8 @@ import (
 
 	"github.com/yankiwi/aruba_exporter/rpc"
 	"github.com/yankiwi/aruba_exporter/util"
+	
+	"github.com/prometheus/common/log"
 )
 
 // ParseVersion parses cli output and tries to find the version number of the running OS
@@ -32,6 +34,8 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 
 // ParseMemory parses cli output and tries to find current memory usage
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
+	log.Infof("OS: %s\n", ostype)
+	log.Infof("output: %s\n", output)
 	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return nil, errors.New("'show memory' is not implemented for " + ostype)
 	}
