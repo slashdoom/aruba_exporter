@@ -2,6 +2,7 @@ package system
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -85,7 +86,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 
 // ParseCPU parses cli output and tries to find current CPU utilization
 func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, error) {
-	if ostype != rpc.IOSXE && ostype != rpc.IOS {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return SystemCPU{}, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
 	memoryRegexp, _ := regexp.Compile(`^\s*CPU utilization for five seconds: (\d+)%\/(\d+)%; one minute: (\d+)%; five minutes: (\d+)%.*$`)
