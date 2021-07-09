@@ -66,6 +66,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		availMemRegexp, _ := regexp.Compile(`^.*MemAvailable:\s*(\d+) kB.*$`)
 		
 		for _, line := range lines {
+			log.Infof("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
