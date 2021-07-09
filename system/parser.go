@@ -70,7 +70,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
-			if totalMatches == nil && freeMatches == nil && availMatches == nil {
+			if totalMatches == nil || freeMatches == nil || availMatches == nil {
 				continue
 			}
 			totalMem := util.Str2float64(totalMatches[2])
