@@ -12,8 +12,6 @@ type SystemMemory struct {
 }
 
 type SystemCPU struct {
-	FiveSeconds float64
-	Interrupts  float64
-	OneMinute   float64
-	FiveMinutes float64
+	Used float64
+	Idle  float64
 }
