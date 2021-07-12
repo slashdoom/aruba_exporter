@@ -59,6 +59,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			}
 			items = append(items, item)
 		}
+		return items, nil
 	}
 	if ostype == rpc.ArubaInstant {
 		totalMemRegexp, _ := regexp.Compile(`^.*MemTotal:\s*(\d+) kB.*$`)
@@ -85,9 +86,10 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			}
 			items = append(items, item)
 		}
+		return items, nil
 	}
 	                                   
-	return items, nil
+	return []SystemMemory{}, errors.New("Memory string not found")
 }
 
 // ParseCPU parses cli output and tries to find current CPU utilization
