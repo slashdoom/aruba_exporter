@@ -93,7 +93,7 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand("show process cpu")
+	out, err := client.RunCommand("show cpu")
 	if err != nil {
 		return err
 	}
