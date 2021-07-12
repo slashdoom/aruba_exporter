@@ -1,6 +1,8 @@
 package system
 
 import (
+	"fmt"
+	
 	"github.com/yankiwi/aruba_exporter/collector"
 	"github.com/yankiwi/aruba_exporter/rpc"
 
@@ -106,15 +108,15 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 func (c *systemCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
 	err := c.CollectVersion(client, ch, labelValues)
 	if client.Debug && err != nil {
-		log.Printf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
+		fmt.Printf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
 	}
 	err = c.CollectMemory(client, ch, labelValues)
 	if client.Debug && err != nil {
-		log.Printf("CollectMemory for %s: %s\n", labelValues[0], err.Error())
+		fmt.Printf("CollectMemory for %s: %s\n", labelValues[0], err.Error())
 	}
 	err = c.CollectCPU(client, ch, labelValues)
 	if client.Debug && err != nil {
-		log.Printf("CollectCPU for %s: %s\n", labelValues[0], err.Error())
+		fmt.Printf("CollectCPU for %s: %s\n", labelValues[0], err.Error())
 	}
 	return nil
 }
