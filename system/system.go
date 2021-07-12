@@ -13,5 +13,5 @@ type SystemMemory struct {
 
 type SystemCPU struct {
 	Used float64
-	Idle  float64
+	Idle float64
 }
