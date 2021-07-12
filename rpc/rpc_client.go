@@ -13,6 +13,8 @@ import (
 const (
 	ArubaInstant string = "ArubaInstant"
 	ArubaController string = "ArubaController"
+	ArubaSwitch string = "ArubaSwitch"
+	ArubaCXSwitch string = "ArubaCXSwitch"
 )
 
 // Client sends commands to a Aruba device
@@ -43,6 +45,10 @@ func (c *Client) Identify() error {
 		c.OSType = ArubaController
 	case strings.Contains(output, "ArubaOS (MODEL: "):
 		c.OSType = ArubaInstant
+	case strings.Contains(output, "/ws/swbuild"):
+		c.OSType = ArubaSwitch
+	case strings.Contains(output, "ArubaOS-CX"):
+		c.OSType = ArubaCXSwitch
 	default:
 		return errors.New("Unknown OS")
 	}
