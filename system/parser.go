@@ -20,6 +20,8 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 	versionRegexp := make(map[string]*regexp.Regexp)
 	versionRegexp[rpc.ArubaInstant], _ = regexp.Compile(`^.*, Version (.*)$`)
 	versionRegexp[rpc.ArubaController], _ = regexp.Compile(`^.*, Version (.*)$`)
+	versionRegexp[rpc.ArubaSwitch], _ = regexp.Compile(`^\s*[A-Z]{2}.(.*)$`)
+	versionRegexp[rpc.ArubaCXSwitch], _ = regexp.Compile(`^.*Version\s*:\s*[A-Z]{2}.(.*)$`)
 
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
