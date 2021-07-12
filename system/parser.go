@@ -92,6 +92,8 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 
 // ParseCPU parses cli output and tries to find current CPU utilization
 func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, error) {
+	log.Infof("OS: %s\n", ostype)
+	log.Infof("output: %s\n", output)
 	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return SystemCPU{}, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
