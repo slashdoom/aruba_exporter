@@ -110,5 +110,5 @@ func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, err
 			Idle:  util.Str2float64(matches[2]),
 		}, nil
 	}
-	return SystemCPU{}, errors.New("Version string not found")
+	return SystemCPU{}, errors.New("CPU string not found")
 }
