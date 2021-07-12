@@ -1,12 +1,11 @@
 package system
 
 import (
-	"log"
-
 	"github.com/yankiwi/aruba_exporter/collector"
 	"github.com/yankiwi/aruba_exporter/rpc"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/common/log"
 )
 
 const prefix string = "aruba_system_"
@@ -89,6 +88,7 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
+	log.Infof("%s", client)
 	out, err := client.RunCommand("show cpu")
 	if err != nil {
 		return err
