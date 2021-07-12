@@ -16,10 +16,8 @@ var (
 	memoryTotalDesc    *prometheus.Desc
 	memoryUsedDesc     *prometheus.Desc
 	memoryFreeDesc     *prometheus.Desc
-	cpuOneMinuteDesc   *prometheus.Desc
-	cpuFiveSecondsDesc *prometheus.Desc
-	cpuInterruptsDesc  *prometheus.Desc
-	cpuFiveMinutesDesc *prometheus.Desc
+	cpuUsed            *prometheus.Desc
+	cpuIdle            *prometheus.Desc
 )
 
 func init() {
@@ -30,10 +28,8 @@ func init() {
 	memoryUsedDesc = prometheus.NewDesc(prefix+"memory_used", "Used memory", append(l, "type"), nil)
 	memoryFreeDesc = prometheus.NewDesc(prefix+"memory_free", "Free memory", append(l, "type"), nil)
 
-	cpuOneMinuteDesc = prometheus.NewDesc(prefix+"cpu_one_minute_percent", "CPU utilization for one minute", l, nil)
-	cpuFiveSecondsDesc = prometheus.NewDesc(prefix+"cpu_five_seconds_percent", "CPU utilization for five seconds", l, nil)
-	cpuInterruptsDesc = prometheus.NewDesc(prefix+"cpu_interrupt_percent", "Interrupt percentage", l, nil)
-	cpuFiveMinutesDesc = prometheus.NewDesc(prefix+"cpu_five_minutes_percent", "CPU utilization for five minutes", l, nil)
+	cpuUsed = prometheus.NewDesc(prefix+"cpu_used_percent", "Percent CPU Used", l, nil)
+	cpuIdle = prometheus.NewDesc(prefix+"cpu_idle_percent", "Percent CPU Idle", l, nil)
 }
 
 type systemCollector struct {
@@ -101,10 +97,8 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 	if err != nil {
 		return err
 	}
-	ch <- prometheus.MustNewConstMetric(cpuOneMinuteDesc, prometheus.GaugeValue, item.OneMinute, labelValues...)
-	ch <- prometheus.MustNewConstMetric(cpuFiveSecondsDesc, prometheus.GaugeValue, item.FiveSeconds, labelValues...)
-	ch <- prometheus.MustNewConstMetric(cpuInterruptsDesc, prometheus.GaugeValue, item.Interrupts, labelValues...)
-	ch <- prometheus.MustNewConstMetric(cpuFiveMinutesDesc, prometheus.GaugeValue, item.FiveMinutes, labelValues...)
+	ch <- prometheus.MustNewConstMetric(cpuUsed, prometheus.GaugeValue, item.Used, labelValues...)
+	ch <- prometheus.MustNewConstMetric(cpuIdle, prometheus.GaugeValue, item.Idle, labelValues...)
 	return nil
 }
 
