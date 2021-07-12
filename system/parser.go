@@ -104,10 +104,8 @@ func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, err
 			continue
 		}
 		return SystemCPU{
-			FiveSeconds: util.Str2float64(matches[1]),
-			Interrupts:  util.Str2float64(matches[2]),
-			OneMinute:   util.Str2float64(matches[3]),
-			FiveMinutes: util.Str2float64(matches[4]),
+			Used: util.Str2float64(matches[1]),
+			Idle:  util.Str2float64(matches[2]),
 		}, nil
 	}
 	return SystemCPU{}, errors.New("Version string not found")
