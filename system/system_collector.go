@@ -17,8 +17,8 @@ var (
 	memoryTotalDesc    *prometheus.Desc
 	memoryUsedDesc     *prometheus.Desc
 	memoryFreeDesc     *prometheus.Desc
-	cpuUsed            *prometheus.Desc
-	cpuIdle            *prometheus.Desc
+	cpuUsedDesc        *prometheus.Desc
+	cpuIdleDesc        *prometheus.Desc
 )
 
 func init() {
@@ -29,8 +29,8 @@ func init() {
 	memoryUsedDesc = prometheus.NewDesc(prefix+"memory_used", "Used memory", append(l, "type"), nil)
 	memoryFreeDesc = prometheus.NewDesc(prefix+"memory_free", "Free memory", append(l, "type"), nil)
 
-	cpuUsed = prometheus.NewDesc(prefix+"cpu_used_percent", "Percent CPU Used", l, nil)
-	cpuIdle = prometheus.NewDesc(prefix+"cpu_idle_percent", "Percent CPU Idle", l, nil)
+	cpuUsedDesc = prometheus.NewDesc(prefix+"cpu_used_percent", "Percent CPU Used", l, nil)
+	cpuIdleDesc = prometheus.NewDesc(prefix+"cpu_idle_percent", "Percent CPU Idle", l, nil)
 }
 
 type systemCollector struct {
@@ -99,8 +99,8 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 	if err != nil {
 		return err
 	}
-	ch <- prometheus.MustNewConstMetric(cpuUsed, prometheus.GaugeValue, item.Used, labelValues...)
-	ch <- prometheus.MustNewConstMetric(cpuIdle, prometheus.GaugeValue, item.Idle, labelValues...)
+	ch <- prometheus.MustNewConstMetric(cpuUsedDesc, prometheus.GaugeValue, item.Used, labelValues...)
+	ch <- prometheus.MustNewConstMetric(cpuIdleDesc, prometheus.GaugeValue, item.Idle, labelValues...)
 	return nil
 }
 
