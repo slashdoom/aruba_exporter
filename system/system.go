@@ -12,6 +12,7 @@ type SystemMemory struct {
 }
 
 type SystemCPU struct {
+	Type string
 	Used float64
 	Idle float64
 }
