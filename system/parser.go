@@ -113,12 +113,14 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 			if matches == nil {
 				continue
 			}
-			return SystemCPU{
+			item := SystemCPU{
 				Type: matches[1],
 				Used: util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4]),
 				Idle: util.Str2float64(matches[5]),
-			}, nil
+			}
+			items = append(items, item)
 		}
+		return items, nil
 	}
 
 	return []SystemCPU{}, errors.New("CPU string not found")
