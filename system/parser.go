@@ -101,11 +101,12 @@ func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, err
 	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return SystemCPU{}, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
-	memoryRegexp, _ := regexp.Compile(`^\s*CPU utilization for five seconds: (\d+)%\/(\d+)%; one minute: (\d+)%; five minutes: (\d+)%.*$`)
+	cpuRegexp, _ := regexp.Compile(`^\s*CPU utilization for five seconds: (\d+)%\/(\d+)%; one minute: (\d+)%; five minutes: (\d+)%.*$`)
 
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
-		matches := memoryRegexp.FindStringSubmatch(line)
+		log.Infof("line: %s\n", line)
+		matches := cpuRegexp.FindStringSubmatch(line)
 		if matches == nil {
 			continue
 		}
