@@ -95,7 +95,7 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 	if err != nil {
 		return err
 	}
-	item, err := c.ParseCPU(client.OSType, out)
+	items, err := c.ParseCPU(client.OSType, out)
 	if err != nil {
 		return err
 	}
