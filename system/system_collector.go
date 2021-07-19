@@ -99,8 +99,11 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 	if err != nil {
 		return err
 	}
-	ch <- prometheus.MustNewConstMetric(cpuUsedDesc, prometheus.GaugeValue, item.Used, labelValues...)
-	ch <- prometheus.MustNewConstMetric(cpuIdleDesc, prometheus.GaugeValue, item.Idle, labelValues...)
+	for _, item := range items {
+		l := append(labelValues, item.Type)
+		ch <- prometheus.MustNewConstMetric(cpuUsedDesc, prometheus.GaugeValue, item.Used, l...)
+		ch <- prometheus.MustNewConstMetric(cpuIdleDesc, prometheus.GaugeValue, item.Idle, l...)
+	}
 	return nil
 }
 
