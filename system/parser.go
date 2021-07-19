@@ -106,7 +106,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 
 	if ostype == rpc.ArubaInstant {
 		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)
-		                               ``
+
 		for _, line := range lines {
 			log.Infof("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
