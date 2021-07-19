@@ -114,8 +114,8 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 				continue
 			}
 			log.Infof("type: %s\n", matches[1])
-			log.Infof("used: %s\n", (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])))
-			log.Infof("idle: %s\n", matches[5])
+			log.Infof("used: %v\n", (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])))
+			log.Infof("idle: %v\n", util.Str2float64(matches[5]))
 			item := SystemCPU{
 				Type: matches[1],
 				Used: (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])),
