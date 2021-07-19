@@ -29,8 +29,8 @@ func init() {
 	memoryUsedDesc = prometheus.NewDesc(prefix+"memory_used", "Used memory", append(l, "type"), nil)
 	memoryFreeDesc = prometheus.NewDesc(prefix+"memory_free", "Free memory", append(l, "type"), nil)
 
-	cpuUsedDesc = prometheus.NewDesc(prefix+"cpu_used_percent", "Percent CPU Used", l, nil)
-	cpuIdleDesc = prometheus.NewDesc(prefix+"cpu_idle_percent", "Percent CPU Idle", l, nil)
+	cpuUsedDesc = prometheus.NewDesc(prefix+"cpu_used_percent", "Percent CPU Used", append(l, "type"), nil)
+	cpuIdleDesc = prometheus.NewDesc(prefix+"cpu_idle_percent", "Percent CPU Idle", append(l, "type"), nil)
 }
 
 type systemCollector struct {
@@ -92,7 +92,6 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	log.Infof("%v+", client)
 	out, err := client.RunCommand("show cpu")
 	if err != nil {
 		return err
@@ -111,9 +110,10 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 
 // Collect collects metrics from Aruba Devices
 func (c *systemCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	err := c.CollectVersion(client, ch, labelValues)
 	log.Infof("client: %v+", client)
-	log.Infof("labelValues %v+", labelValues)
+	log.Infof("labelValues %+v", labelValues)
+
+	err := c.CollectVersion(client, ch, labelValues)
 	if client.Debug && err != nil {
 		fmt.Printf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
 	}
