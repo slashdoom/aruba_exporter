@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-        "flag"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -11,8 +11,8 @@ import (
 //	"strings"
 //	"time"
 
-        "github.com/yankiwi/aruba_exporter/config"
-        "github.com/yankiwi/aruba_exporter/connector"
+	"github.com/yankiwi/aruba_exporter/config"
+	"github.com/yankiwi/aruba_exporter/connector"
 	
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -32,7 +32,7 @@ var (
 	sshPassword        = flag.String("ssh.password", "", "Password to use when connecting to junos devices using ssh")
 	sshTimeout         = flag.Int("ssh.timeout", 5, "Timeout to use for SSH connection")
 	sshBatchSize       = flag.Int("ssh.batch-size", 10000, "The SSH response batch size")
-	debug              = flag.Bool("debug", false, "Show verbose debug output in log")
+	level              = flag.String("level", "info", "Set logging verbose level")
 	configFile         = flag.String("config.file", "", "Path to config file")
 	devices            []*connector.Device
 	cfg                *config.Config
@@ -69,6 +69,7 @@ func initialize() error {
 		return err
 	}
 
+	log.Set(c.level)
 	devices, err = devicesForConfig(c)
 	if err != nil {
 		return err
@@ -121,7 +122,8 @@ func loadConfigFromFlags() *config.Config {
 func startServer() {
 	log.Infof("starting aruba_exporter (version: %s)\n", version)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(`<html>
+		w.Write([]byte(`
+<html>
   <head>
     <title>Aruba Exporter (Version ` + version + `)</title>
   </head>

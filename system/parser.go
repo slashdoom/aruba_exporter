@@ -73,12 +73,20 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
+
+			if totalMem == nil && totalMatches != nil {
+				totalMem := util.Str2float64(totalMatches[2])
+			}
+			if freeMem == nil && freeMatches != nil {
+				freeMem := util.Str2float64(freeMatches[2])
+			}
+			if usedMem ==nil && totalMem != nil && availMatches != nil {
+				usedMem := totalMem - util.Str2float64(availMatches[2])
+			}
+
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
 				continue
 			}
-			totalMem := util.Str2float64(totalMatches[2])
-			freeMem := util.Str2float64(freeMatches[2])
-			usedMem := totalMem - util.Str2float64(availMatches[2])
 			
 			item := SystemMemory{
 				Type:  fmt.Sprintf("Memory (Kb): total: %d, used: %d, free: %d", totalMem, usedMem, freeMem),
