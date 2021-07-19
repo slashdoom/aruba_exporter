@@ -95,25 +95,31 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 }
 
 // ParseCPU parses cli output and tries to find current CPU utilization
-func (c *systemCollector) ParseCPU(ostype string, output string) (SystemCPU, error) {
+func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, error) {
 	log.Infof("OS: %s\n", ostype)
 	log.Infof("output: %s\n", output)
-	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
-		return SystemCPU{}, errors.New("'show process cpu' is not implemented for " + ostype)
+	if ostype != rpc.ArubaInstant {
+		return nil, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
-	cpuRegexp, _ := regexp.Compile(`^\s*CPU utilization for five seconds: (\d+)%\/(\d+)%; one minute: (\d+)%; five minutes: (\d+)%.*$`)
-
+	items := []SystemCPU{}
 	lines := strings.Split(output, "\n")
-	for _, line := range lines {
-		log.Infof("line: %s\n", line)
-		matches := cpuRegexp.FindStringSubmatch(line)
-		if matches == nil {
-			continue
+
+	if ostype == rpc.ArubaInstant {
+		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)
+		                               ``
+		for _, line := range lines {
+			log.Infof("line: %s\n", line)
+			matches := cpuRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			return SystemCPU{
+				Type: matches[1],
+				Used: util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4]),
+				Idle: util.Str2float64(matches[5]),
+			}, nil
 		}
-		return SystemCPU{
-			Used: util.Str2float64(matches[1]),
-			Idle:  util.Str2float64(matches[2]),
-		}, nil
 	}
-	return SystemCPU{}, errors.New("CPU string not found")
+
+	return []SystemCPU{}, errors.New("CPU string not found")
 }
