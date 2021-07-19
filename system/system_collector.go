@@ -52,6 +52,8 @@ func (*systemCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- memoryTotalDesc
 	ch <- memoryUsedDesc
 	ch <- memoryFreeDesc
+	ch <- cpuUsedDesc
+	ch <- cpuIdleDesc
 }
 
 // CollectVersion collects version informations from Aruba Devices
