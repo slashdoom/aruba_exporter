@@ -69,7 +69,7 @@ func initialize() error {
 		return err
 	}
 
-	log.Log(level: c.level)
+	log.level = c.level
 	devices, err = devicesForConfig(c)
 	if err != nil {
 		return err
