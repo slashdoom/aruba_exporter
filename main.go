@@ -36,7 +36,8 @@ var (
 	configFile         = flag.String("config.file", "", "Path to config file")
 	devices            []*connector.Device
 	cfg                *config.Config
-)
+	logger				*log.NewLogger
+)	
 
 func init() {
 	flag.Usage = func() {
@@ -86,7 +87,7 @@ func printVersion() {
 }
 
 func loadConfig() (*config.Config, error) {
-	log.SetLevel(*level)
+	logger.SetLevel(*level)
 	if len(*configFile) == 0 {
 		log.Infoln("Loading config flags")
 		return loadConfigFromFlags(), nil
