@@ -36,7 +36,7 @@ var (
 	configFile         = flag.String("config.file", "", "Path to config file")
 	devices            []*connector.Device
 	cfg                *config.Config
-	logger             = log.NewLogger()
+	logger             = log.Base()
 )	
 
 func init() {
