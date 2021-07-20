@@ -86,7 +86,7 @@ func printVersion() {
 }
 
 func loadConfig() (*config.Config, error) {
-	log.lSetLevel(*level)
+	log.SetLevel(*level)
 	if len(*configFile) == 0 {
 		log.Infoln("Loading config flags")
 		return loadConfigFromFlags(), nil
@@ -104,7 +104,6 @@ func loadConfig() (*config.Config, error) {
 func loadConfigFromFlags() *config.Config {
 	c := config.New()
 
-	c.Debug = *debug
 	c.Timeout = *sshTimeout
 	c.BatchSize = *sshBatchSize
 	c.Username = *sshUsername
