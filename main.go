@@ -69,7 +69,6 @@ func initialize() error {
 		return err
 	}
 
-	log.level = c.level
 	devices, err = devicesForConfig(c)
 	if err != nil {
 		return err
@@ -87,6 +86,7 @@ func printVersion() {
 }
 
 func loadConfig() (*config.Config, error) {
+	log.lSetLevel(*level)
 	if len(*configFile) == 0 {
 		log.Infoln("Loading config flags")
 		return loadConfigFromFlags(), nil
