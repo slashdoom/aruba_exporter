@@ -89,11 +89,11 @@ func printVersion() {
 func loadConfig() (*config.Config, error) {
 	logger.SetLevel(*level)
 	if len(*configFile) == 0 {
-		log.Infoln("Loading config flags")
+		logger.Infoln("Loading config flags")
 		return loadConfigFromFlags(), nil
 	}
 
-	log.Infoln("Loading config from", *configFile)
+	logger.Infoln("Loading config from", *configFile)
 	b, err := ioutil.ReadFile(*configFile)
 	if err != nil {
 		return nil, err
@@ -111,10 +111,10 @@ func loadConfigFromFlags() *config.Config {
 	c.Password = *sshPassword
 	c.KeyFile = *sshKeyFile
 	c.DevicesFromTargets(*sshHosts)
-	log.Infoln(c)
+	log.Debugln(c)
 
 	f := c.Features
-	log.Infoln(f)
+	log.Debugln(f)
 
 	return c
 }
