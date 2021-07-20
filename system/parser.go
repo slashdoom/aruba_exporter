@@ -74,19 +74,22 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
 			var (
-				totalMem float64
-				freeMem float64
-				usedMem float64
+				totalMem SystemValue
+				freeMem SystemValue
+				usedMem SystemValue
 			)
 
-			if totalMem == nil && totalMatches != nil {
-				totalMem := util.Str2float64(totalMatches[2])
+			if totalMem.isSet && totalMatches != nil {
+				totalMem.isSet = true
+				totalMem.Value := util.Str2float64(totalMatches[2])
 			}
-			if freeMem == nil && freeMatches != nil {
-				freeMem := util.Str2float64(freeMatches[2])
+			if freeMem.isSet && freeMatches != nil {
+				freeMem.isSet = true
+				freeMem.Value := util.Str2float64(freeMatches[2])
 			}
-			if usedMem == nil && totalMem != nil && availMatches != nil {
-				usedMem := totalMem - util.Str2float64(availMatches[2])
+			if usedMem.isSet && totalMem != nil && availMatches != nil {
+				usedMem.isSet = true
+				usedMem.Value := totalMem - util.Str2float64(availMatches[2])
 			}
 
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
@@ -94,10 +97,10 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			}
 			
 			item := SystemMemory{
-				Type:  fmt.Sprintf("Memory (Kb): total: %d, used: %d, free: %d", totalMem, usedMem, freeMem),
-				Total: totalMem,
-				Used:  usedMem,
-				Free:  freeMem,
+				Type:  fmt.Sprintf("Kb"),
+				Total: totalMem.Value,
+				Used:  usedMem.Value,
+				Free:  freeMem.Value,
 			}
 			items = append(items, item)
 		}

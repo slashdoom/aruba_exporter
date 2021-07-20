@@ -16,3 +16,8 @@ type SystemCPU struct {
 	Used float64
 	Idle float64
 }
+
+type SystemValue struct {
+	isSet bool
+	Value float64
+}
