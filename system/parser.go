@@ -81,15 +81,15 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 
 			if totalMem.isSet && totalMatches != nil {
 				totalMem.isSet = true
-				totalMem.Value := util.Str2float64(totalMatches[2])
+				totalMem.Value = util.Str2float64(totalMatches[2])
 			}
 			if freeMem.isSet && freeMatches != nil {
 				freeMem.isSet = true
-				freeMem.Value := util.Str2float64(freeMatches[2])
+				freeMem.Value = util.Str2float64(freeMatches[2])
 			}
-			if usedMem.isSet && totalMem != nil && availMatches != nil {
+			if usedMem.isSet && totalMem.isSet && availMatches != nil {
 				usedMem.isSet = true
-				usedMem.Value := totalMem - util.Str2float64(availMatches[2])
+				usedMem.Value = totalMem.Value - util.Str2float64(availMatches[2])
 			}
 
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
