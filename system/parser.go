@@ -129,7 +129,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 	lines := strings.Split(output, "\n")
 
 	if ostype == rpc.ArubaController {
-		cpuRegexp, _ := regexp.Compile(`^.*user\s*(\d+)%, system\s*(\d+)%, idle\s*(\d+)%.*$`)
+		cpuRegexp, _ := regexp.Compile(`^.*user\s*(\d+\.?\d*)%, system\s*(\d+\.?\d*)%, idle\s*(\d+\.?\d*)%.*$`)
 
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
