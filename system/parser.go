@@ -57,7 +57,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type:  "system",
+				Type:  "total",
 				Total: util.Str2float64(matches[1]),
 				Used:  util.Str2float64(matches[2]),
 				Free:  util.Str2float64(matches[3]),
@@ -129,7 +129,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 	lines := strings.Split(output, "\n")
 
 	if ostype == rpc.ArubaController {
-		cpuRegexp, _ := regexp.Compile(`^\s*user\s*(\d+)%, system\s*(\d+)%, idle\s*(\d+)%`)
+		cpuRegexp, _ := regexp.Compile(`^.*user\s*(\d+)%, system\s*(\d+)%, idle\s*(\d+)%.*$`)
 
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
@@ -138,7 +138,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 				continue
 			}
 			item := SystemCPU{
-				Type: "system",
+				Type: "total",
 				Used: (util.Str2float64(matches[1])+util.Str2float64(matches[2])),
 				Idle: util.Str2float64(matches[3]),
 			}
