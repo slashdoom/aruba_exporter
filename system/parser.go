@@ -67,17 +67,16 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		totalMemRegexp, _ := regexp.Compile(`^.*MemTotal:\s*(\d+) kB.*$`)
 		freeMemRegexp, _ := regexp.Compile(`^.*MemFree:\s*(\d+) kB.*$`)
 		availMemRegexp, _ := regexp.Compile(`^.*MemAvailable:\s*(\d+) kB.*$`)
-		
+		var (
+			totalMem SystemValue
+			freeMem SystemValue
+			usedMem SystemValue
+		)
 		for _, line := range lines {
 			log.Infof("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
-			var (
-				totalMem SystemValue
-				freeMem SystemValue
-				usedMem SystemValue
-			)
 
 			if !totalMem.isSet && totalMatches != nil {
 				log.Debugf("totalMatches: %+v", totalMatches)
@@ -95,7 +94,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				usedMem.Value = util.Str2float64(availMatches[1])
 			}
 
-			if totalMatches == nil || freeMatches == nil || availMatches == nil {
+			if !totalMem.isSet || !freeMem.isSet || !usedMem.isSet {
 				continue
 			}
 			item := SystemMemory{
