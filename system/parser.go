@@ -48,18 +48,19 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 	lines := strings.Split(output, "\n")
 	
 	if ostype == rpc.ArubaController {
-		memoryRegexp, _ := regexp.Compile(`^.*Memory (Kb): total:\s*(\d+), used:\s*(\d+), free:\s*(\d+)\s*$`)
+		memoryRegexp, _ := regexp.Compile(`^.*Memory \(Kb\): total:\s*(\d+), used:\s*(\d+), free:\s*(\d+)\s*$`)
 		
 		for _, line := range lines {
+			log.Debugf("line: %s\n", line)
 			matches := memoryRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
 			}
 			item := SystemMemory{
-				Type:  matches[1],
-				Total: util.Str2float64(matches[2]),
-				Used:  util.Str2float64(matches[3]),
-				Free:  util.Str2float64(matches[4]),
+				Type:  "system",
+				Total: util.Str2float64(matches[1]),
+				Used:  util.Str2float64(matches[2]),
+				Free:  util.Str2float64(matches[3]),
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
