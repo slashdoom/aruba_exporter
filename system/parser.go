@@ -122,14 +122,33 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("rpc.ArubaInstant: %s", rpc.ArubaInstant)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaInstant {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return nil, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
 	items := []SystemCPU{}
 	lines := strings.Split(output, "\n")
 
+	if ostype == rpc.ArubaController {
+		cpuRegexp, _ := regexp.Compile(`^\s*user\s*(\d+)%, system\s*(\d+)%, idle\s*(\d+)%`)
+
+		for _, line := range lines {
+			log.Debugf("line: %s\n", line)
+			matches := cpuRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			item := SystemCPU{
+				Type: "system",
+				Used: (util.Str2float64(matches[1])+util.Str2float64(matches[2])),
+				Idle: util.Str2float64(matches[3]),
+			}
+			log.Debugf("item: %+v\n", item)
+			items = append(items, item)
+		}
+		return items, nil
+	}
 	if ostype == rpc.ArubaInstant {
-		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)
+		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)                      
 
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
