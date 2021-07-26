@@ -93,11 +93,11 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
-	output, err := c.RunCommand("")
+	output, err = c.RunCommand("")
 	log.Debugln(output)
-	output, err := c.RunCommand("")
+	output, err = c.RunCommand("")
 	log.Debugln(output)
-	output, err := c.RunCommand("terminal length 0")
+	output, err = c.RunCommand("terminal length 0")
 	log.Debugln(output)
 
 	return nil
