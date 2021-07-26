@@ -12,6 +12,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/config"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh"
+	"github.com/prometheus/common/log"
 )
 
 // NewSSSHConnection connects to device
