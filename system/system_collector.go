@@ -1,8 +1,6 @@
 package system
 
 import (
-	"fmt"
-	
 	"github.com/yankiwi/aruba_exporter/collector"
 	"github.com/yankiwi/aruba_exporter/rpc"
 
