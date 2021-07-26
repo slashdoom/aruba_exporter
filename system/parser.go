@@ -105,6 +105,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
+			break
 		}
 		return items, nil
 	}
