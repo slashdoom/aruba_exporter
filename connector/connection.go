@@ -95,7 +95,10 @@ func (c *SSHConnection) Connect() error {
 
 	output, err := c.RunCommand("")
 	log.Debugln(output)
-	c.RunCommand("terminal length 0")
+	output, err := c.RunCommand("")
+	log.Debugln(output)
+	output, err := c.RunCommand("terminal length 0")
+	log.Debugln(output)
 
 	return nil
 }
