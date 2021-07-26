@@ -14,6 +14,8 @@ import (
 
 // ParseVersion parses cli output and tries to find the version number of the running OS
 func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVersion, error) {
+	log.Debugf("OS: %s\n", ostype)
+	log.Debugf("output: %s\n", output)
 	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return SystemVersion{}, errors.New("'show version' is not implemented for " + ostype)
 	}
@@ -36,8 +38,8 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 
 // ParseMemory parses cli output and tries to find current memory usage
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
-	log.Infof("OS: %s\n", ostype)
-	log.Infof("output: %s\n", output)
+	log.Debugf("OS: %s\n", ostype)
+	log.Debugf("output: %s\n", output)
 	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
 		return nil, errors.New("'show memory' is not implemented for " + ostype)
 	}
@@ -59,6 +61,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				Used:  util.Str2float64(matches[3]),
 				Free:  util.Str2float64(matches[4]),
 			}
+			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
 		}
 		return items, nil
@@ -73,7 +76,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			usedMem SystemValue
 		)
 		for _, line := range lines {
-			log.Infof("line: %s\n", line)
+			log.Debugf("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
@@ -115,8 +118,9 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 
 // ParseCPU parses cli output and tries to find current CPU utilization
 func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, error) {
-	log.Infof("OS: %s\n", ostype)
-	log.Infof("output: %s\n", output)
+	log.Debugf("OS: %s\n", ostype)
+	log.Debugf("rpc.ArubaInstant: %s", rpc.ArubaInstant)
+	log.Debugf("output: %s\n", output)
 	if ostype != rpc.ArubaInstant {
 		return nil, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
@@ -127,7 +131,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)
 
 		for _, line := range lines {
-			log.Infof("line: %s\n", line)
+			log.Debugf("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
