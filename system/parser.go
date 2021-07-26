@@ -98,13 +98,13 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
 				continue
 			}
-			
 			item := SystemMemory{
 				Type: fmt.Sprintf("Kb"),
 				Total: totalMem.Value,
 				Used: usedMem.Value,
 				Free: (totalMem.Value - usedMem.Value),
 			}
+			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
 		}
 		return items, nil
@@ -132,14 +132,12 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 			if matches == nil {
 				continue
 			}
-			log.Infof("type: %s\n", matches[1])
-			log.Infof("used: %v\n", (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])))
-			log.Infof("idle: %v\n", util.Str2float64(matches[5]))
 			item := SystemCPU{
 				Type: matches[1],
 				Used: (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])),
 				Idle: util.Str2float64(matches[5]),
 			}
+			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
 		}
 		return items, nil
