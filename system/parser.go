@@ -89,10 +89,10 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				freeMem.isSet = true
 				freeMem.Value = util.Str2float64(freeMatches[1])
 			}
-			if !usedMem.isSet && totalMem.isSet && availMatches != nil {
+			if !usedMem.isSet && availMatches != nil {
 				log.Debugf("availMatches: %+v", availMatches)
 				usedMem.isSet = true
-				usedMem.Value = totalMem.Value - util.Str2float64(availMatches[1])
+				usedMem.Value = util.Str2float64(availMatches[1])
 			}
 
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
@@ -103,7 +103,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				Type:  fmt.Sprintf("Kb"),
 				Total: totalMem.Value,
 				Used:  usedMem.Value,
-				Free:  freeMem.Value,
+				Free:  totalMem.Value - usedMem.Value
 			}
 			items = append(items, item)
 		}
