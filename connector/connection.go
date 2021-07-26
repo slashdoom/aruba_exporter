@@ -70,9 +70,17 @@ type SSHConnection struct {
 	clientConfig *ssh.ClientConfig
 }
 
+type result struct {
+	output string
+	err    error
+}
+
 // Connect connects to the device
 func (c *SSHConnection) Connect() error {
-	var err error
+	var (
+		err error
+		output string
+	)
 	c.client, err = ssh.Dial("tcp", c.Host, c.clientConfig)
 	if err != nil {
 		return err
@@ -101,11 +109,6 @@ func (c *SSHConnection) Connect() error {
 	log.Debugln(output)
 
 	return nil
-}
-
-type result struct {
-	output string
-	err    error
 }
 
 // RunCommand runs a command against the device
