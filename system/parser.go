@@ -80,16 +80,19 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			)
 
 			if !totalMem.isSet && totalMatches != nil {
+				log.Debugf("totalMatches: %+v", totalMatches)
 				totalMem.isSet = true
-				totalMem.Value = util.Str2float64(totalMatches[2])
+				totalMem.Value = util.Str2float64(totalMatches[1])
 			}
 			if !freeMem.isSet && freeMatches != nil {
+				log.Debugf("freeMatches: %+v", freeMatches)
 				freeMem.isSet = true
-				freeMem.Value = util.Str2float64(freeMatches[2])
+				freeMem.Value = util.Str2float64(freeMatches[1])
 			}
 			if !usedMem.isSet && totalMem.isSet && availMatches != nil {
+				log.Debugf("availMatches: %+v", availMatches)
 				usedMem.isSet = true
-				usedMem.Value = totalMem.Value - util.Str2float64(availMatches[2])
+				usedMem.Value = totalMem.Value - util.Str2float64(availMatches[1])
 			}
 
 			if totalMatches == nil || freeMatches == nil || availMatches == nil {
