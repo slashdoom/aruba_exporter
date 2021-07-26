@@ -114,16 +114,16 @@ func (c *systemCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metri
 	log.Debugf("labelValues %+v", labelValues)
 
 	err := c.CollectVersion(client, ch, labelValues)
-	if client.Debug && err != nil {
-		fmt.Printf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
+	if err != nil {
+		log.Debugf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
 	}
 	err = c.CollectMemory(client, ch, labelValues)
-	if client.Debug && err != nil {
-		fmt.Printf("CollectMemory for %s: %s\n", labelValues[0], err.Error())
+	if err != nil {
+		log.Debugf("CollectMemory for %s: %s\n", labelValues[0], err.Error())
 	}
 	err = c.CollectCPU(client, ch, labelValues)
-	if client.Debug && err != nil {
-		fmt.Printf("CollectCPU for %s: %s\n", labelValues[0], err.Error())
+	if err != nil {
+		log.Debugf("CollectCPU for %s: %s\n", labelValues[0], err.Error())
 	}
 	return nil
 }
