@@ -15,6 +15,22 @@ import (
 	"github.com/prometheus/common/log"
 )
 
+// SSHConnection encapsulates the connection to the device
+type SSHConnection struct {
+	client       *ssh.Client
+	Host         string
+	stdin        io.WriteCloser
+	stdout       io.Reader
+	session      *ssh.Session
+	batchSize    int
+	clientConfig *ssh.ClientConfig
+}
+
+type result struct {
+	output string
+	err    error
+}
+
 // NewSSSHConnection connects to device
 func NewSSSHConnection(device *Device, cfg *config.Config) (*SSHConnection, error) {
 	deviceConfig := device.DeviceConfig
@@ -59,22 +75,6 @@ func NewSSSHConnection(device *Device, cfg *config.Config) (*SSHConnection, erro
 	return c, nil
 }
 
-// SSHConnection encapsulates the connection to the device
-type SSHConnection struct {
-	client       *ssh.Client
-	Host         string
-	stdin        io.WriteCloser
-	stdout       io.Reader
-	session      *ssh.Session
-	batchSize    int
-	clientConfig *ssh.ClientConfig
-}
-
-type result struct {
-	output string
-	err    error
-}
-
 // Connect connects to the device
 func (c *SSHConnection) Connect() error {
 	var (
@@ -102,11 +102,11 @@ func (c *SSHConnection) Connect() error {
 	c.session = session
 
 	output, err = c.RunCommand("")
-	log.Debugln(output)
+	log.Debugln(output, err)
 	output, err = c.RunCommand("")
-	log.Debugln(output)
+	log.Debugln(output, err)
 	output, err = c.RunCommand("terminal length 0")
-	log.Debugln(output)
+	log.Debugln(output, err)
 
 	return nil
 }
@@ -168,5 +168,7 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		}
 	}
 	loadStr = strings.Replace(loadStr, "\r", "", -1)
+	logger.debug(loadStr)
 	ch <- result{output: loadStr, err: nil}
 }
+
