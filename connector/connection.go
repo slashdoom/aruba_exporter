@@ -168,7 +168,7 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		}
 	}
 	loadStr = strings.Replace(loadStr, "\r", "", -1)
-	logger.debug(loadStr)
+	log.debug(loadStr)
 	ch <- result{output: loadStr, err: nil}
 }
 
