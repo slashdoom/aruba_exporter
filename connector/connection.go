@@ -170,8 +170,8 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		loadStr += string(buf[:n])
 		log.Debugln(loadStr)
 		log.Debugln(len(loadStr))
-		log.Debugln(len(loadStr)-10)
-		log.Debugln(loadStr[len(loadStr)-10:])
+		log.Debugln(len(loadStr)-5)
+		log.Debugln(loadStr[len(loadStr)-5:])
 		if strings.Contains(loadStr, cmd) {
 			log.Debugln("command match")
 		    if re.MatchString(loadStr) {
