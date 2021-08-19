@@ -170,7 +170,7 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 			break
 		}
 		if re2.MatchString(loadStr) {
-			log.Debugln("re2 match"))
+			log.Debugln("re2 match")
 			break
 		}
 	}
