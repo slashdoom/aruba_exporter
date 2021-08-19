@@ -101,7 +101,7 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
-	output, err = c.RunCommand("")
+	output, err = c.ReadOutput()
 	log.Debugln(output, err)
 	//output, err = c.RunCommand("")
 	//log.Debugln(output, err)
@@ -115,6 +115,22 @@ func (c *SSHConnection) Connect() error {
 func (c *SSHConnection) RunCommand(cmd string) (string, error) {
 	buf := bufio.NewReader(c.stdout)
 	io.WriteString(c.stdin, cmd+"\n")
+
+	outputChan := make(chan result)
+	go func() {
+		c.readln(outputChan, cmd, buf)
+	}()
+	select {
+	case res := <-outputChan:
+		return res.output, res.err
+	case <-time.After(c.clientConfig.Timeout):
+		return "", errors.New("Timeout reached")
+	}
+}
+
+// Reads output from the device
+func (c *SSHConnection) ReadOutput() (string, error) {
+	buf := bufio.NewReader(c.stdout)
 
 	outputChan := make(chan result)
 	go func() {
