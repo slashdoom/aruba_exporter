@@ -103,10 +103,10 @@ func (c *SSHConnection) Connect() error {
 
 	output, err = c.RunCommand("")
 	log.Debugln(output, err)
-	output, err = c.RunCommand("")
-	log.Debugln(output, err)
-	output, err = c.RunCommand("terminal length 0")
-	log.Debugln(output, err)
+	//output, err = c.RunCommand("")
+	//log.Debugln(output, err)
+	//output, err = c.RunCommand("terminal length 0")
+	//log.Debugln(output, err)
 
 	return nil
 }
@@ -166,9 +166,11 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		log.Debugln(string(buf[:n]))
 		loadStr += string(buf[:n])
 		if strings.Contains(loadStr, cmd) && re.MatchString(loadStr) {
+			log.Debugln("re match")
 			break
 		}
-		if strings.Contains(loadStr, cmd) && re2.MatchString(loadStr) {
+		if re2.MatchString(loadStr) {
+			log.Debugln("re2 match"))
 			break
 		}
 	}
