@@ -101,7 +101,7 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
-	BlindSend()
+	c.BlindSend()
 	output, err = c.RunCommand("")
 	log.Debugln(output, err)
 	//output, err = c.RunCommand("terminal length 0")
