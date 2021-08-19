@@ -101,7 +101,7 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
-	output, err = c.ReadOutput()
+	output, err = c.RunCommand("")
 	log.Debugln(output, err)
 	//output, err = c.RunCommand("")
 	//log.Debugln(output, err)
