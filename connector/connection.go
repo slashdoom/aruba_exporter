@@ -129,7 +129,6 @@ func (c *SSHConnection) RunCommand(cmd string) (string, error) {
 
 // Reads output from the device
 func (c *SSHConnection) BlindSend() {
-	buf := bufio.NewReader(c.stdout)
 	io.WriteString(c.stdin, "\n")
 	io.WriteString(c.stdin, "\n")
 }
