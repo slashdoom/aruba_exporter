@@ -101,10 +101,9 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
+	BlindSend()
 	output, err = c.RunCommand("")
 	log.Debugln(output, err)
-	//output, err = c.RunCommand("")
-	//log.Debugln(output, err)
 	//output, err = c.RunCommand("terminal length 0")
 	//log.Debugln(output, err)
 
@@ -129,19 +128,10 @@ func (c *SSHConnection) RunCommand(cmd string) (string, error) {
 }
 
 // Reads output from the device
-func (c *SSHConnection) ReadOutput() (string, error) {
+func (c *SSHConnection) BlindSend() {
 	buf := bufio.NewReader(c.stdout)
-
-	outputChan := make(chan result)
-	go func() {
-		c.readln(outputChan, "", buf)
-	}()
-	select {
-	case res := <-outputChan:
-		return res.output, res.err
-	case <-time.After(c.clientConfig.Timeout):
-		return "", errors.New("Timeout reached")
-	}
+	io.WriteString(c.stdin, "\n")
+	io.WriteString(c.stdin, "\n")
 }
 
 // Close closes connection
@@ -171,7 +161,6 @@ func loadPrivateKey(r io.Reader) (ssh.AuthMethod, error) {
 
 func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 	re := regexp.MustCompile(`.+#\s?$`)
-	re2 := regexp.MustCompile(`.*Press any key to continue$`)
 	buf := make([]byte, c.batchSize)
 	loadStr := ""
 	for {
@@ -183,10 +172,6 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		log.Debugln(loadStr)
 		if strings.Contains(loadStr, cmd) && re.MatchString(loadStr) {
 			log.Debugln("re match")
-			break
-		}
-		if re2.MatchString(loadStr) {
-			log.Debugln("re2 match")
 			break
 		}
 	}
