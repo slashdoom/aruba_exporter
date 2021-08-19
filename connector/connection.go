@@ -168,6 +168,8 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 			ch <- result{output: "", err: err}
 		}
 		loadStr += string(buf[:n])
+		log.Debugln(n)
+		log.Debugln(string(buf[n-1:]))
 		log.Debugln(loadStr)
 		if strings.Contains(loadStr, cmd) {
 			log.Debugln("command match")
