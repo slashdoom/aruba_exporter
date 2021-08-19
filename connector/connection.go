@@ -169,15 +169,12 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		}
 		loadStr += string(buf[:n])
 		if strings.Contains(loadStr, cmd) {
-            log.Debugln("command match")
 		    if re.MatchString(loadStr) {
-			    log.Debugln("prompt match")
 			    break
 			}
 		}
 	}
 	loadStr = strings.Replace(loadStr, "\r", "", -1)
-	log.Debugln(loadStr)
 	ch <- result{output: loadStr, err: nil}
 }
 
