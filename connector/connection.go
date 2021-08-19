@@ -134,7 +134,7 @@ func (c *SSHConnection) ReadOutput() (string, error) {
 
 	outputChan := make(chan result)
 	go func() {
-		c.readln(outputChan, buf)
+		c.readln(outputChan, "", buf)
 	}()
 	select {
 	case res := <-outputChan:
