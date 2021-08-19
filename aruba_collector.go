@@ -81,7 +81,7 @@ func (c *arubaCollector) collectForHost(device *connector.Device, ch chan<- prom
 	ch <- prometheus.MustNewConstMetric(upDesc, prometheus.GaugeValue, 1, l...)
 
 	client := rpc.NewClient(conn, cfg.Debug)
-	err = client.Identify()
+	//err = client.Identify()
 	if err != nil {
 		log.Errorln(device.Host + ": " + err.Error())
 		return
