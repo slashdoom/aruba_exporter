@@ -102,7 +102,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type: fmt.Sprintf("Kb"),
+				Type: fmt.Sprintf("kB"),
 				Total: totalMem.Value,
 				Used: usedMem.Value,
 				Free: (totalMem.Value - usedMem.Value),
@@ -140,10 +140,10 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type: fmt.Sprintf("Kb"),
-				Total: totalMem.Value/1024,
-				Used: usedMem.Value/1024,
-				Free: (totalMem.Value - usedMem.Value)/1024,
+				Type: fmt.Sprintf("kB"),
+				Total: totalMem.Value/1000,
+				Used: usedMem.Value/1000,
+				Free: (totalMem.Value - usedMem.Value)/1000,
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
