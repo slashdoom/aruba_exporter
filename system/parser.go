@@ -166,7 +166,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		return items, nil
 	}
 	if ostype == rpc.ArubaSwitch {
-		cpuRegexp, _ := regexp.Compile(`^(\d+) percent busy, from \d+ sec ago$`)                      
+		cpuRegexp, _ := regexp.Compile(`^(\d+) percent busy, from \d+ sec ago$`)
 
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)

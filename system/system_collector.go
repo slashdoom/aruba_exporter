@@ -109,6 +109,7 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 // Collect collects metrics from Aruba Devices
 func (c *systemCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
 	log.Debugf("client: %+v", client)
+	log.Debugf("ostype: %+v", client.OSType)
 	log.Debugf("labelValues %+v", labelValues)
 
 	err := c.CollectVersion(client, ch, labelValues)
