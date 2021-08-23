@@ -118,7 +118,6 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		usedMemRegexp, _ := regexp.Compile(`^Total Used Memory(bytes): (\d+)$`)
 		var (
 			totalMem SystemValue
-			freeMem SystemValue
 			usedMem SystemValue
 		)
 		for _, line := range lines {
