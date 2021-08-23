@@ -124,7 +124,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
-			usedMatches := freeMemRegexp.FindStringSubmatch(line)
+			usedMatches := usedMemRegexp.FindStringSubmatch(line)
 
 			if !totalMem.isSet && totalMatches != nil {
 				log.Debugf("totalMatches: %+v", totalMatches)
