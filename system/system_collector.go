@@ -76,8 +76,7 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 		if err != nil {
 			return err
 		}
-	}
-	else {
+	} else {
 		out, err := client.RunCommand("show memory")
 		if err != nil {
 			return err
