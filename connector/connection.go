@@ -105,8 +105,10 @@ func (c *SSHConnection) Connect() error {
 	c.BlindSend()
 	output, err = c.RunCommand("")
 	log.Debugln(output, err)
-	//output, err = c.RunCommand("terminal length 0")
-	//log.Debugln(output, err)
+	output, err = c.RunCommand("terminal length 0")
+	log.Debugln(output, err)
+	output, err = c.RunCommand("")
+	log.Debugln(output, err)
 
 	return nil
 }
@@ -161,7 +163,7 @@ func loadPrivateKey(r io.Reader) (ssh.AuthMethod, error) {
 
 func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 	endPrompt := regexp.MustCompile(`.+#\s+?$`)
-	escapeSeq := regexp.MustCompile(`\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])`)
+	escSequence := regexp.MustCompile(`\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])`)
 	buf := make([]byte, c.batchSize)
 	loadStr := ""
 	for {
@@ -169,14 +171,9 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		if err != nil {
 			ch <- result{output: "", err: err}
 		}
-		cleanStr := escapeSeq.ReplaceAllString(string(buf[:n]), "")
+		cleanStr := escSequence.ReplaceAllString(string(buf[:n]), "")
 		loadStr += cleanStr
 		log.Debugln(loadStr)
-		log.Debugln(len(loadStr))
-		log.Debugln(len(loadStr)-25)
-		for i := len(loadStr)-25; i < len(loadStr); i++ {
-			log.Infof("i: %v, char: %s", i, loadStr[i])
-		}
 		if strings.Contains(loadStr, cmd) {
 			log.Debugln("command match")
 		    if endPrompt.MatchString(loadStr) {
