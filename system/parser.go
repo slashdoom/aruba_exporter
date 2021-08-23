@@ -3,6 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
+	"math"
 	"regexp"
 	"strings"
 
@@ -141,9 +142,9 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			}
 			item := SystemMemory{
 				Type: fmt.Sprintf("kB"),
-				Total: totalMem.Value/1000,
-				Used: usedMem.Value/1000,
-				Free: (totalMem.Value - usedMem.Value)/1000,
+				Total: math.RoundToEven(totalMem.Value/1000),
+				Used: math.RoundToEven(usedMem.Value/1000),
+				Free: math.RoundToEven((totalMem.Value - usedMem.Value)/1000),
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
