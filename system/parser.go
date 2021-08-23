@@ -40,7 +40,7 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch {
 		return nil, errors.New("'show memory' is not implemented for " + ostype)
 	}
 	
@@ -106,6 +106,45 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				Total: totalMem.Value,
 				Used: usedMem.Value,
 				Free: (totalMem.Value - usedMem.Value),
+			}
+			log.Debugf("item: %+v\n", item)
+			items = append(items, item)
+			break
+		}
+		return items, nil
+	}
+	if ostype == rpc.ArubaSwitch {
+		totalMemRegexp, _ := regexp.Compile(`^System Total Memory(bytes): (\d+)$`)
+		usedMemRegexp, _ := regexp.Compile(`^Total Used Memory(bytes): (\d+)$`)
+		var (
+			totalMem SystemValue
+			freeMem SystemValue
+			usedMem SystemValue
+		)
+		for _, line := range lines {
+			log.Debugf("line: %s\n", line)
+			totalMatches := totalMemRegexp.FindStringSubmatch(line)
+			usedMatches := freeMemRegexp.FindStringSubmatch(line)
+
+			if !totalMem.isSet && totalMatches != nil {
+				log.Debugf("totalMatches: %+v", totalMatches)
+				totalMem.isSet = true
+				totalMem.Value = util.Str2float64(totalMatches[1])
+			}
+			if !usedMem.isSet && usedMatches != nil {
+				log.Debugf("usedMatches: %+v", usedMatches)
+				usedMem.isSet = true
+				usedMem.Value = util.Str2float64(usedMatches[1])
+			}
+
+			if !totalMem.isSet || !usedMem.isSet {
+				continue
+			}
+			item := SystemMemory{
+				Type: fmt.Sprintf("Kb"),
+				Total: totalMem.Value/1024,
+				Used: usedMem.Value/1024,
+				Free: (totalMem.Value - usedMem.Value)/1024,
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
