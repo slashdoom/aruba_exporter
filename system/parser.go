@@ -16,7 +16,7 @@ import (
 func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVersion, error) {
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch {
 		return SystemVersion{}, errors.New("'show version' is not implemented for " + ostype)
 	}
 	versionRegexp := make(map[string]*regexp.Regexp)
