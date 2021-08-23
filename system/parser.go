@@ -120,9 +120,8 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 // ParseCPU parses cli output and tries to find current CPU utilization
 func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, error) {
 	log.Debugf("OS: %s\n", ostype)
-	log.Debugf("rpc.ArubaInstant: %s", rpc.ArubaInstant)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch {
 		return nil, errors.New("'show process cpu' is not implemented for " + ostype)
 	}
 	items := []SystemCPU{}
@@ -160,6 +159,25 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 				Type: matches[1],
 				Used: (util.Str2float64(matches[2])+util.Str2float64(matches[3])+util.Str2float64(matches[4])),
 				Idle: util.Str2float64(matches[5]),
+			}
+			log.Debugf("item: %+v\n", item)
+			items = append(items, item)
+		}
+		return items, nil
+	}
+	if ostype == rpc.ArubaSwitch {
+		cpuRegexp, _ := regexp.Compile(`^(\d+) percent busy, from \d+ sec ago$`)                      
+
+		for _, line := range lines {
+			log.Debugf("line: %s\n", line)
+			matches := cpuRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			item := SystemCPU{
+				Type: "total",
+				Used: util.Str2float64(matches[1]),
+				Idle: 100-util.Str2float64(matches[1]),
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
