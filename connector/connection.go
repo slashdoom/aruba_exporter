@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"regexp"
 	"strings"
-
 	"time"
 
 	"github.com/yankiwi/aruba_exporter/config"
@@ -132,8 +131,10 @@ func (c *SSHConnection) RunCommand(cmd string) (string, error) {
 
 // Reads output from the device
 func (c *SSHConnection) BlindSend() {
+	time.Sleep(2 * time.Second)
 	io.WriteString(c.stdin, "\n")
 	io.WriteString(c.stdin, "\n")
+	time.Sleep(2 * time.Second)
 }
 
 // Close closes connection
