@@ -94,7 +94,8 @@ func (c *SSHConnection) Connect() error {
 	c.stdin, _ = session.StdinPipe()
 	c.stdout, _ = session.StdoutPipe()
 	modes := ssh.TerminalModes{
-		ssh.ECHO:  0,
+		ssh.ECHO: 0,
+		ssh.ECHOCTL: 0,
 		ssh.OCRNL: 0,
 	}
 	session.RequestPty("vt100", 0, 2000, modes)
