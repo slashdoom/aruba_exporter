@@ -104,10 +104,6 @@ func (c *SSHConnection) Connect() error {
 	c.BlindSend()
 	output, err = c.RunCommand("")
 	log.Debugln(output, err)
-	output, err = c.RunCommand("terminal length 0")
-	log.Debugln(output, err)
-	output, err = c.RunCommand("")
-	log.Debugln(output, err)
 
 	return nil
 }
