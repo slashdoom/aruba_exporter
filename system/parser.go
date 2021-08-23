@@ -114,8 +114,8 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		return items, nil
 	}
 	if ostype == rpc.ArubaSwitch {
-		totalMemRegexp, _ := regexp.Compile(`^System Total Memory(bytes): (\d+)$`)
-		usedMemRegexp, _ := regexp.Compile(`^Total Used Memory(bytes): (\d+)$`)
+		totalMemRegexp, _ := regexp.Compile(`System Total Memory(bytes):\s*(\d+)`)
+		usedMemRegexp, _ := regexp.Compile(`Total Used Memory(bytes):\s*(\d+)`)
 		var (
 			totalMem SystemValue
 			usedMem SystemValue
