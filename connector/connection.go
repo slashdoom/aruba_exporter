@@ -173,15 +173,6 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		cleanStr := escSequence.ReplaceAllString(string(buf[:n]), "")
 		loadStr += cleanStr
 		log.Debugln(loadStr)
-		log.Debugln(len(loadStr))
-		log.Debugln(len(loadStr)-25)
-		start := 0
-		if len(loadStr)-25 > 0 {
-			start = len(loadStr)-25
-		}
-		for i := start; i < len(loadStr); i++ {
-			log.Infof("i: %v, char: %s", i, string(loadStr[i]))
-		}
 		if strings.Contains(loadStr, cmd) {
 			log.Debugln("command match")
 		    if endPrompt.MatchString(loadStr) {
