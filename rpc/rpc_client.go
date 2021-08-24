@@ -61,8 +61,6 @@ func (c *Client) Identify() error {
 // RunCommand runs a command on a Aruba device
 func (c *Client) RunCommand(cmd string) (string, error) {
 
-	log.Infof("Running command on %s: %s\n", c.conn.Host, cmd)
-
 	output, err := c.conn.RunCommand(fmt.Sprintf("%s", cmd))
 	if err != nil {
 		println(err.Error())

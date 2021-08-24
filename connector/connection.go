@@ -110,6 +110,8 @@ func (c *SSHConnection) Connect() error {
 
 // RunCommand runs a command against the device
 func (c *SSHConnection) RunCommand(cmd string) (string, error) {
+	log.Infof("Running command on %s: %s\n", c.Host, cmd)
+
 	buf := bufio.NewReader(c.stdout)
 	io.WriteString(c.stdin, cmd+"\n")
 
