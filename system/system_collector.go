@@ -75,17 +75,24 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 		out string
 		err error
 	)
-	if client.OSType == "ArubaSwitch" {
+	switch client.OSType {
+	case: "ArubaSwitch"
 		out, err = client.RunCommand([]string{"display memory"})
 		if err != nil {
 			return err
 		}
-	} else {
+	case: "ArubaCXSwitch"
+		out, err = client.RunCommand([]string{"top memory", "q"})
+		if err != nil {
+			return err
+		}
+	default:
 		out, err = client.RunCommand([]string{"show memory"})
 		if err != nil {
 			return err
 		}
 	}
+
 	items, err := c.ParseMemory(client.OSType, out)
 	if err != nil {
 		return err

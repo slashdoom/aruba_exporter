@@ -41,7 +41,7 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch {
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch && ostype != rpc.ArubaCXSwitch {
 		return nil, errors.New("'show memory' is not implemented for " + ostype)
 	}
 	
@@ -58,7 +58,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type:  "total",
+				Type:  "system",
 				Total: util.Str2float64(matches[1]),
 				Used:  util.Str2float64(matches[2]),
 				Free:  util.Str2float64(matches[3]),
@@ -103,7 +103,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type: fmt.Sprintf("kB"),
+				Type: fmt.Sprintf("system"),
 				Total: totalMem.Value,
 				Used: usedMem.Value,
 				Free: (totalMem.Value - usedMem.Value),
@@ -141,7 +141,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				continue
 			}
 			item := SystemMemory{
-				Type: fmt.Sprintf("kB"),
+				Type: fmt.Sprintf("system"),
 				Total: math.RoundToEven(totalMem.Value/1000),
 				Used: math.RoundToEven(usedMem.Value/1000),
 				Free: math.RoundToEven((totalMem.Value - usedMem.Value)/1000),
@@ -149,6 +149,39 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)
 			break
+		}
+		return items, nil
+	}
+	if ostype == rpc.ArubaCXSwitch {
+		memoryRegexp, _ := regexp.Compile(`^MiB Mem\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used,\s*(\d+\.\d+) buff/cache\s*$`)
+		swapRegexp, _ := regexp.Compile(`^MiB Swap\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used,\s*(\d+\.\d+) avail Mem\s*$`)                    
+		
+		for _, line := range lines {
+			log.Debugf("line: %s\n", line)
+			matchesMem := memoryRegexp.FindStringSubmatch(line)
+			matchesSwap := swapRegexp.FindStringSubmatch(line)
+			if matchesMem == nil && matchesSwap == nil {
+				continue
+			}
+			var item SystemMemory
+			if matchesMem != nil {
+				item := SystemMemory{
+					Type:  "system",
+					Total: util.Str2float64(matchesMem[1])*1000,
+					Used:  util.Str2float64(matchesMem[3])*1000,
+					Free:  util.Str2float64(matchesMem[2])*1000,
+				}
+			}
+			if matchesSwap != nil {
+				item := SystemMemory{
+					Type:  "system",
+					Total: util.Str2float64(matchesSwap[1])*1000,
+					Used:  util.Str2float64(matchesSwap[3])*1000,
+					Free:  util.Str2float64(matchesSwap[2])*1000,
+				}
+			}
+			log.Debugf("item: %+v\n", item)
+			items = append(items, item)
 		}
 		return items, nil
 	}
