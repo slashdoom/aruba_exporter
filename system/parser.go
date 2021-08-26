@@ -154,8 +154,8 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 	}
 	if ostype == rpc.ArubaCXSwitch {
 		memoryRegexp, _ := regexp.Compile(`^MiB Mem\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used,\s*(\d+\.\d+) buff/cache\s*$`)
-		swapRegexp, _ := regexp.Compile(`^MiB Swap\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used,\s*(\d+\.\d+) avail Mem\s*$`)                    
-		
+		swapRegexp, _ := regexp.Compile(`^MiB Swap\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used.\s*(\d+\.\d+) avail Mem\s*$`)
+
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
 			matchesMem := memoryRegexp.FindStringSubmatch(line)

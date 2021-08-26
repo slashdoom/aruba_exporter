@@ -82,7 +82,7 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 			return err
 		}
 	case "ArubaCXSwitch":
-		out, err = client.RunCommand([]string{"top memory", "q"})
+		out, err = client.RunCommand([]string{"top memory"})
 		if err != nil {
 			return err
 		}
