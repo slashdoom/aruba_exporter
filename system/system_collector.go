@@ -56,7 +56,7 @@ func (*systemCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // CollectVersion collects version informations from Aruba Devices
 func (c *systemCollector) CollectVersion(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand("show version")
+	out, err := client.RunCommand([]string{"show version"})
 	if err != nil {
 		return err
 	}
@@ -76,12 +76,12 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 		err error
 	)
 	if client.OSType == "ArubaSwitch" {
-		out, err = client.RunCommand("display memory")
+		out, err = client.RunCommand([]string{"display memory"})
 		if err != nil {
 			return err
 		}
 	} else {
-		out, err = client.RunCommand("show memory")
+		out, err = client.RunCommand([]string{"show memory"})
 		if err != nil {
 			return err
 		}
@@ -101,7 +101,7 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand("show cpu")
+	out, err := client.RunCommand([]string{"show cpu"})
 	if err != nil {
 		return err
 	}

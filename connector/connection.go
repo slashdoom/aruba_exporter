@@ -2,6 +2,7 @@ package connector
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"regexp"
@@ -101,19 +102,20 @@ func (c *SSHConnection) Connect() error {
 	session.Shell()
 	c.session = session
 
-	c.BlindSend()
-	output, err = c.RunCommand("")
+	c.BlindSend([]string{"", ""})
+	output, err = c.RunCommand([]string{""})
 	log.Debugln(output, err)
 
 	return nil
 }
 
 // RunCommand runs a command against the device
-func (c *SSHConnection) RunCommand(cmd string) (string, error) {
-	log.Infof("Running command on %s: %s\n", c.Host, cmd)
-
+func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 	buf := bufio.NewReader(c.stdout)
-	io.WriteString(c.stdin, cmd+"\n")
+	for i := 0; i < len(); i++ {
+		log.Infof("Running command on %s: %s\n", c.Host, cmds[i])
+		io.WriteString(c.stdin, fmt.Sprintf("%s", cmd)+"\n")
+	}
 
 	outputChan := make(chan result)
 	go func() {
@@ -127,11 +129,12 @@ func (c *SSHConnection) RunCommand(cmd string) (string, error) {
 	}
 }
 
-// Reads output from the device
-func (c *SSHConnection) BlindSend() {
-	time.Sleep(2 * time.Second)
-	io.WriteString(c.stdin, "\n")
-	io.WriteString(c.stdin, "\n")
+// BlindSend sends commands to a device and doesn't wait for output
+func (c *SSHConnection) BlindSend(cmds []string) {
+	for i := 0; i < len(); i++ {
+		log.Infof("Blind sending command on %s: %s\n", c.Host, cmds[i])
+		io.WriteString(c.stdin, fmt.Sprintf("%s", cmd)+"\n")
+	}
 	time.Sleep(2 * time.Second)
 }
 

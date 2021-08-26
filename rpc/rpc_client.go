@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 
 	"github.com/yankiwi/aruba_exporter/connector"
@@ -33,7 +32,7 @@ func NewClient(ssh *connector.SSHConnection, debug bool) *Client {
 
 // Identify tries to identify the OS running on a Aruba device
 func (c *Client) Identify() error {
-	output, err := c.RunCommand("show version")
+	output, err := c.RunCommand([]string{"show version"})
 	if err != nil {
 		return err
 	}
@@ -59,9 +58,9 @@ func (c *Client) Identify() error {
 }
 
 // RunCommand runs a command on a Aruba device
-func (c *Client) RunCommand(cmd string) (string, error) {
+func (c *Client) RunCommand(cmds []string) (string, error) {
 
-	output, err := c.conn.RunCommand(fmt.Sprintf("%s", cmd))
+	output, err := c.conn.RunCommand(cmds)
 	if err != nil {
 		println(err.Error())
 		return "", err
