@@ -112,14 +112,14 @@ func (c *SSHConnection) Connect() error {
 // RunCommand runs a command against the device
 func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 	buf := bufio.NewReader(c.stdout)
-	for i := 0; i < len(); i++ {
+	for i := 0; i < len(cmds); i++ {
 		log.Infof("Running command on %s: %s\n", c.Host, cmds[i])
-		io.WriteString(c.stdin, fmt.Sprintf("%s", cmd)+"\n")
+		io.WriteString(c.stdin, fmt.Sprintf("%s", cmds[i])+"\n")
 	}
 
 	outputChan := make(chan result)
 	go func() {
-		c.readln(outputChan, cmd, buf)
+		c.readln(outputChan, cmds[0], buf)
 	}()
 	select {
 	case res := <-outputChan:
@@ -131,9 +131,9 @@ func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 
 // BlindSend sends commands to a device and doesn't wait for output
 func (c *SSHConnection) BlindSend(cmds []string) {
-	for i := 0; i < len(); i++ {
+	for i := 0; i < len(cmds); i++ {
 		log.Infof("Blind sending command on %s: %s\n", c.Host, cmds[i])
-		io.WriteString(c.stdin, fmt.Sprintf("%s", cmd)+"\n")
+		io.WriteString(c.stdin, fmt.Sprintf("%s", cmds[i])+"\n")
 	}
 	time.Sleep(2 * time.Second)
 }
