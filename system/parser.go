@@ -163,9 +163,9 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			if matchesMem == nil && matchesSwap == nil {
 				continue
 			}
-			var item SystemMemory
+			item := SystemMemory{}
 			if matchesMem != nil {
-				item := SystemMemory{
+				item = SystemMemory{
 					Type:  "system",
 					Total: util.Str2float64(matchesMem[1])*1000,
 					Used:  util.Str2float64(matchesMem[3])*1000,
@@ -173,7 +173,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 				}
 			}
 			if matchesSwap != nil {
-				item := SystemMemory{
+				item = SystemMemory{
 					Type:  "system",
 					Total: util.Str2float64(matchesSwap[1])*1000,
 					Used:  util.Str2float64(matchesSwap[3])*1000,
