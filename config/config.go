@@ -62,34 +62,9 @@ func Load(reader io.Reader) (*Config, error) {
 	}
 
 	c := New()
-	t := New()
-	log.Infof("c: %+v\n", c)
-	err = yaml.Unmarshal(b, t)
+	err = yaml.Unmarshal(b, c)
 	if err != nil {
 		return nil, err
-	}
-	log.Infof("b: %s\n", b)
-	log.Infof("t: %+v\n", t)
-
-	for _, d := range c.Devices {
-		if d.Features == nil {
-			continue
-		}
-		if d.Features.BGP == nil {
-			d.Features.BGP = c.Features.BGP
-		}
-		if d.Features.Environment == nil {
-			d.Features.Environment = c.Features.Environment
-		}
-		if d.Features.Interfaces == nil {
-			d.Features.Interfaces = c.Features.Interfaces
-		}
-		if d.Features.Optics == nil {
-			d.Features.Optics = c.Features.Optics
-		}
-		if d.Features.System == nil {
-			d.Features.System = c.Features.System
-		}
 	}
 
 	return c, nil
