@@ -69,7 +69,8 @@ func Load(reader io.Reader) (*Config, error) {
 		return nil, err
 	}
 	log.Infof("b: %s\n", b)
-	log.Infof("b: %s\n", b.Level)
+	log.Infof("b.Level: %s\n", b.Level)
+	log.Infof("b.Nothing: %s\n", b.Nothing)
 	log.Infof("t: %+v\n", c)
 
 	for _, d := range c.Devices {
