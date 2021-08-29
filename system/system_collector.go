@@ -92,7 +92,6 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 			return err
 		}
 	}
-
 	items, err := c.ParseMemory(client.OSType, out)
 	if err != nil {
 		return err
@@ -108,9 +107,17 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand([]string{"show cpu"})
-	if err != nil {
-		return err
+	switch client.OSType {
+	case "ArubaCXSwitch":
+		out, err = client.RunCommand([]string{"show system"})
+		if err != nil {
+			return err
+		}
+	default:
+		out, err = client.RunCommand([]string{"show cpu"})
+		if err != nil {
+			return err
+		}
 	}
 	items, err := c.ParseCPU(client.OSType, out)
 	if err != nil {

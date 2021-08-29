@@ -37,7 +37,6 @@ type DeviceConfig struct {
 type FeatureConfig struct {
 	BGP         *bool `yaml:"bgp,omitempty"`
 	Environment *bool `yaml:"environment,omitempty"`
-	Facts       *bool `yaml:"facts,omitempty"`
 	Interfaces  *bool `yaml:"interfaces,omitempty"`
 	Optics      *bool `yaml:"optics,omitempty"`
 	System      *bool `yaml:"system,omitempty"`
@@ -75,9 +74,6 @@ func Load(reader io.Reader) (*Config, error) {
 		}
 		if d.Features.Environment == nil {
 			d.Features.Environment = c.Features.Environment
-		}
-		if d.Features.Facts == nil {
-			d.Features.Facts = c.Features.Facts
 		}
 		if d.Features.Interfaces == nil {
 			d.Features.Interfaces = c.Features.Interfaces
