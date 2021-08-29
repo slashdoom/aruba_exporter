@@ -19,13 +19,13 @@ const (
 // Client sends commands to a Aruba device
 type Client struct {
 	conn   *connector.SSHConnection
-	Debug  bool
+	Level  string
 	OSType string
 }
 
 // NewClient creates a new client connection
-func NewClient(ssh *connector.SSHConnection, debug bool) *Client {
-	rpc := &Client{conn: ssh, Debug: debug}
+func NewClient(ssh *connector.SSHConnection, level string) *Client {
+	rpc := &Client{conn: ssh, Level: level}
 
 	return rpc
 }
