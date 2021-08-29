@@ -69,6 +69,7 @@ func initialize() error {
 	if err != nil {
 		return err
 	}
+	logger.SetLevel(c.Level)
 
 	devices, err = devicesForConfig(c)
 	if err != nil {
