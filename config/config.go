@@ -6,8 +6,6 @@ import (
 	"strings"
 
 	"gopkg.in/yaml.v2"
-
-	"github.com/prometheus/common/log"
 )
 
 // Config represents the configuration for the exporter
