@@ -62,13 +62,14 @@ func Load(reader io.Reader) (*Config, error) {
 	}
 
 	c := New()
+	t := New()
 	log.Infof("cb: %+v\n", c)
-	err = yaml.Unmarshal(b, c)
+	err = yaml.Unmarshal(b, &t)
 	if err != nil {
 		return nil, err
 	}
 	log.Infof("b: %s\n", b)
-	log.Infof("ca: %+v\n", c)
+	log.Infof("t: %+v\n", c)
 
 	for _, d := range c.Devices {
 		if d.Features == nil {
