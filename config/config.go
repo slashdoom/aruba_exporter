@@ -10,7 +10,7 @@ import (
 
 // Config represents the configuration for the exporter
 type Config struct {
-	Debug         bool            `yaml:"debug"`
+	Level         string          `yaml:"info"`
 	LegacyCiphers bool            `yaml:"legacy_ciphers,omitempty"`
 	Timeout       int             `yaml:"timeout,omitempty"`
 	BatchSize     int             `yaml:"batch_size,omitempty"`
@@ -90,7 +90,7 @@ func Load(reader io.Reader) (*Config, error) {
 }
 
 func (c *Config) setDefaultValues() {
-	c.Debug = false
+	c.Level = "info"
 	c.LegacyCiphers = false
 	c.Timeout = 5
 	c.BatchSize = 10000
@@ -100,8 +100,6 @@ func (c *Config) setDefaultValues() {
 	f.BGP = &bgp
 	environment := true
 	f.Environment = &environment
-	facts := true
-	f.Facts = &facts
 	interfaces := true
 	f.Interfaces = &interfaces
 	optics := true
