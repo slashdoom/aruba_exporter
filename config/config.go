@@ -66,7 +66,7 @@ func Load(reader io.Reader) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Infof("%+v\n", b)
+	log.Infof("%s\n", b)
 	log.Infof("%+v\n", c)
 
 	for _, d := range c.Devices {
