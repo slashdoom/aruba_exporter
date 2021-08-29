@@ -12,12 +12,12 @@ import (
 
 // Config represents the configuration for the exporter
 type Config struct {
-	Level         string          `yaml:"info"`
+	Level         string          `yaml:"level"`
 	LegacyCiphers bool            `yaml:"legacy_ciphers,omitempty"`
 	Timeout       int             `yaml:"timeout,omitempty"`
 	BatchSize     int             `yaml:"batch_size,omitempty"`
 	Username      string          `yaml:"username,omitempty"`
-	Password      string          `yaml:"Password,omitempty"`
+	Password      string          `yaml:"password,omitempty"`
 	KeyFile       string          `yaml:"key_file,omitempty"`
 	Devices       []*DeviceConfig `yaml:"devices,omitempty"`
 	Features      *FeatureConfig  `yaml:"features,omitempty"`
@@ -64,7 +64,7 @@ func Load(reader io.Reader) (*Config, error) {
 	c := New()
 	t := New()
 	log.Infof("c: %+v\n", c)
-	err = yaml.Unmarshal(b, &t)
+	err = yaml.Unmarshal(b, t)
 	if err != nil {
 		return nil, err
 	}
