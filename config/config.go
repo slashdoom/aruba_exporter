@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"gopkg.in/yaml.v2"
+
+	"github.com/prometheus/common/log"
 )
 
 // Config represents the configuration for the exporter
@@ -64,6 +66,8 @@ func Load(reader io.Reader) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Infof("%+v\n", b)
+	log.Infof("%+v\n", c)
 
 	for _, d := range c.Devices {
 		if d.Features == nil {
