@@ -107,6 +107,10 @@ func (c *systemCollector) CollectMemory(client *rpc.Client, ch chan<- prometheus
 
 // CollectCPU collects cpu informations from Aruba Devices
 func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
+	var (
+		out string
+		err error
+	)
 	switch client.OSType {
 	case "ArubaCXSwitch":
 		out, err = client.RunCommand([]string{"show system"})
