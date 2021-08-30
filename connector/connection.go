@@ -173,6 +173,7 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		if err != nil {
 			ch <- result{output: "", err: err}
 		}
+		log.Debugln(string(buf[:n]))
 		cleanStr := escSequence.ReplaceAllString(string(buf[:n]), "")
 		loadStr += cleanStr
 		log.Debugln(loadStr)
