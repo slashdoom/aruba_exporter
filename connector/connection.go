@@ -164,7 +164,7 @@ func loadPrivateKey(r io.Reader) (ssh.AuthMethod, error) {
 }
 
 func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
-	endPrompt := regexp.MustCompile(`(?m).+#\s+?$`)
+	endPrompt := regexp.MustCompile(`(?m).+#\s*?$`)
 	escSequence := regexp.MustCompile(`\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])`)
 	buf := make([]byte, c.batchSize)
 	loadStr := ""
@@ -186,9 +186,6 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		}
 		if strings.Contains(loadStr, cmd) {
 			log.Debugln("command match")
-			for i, match := range endPrompt.FindAllString(loadStr, -1) {
-				log.Debugln(match, "found at index", i)
-			}
 		    if endPrompt.MatchString(loadStr) {
 				log.Debugln("prompt match")
 			    break
