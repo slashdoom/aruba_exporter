@@ -257,7 +257,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		return items, nil
 	}
 	if ostype == rpc.ArubaCXSwitch {
-		cpuRegexp, _ := regexp.Compile(`^CPU Util (%)\s*:\s*(\d+)\s*$`)
+		cpuRegexp, _ := regexp.Compile(`^CPU Util \(%\)\s*:\s*(\d+)\s*$`)
 
 		for _, line := range lines {
 			log.Debugf("line: %s\n", line)
