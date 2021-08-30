@@ -106,6 +106,7 @@ func loadConfig() (*config.Config, error) {
 func loadConfigFromFlags() *config.Config {
 	c := config.New()
 
+	c.Level = *level
 	c.Timeout = *sshTimeout
 	c.BatchSize = *sshBatchSize
 	c.Username = *sshUsername
