@@ -69,7 +69,7 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // Collect collects metrics from Aruba
 func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand([]string{"show interface"})
+	out, err := client.RunCommand([]string{"display interface"})
 	if err != nil {
 		return err
 	}
