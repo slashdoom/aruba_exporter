@@ -34,7 +34,7 @@ func (c *collectors) initCollectorsForDevice(device *connector.Device) {
 	
 	c.devices[device.Host] = make([]collector.RPCCollector, 0)
 	c.addCollectorIfEnabledForDevice(device, "system", f.System, system.NewCollector)
-	c.addCollectorIfEnabledForDevice(device, "interfaces", f.Interfaces, Interfaces.NewCollector)
+	c.addCollectorIfEnabledForDevice(device, "interfaces", f.Interfaces, interfaces.NewCollector)
 
 }
 
