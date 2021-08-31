@@ -62,7 +62,7 @@ func (c *Client) RunCommand(cmds []string) (string, error) {
 
 	output, err := c.conn.RunCommand(cmds)
 	if err != nil {
-		println(err.Error())
+		log.Errorln(err.Error())
 		return "", err
 	}
 

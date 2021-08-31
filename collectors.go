@@ -6,6 +6,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/connector"
 	
 	"github.com/yankiwi/aruba_exporter/system"
+	"github.com/yankiwi/aruba_exporter/interfaces"
 )
 
 type collectors struct {
@@ -33,6 +34,7 @@ func (c *collectors) initCollectorsForDevice(device *connector.Device) {
 	
 	c.devices[device.Host] = make([]collector.RPCCollector, 0)
 	c.addCollectorIfEnabledForDevice(device, "system", f.System, system.NewCollector)
+	c.addCollectorIfEnabledForDevice(device, "interfaces", f.Interface, Interfaces.NewCollector)
 
 }
 
