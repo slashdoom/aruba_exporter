@@ -10,7 +10,7 @@ import (
 
 // Config represents the configuration for the exporter
 type Config struct {
-	Level         string          `yaml:"level"`
+	Level         string          `yaml:"level,omitempty"`
 	LegacyCiphers bool            `yaml:"legacy_ciphers,omitempty"`
 	Timeout       int             `yaml:"timeout,omitempty"`
 	BatchSize     int             `yaml:"batch_size,omitempty"`

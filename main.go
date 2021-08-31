@@ -24,7 +24,7 @@ const version string = "0.0.1"
 
 var (
 	showVersion        = flag.Bool("version", false, "Print version information.")
-	listenAddress      = flag.String("web.listen-address", ":9326", "Address on which to expose metrics and web interface.")
+	listenAddress      = flag.String("web.listen-address", ":9909", "Address on which to expose metrics and web interface.")
 	metricsPath        = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
 	sshHosts           = flag.String("ssh.targets", "", "Hosts to scrape")
 	sshUsername        = flag.String("ssh.user", "aruba_exporter", "Username to use when connecting to junos devices using ssh")
