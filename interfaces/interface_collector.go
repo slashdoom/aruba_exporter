@@ -69,7 +69,7 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // Collect collects metrics from Aruba
 func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
-	out, err := client.RunCommand("show interface")
+	out, err := client.RunCommand([]string{"show interface"})
 	if err != nil {
 		return err
 	}
@@ -78,8 +78,8 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		log.Debugf("Parse interfaces for %s: %s\n", labelValues[0], err.Error())
 		return nil
 	}
-	if client.OSType == rpc.IOSXE {
-		out, err := client.RunCommand("show vlans")
+	if client.OSType == rpc.ArubaCXSwitch {
+		out, err := client.RunCommand([]string{"show vlans"})
 		if err != nil {
 			return err
 		}

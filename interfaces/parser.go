@@ -15,7 +15,7 @@ import (
 func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.IOSXE && ostype != rpc.NXOS && ostype != rpc.IOS {
+	if ostype != rpc.ArubaSwitch {
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
 	}
 	items := []Interface{}
@@ -109,7 +109,7 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 func (c *interfaceCollector) ParseVlans(ostype string, output string) ([]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
 	log.Debugf("output: %s\n", output)
-	if ostype != rpc.IOSXE {
+	if ostype != rpc.ArubaSwitch {
 		return nil, errors.New("'show vlans' is not implemented for " + ostype)
 	}
 	items := []Interface{}
