@@ -33,7 +33,7 @@ var (
 )
 
 func init() {
-	l := []string{"target", "name", "description", "mac", "speed"}
+	l := []string{"target", "name", "description", "mac"}
 
 	rxBytesDesc = prometheus.NewDesc(prefix+"rx_bytes", "Received data in bytes", l, nil)
 	rxErrorsDesc = prometheus.NewDesc(prefix+"rx_errors", "Number of errors caused by incoming packets", l, nil)
@@ -117,7 +117,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 	}
 
 	for _, item := range items {
-		l := append(labelValues, item.Name, item.Description, item.MacAddress, item.Speed)
+		l := append(labelValues, item.Name, item.Description, item.MacAddress)
 
 		errorStatus := 0
 		if item.AdminStatus != item.OperStatus {
