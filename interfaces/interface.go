@@ -4,21 +4,29 @@ type Interface struct {
 	Name        string
 	MacAddress  string
 	Description string
+	Speed       string
 
 	AdminStatus string
 	OperStatus  string
 
-	InputErrors  float64
-	OutputErrors float64
+	RxErrors  float64
+	TxErrors float64
 
-	InputDrops  float64
-	OutputDrops float64
+	RxDrops  float64
+	TxDrops float64
 
-	InputBytes  float64
-	OutputBytes float64
+	RxBytes  float64
+	TxBytes float64
 
-	InputBroadcast float64
-	InputMulticast float64
+	RxUnicast float64
+	TxUnicast float64
 
-	Speed string
+	RxBcast float64
+	TxBcast float64
+
+	RxMcast float64
+	TxMcast float64
+
+	RxBandMcast float64
+	TxBandMcast float64
 }
