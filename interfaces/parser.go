@@ -66,7 +66,7 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		}
 
 		if matches := macRegexp.FindStringSubmatch(line); matches != nil {
-			current.MacAddress = matches[1]
+			current.MacAddress = util.StandardizeMacAddr(matches[1])
 			continue
 		}
 
