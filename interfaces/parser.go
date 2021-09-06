@@ -19,19 +19,19 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
 	}
 	items := []Interface{}
-	newIfRegexp := regexp.MustCompile(`^\s+Status and Counters - Port Counters for port (\d+\/?\d*)\s*$`)
+	newIfRegexp := regexp.MustCompile(`^\s+Status and Counters - Port Counters for (?:trunk|port) ((?:Trk)?\d+\/?\d*)\s*$`)
 	descRegexp := regexp.MustCompile(`^\s+Name\s+:\s+(.*?)\s*$`)
 	macRegexp := regexp.MustCompile(`^\s+MAC Address\s+:\s+(.*?)\s*$`)
 	linkStatusRegexp := regexp.MustCompile(`^\s+Link Status\s+:\s+(Up|Down)\s*$`)
 	portEnabledRegexp := regexp.MustCompile(`^\s+Port Enabled\s+:\s+(Yes|No)\s*$`)
-	bytesRegexp := regexp.MustCompile(`\s+Bytes Rx\s+:\s+(\d+)\s+Bytes Tx\s+:\s+(\d+)\s*$`)
-	unicastRegexp := regexp.MustCompile(`\s+Unicast Rx\s+:\s+(\d+)\s+Unicast Tx\s+:\s+(\d+)\s*$`)
-	BandMcastRegexp := regexp.MustCompile(`\s+Bcast\/Mcast Rx\s+:\s+(\d+)\s+Bcast\/Mcast Tx\s+:\s+(\d+)\s*$`)
-	RxDrops := regexp.MustCompile(`\s+Discard Rx\s+:\s+(\d+)\s+Out Queue Len\s+:\s+(\d+)\s*$`)
-	TxDrops := regexp.MustCompile(`\s+FCS Rx\s+:\s+(\d+)\s+Drops Tx\s+:\s+(\d+)\s*$`)
-	RxErrors := regexp.MustCompile(`\s+Total Rx Errors\s+:\s+(\d+)\s+Deferred Tx\s+:\s+(\d+)\s*$`)
-	TxLateColln := regexp.MustCompile(`\s+Runts Rx\s+:\s+(\d+)\s+Late Colln Tx\s+:\s+(\d+)\s*$`)
-	TxExcessColln := regexp.MustCompile(`\s+Giants Rx\s+:\s+(\d+)\s+Excessive Colln\s+:\s+(\d+)\s*$`)
+	bytesRegexp := regexp.MustCompile(`\s+Bytes Rx\s+:\s+(.*?)\s+Bytes Tx\s+:\s+(.*?)\s*$`)
+	unicastRegexp := regexp.MustCompile(`\s+Unicast Rx\s+:\s+(.*?)\s+Unicast Tx\s+:\s+(.*?)\s*$`)
+	BandMcastRegexp := regexp.MustCompile(`\s+Bcast\/Mcast Rx\s+:\s+(.*?)\s+Bcast\/Mcast Tx\s+:\s+(.*?)\s*$`)
+	RxDrops := regexp.MustCompile(`\s+Discard Rx\s+:\s+(.*?)\s+Out Queue Len\s+:\s+(.*?)\s*$`)
+	TxDrops := regexp.MustCompile(`\s+FCS Rx\s+:\s+(.*?)\s+Drops Tx\s+:\s+(.*?)\s*$`)
+	RxErrors := regexp.MustCompile(`\s+Total Rx Errors\s+:\s+(.*?)\s+Deferred Tx\s+:\s+(.*?)\s*$`)
+	TxLateColln := regexp.MustCompile(`\s+Runts Rx\s+:\s+(.*?)\s+Late Colln Tx\s+:\s+(.*?)\s*$`)
+	TxExcessColln := regexp.MustCompile(`\s+Giants Rx\s+:\s+(.*?)\s+Excessive Colln\s+:\s+(.*?)\s*$`)
 	
 	current := Interface{}
 	lines := strings.Split(output, "\n")
