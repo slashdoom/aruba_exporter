@@ -92,8 +92,8 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 			log.Debugf("TxBytes S: %s\n", matches[2])
 			current.RxBytes += util.Str2float64(matches[1])
 			current.TxBytes += util.Str2float64(matches[2])
-			log.Debugf("RxBytes F: %s\n", current.RxBytes)
-			log.Debugf("TxBytes F: %s\n", current.TxBytes)
+			log.Debugf("RxBytes F: %v\n", current.RxBytes)
+			log.Debugf("TxBytes F: %v\n", current.TxBytes)
 			continue
 		}
 
