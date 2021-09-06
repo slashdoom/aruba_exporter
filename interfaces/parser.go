@@ -14,7 +14,6 @@ import (
 // Parse parses cli output and tries to find interfaces with related stats
 func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
-	log.Debugf("output: %s\n", output)
 	if ostype != rpc.ArubaSwitch {
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
 	}
@@ -89,8 +88,12 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		}
 
 		if matches := bytesRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxBytes S: %s\n", matches[1])
+			log.Debugf("TxBytes S: %s\n", matches[2])
 			current.RxBytes += util.Str2float64(matches[1])
 			current.TxBytes += util.Str2float64(matches[2])
+			log.Debugf("RxBytes F: %s\n", current.RxBytes)
+			log.Debugf("TxBytes F: %s\n", current.TxBytes)
 			continue
 		}
 
