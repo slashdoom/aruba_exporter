@@ -20,8 +20,8 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 	}
 	items := []Interface{}
 	newIfRegexp := regexp.MustCompile(`^\s+Status and Counters - Port Counters for port (\d+\/?\d*)\s*$`)
-	descRegexp := regexp.MustCompile(`^\s+Name\s+:\s+(.*)$`)
-	macRegexp := regexp.MustCompile(`^\s+MAC Address\s+:\s+(.*)$`)
+	descRegexp := regexp.MustCompile(`^\s+Name\s+:\s+(.*?)\s*$`)
+	macRegexp := regexp.MustCompile(`^\s+MAC Address\s+:\s+(.*?)\s*$`)
 	linkStatusRegexp := regexp.MustCompile(`^\s+Link Status\s+:\s+(Up|Down)\s*$`)
 	portEnabledRegexp := regexp.MustCompile(`^\s+Port Enabled\s+:\s+(Yes|No)\s*$`)
 	bytesRegexp := regexp.MustCompile(`\s+Bytes Rx\s+:\s+(\d+)\s+Bytes Tx\s+:\s+(\d+)\s*$`)
