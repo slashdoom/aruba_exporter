@@ -26,7 +26,7 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 	portEnabledRegexp := regexp.MustCompile(`^\s+Port Enabled\s+:\s+(Yes|No)\s*$`)
 	bytesRegexp := regexp.MustCompile(`\s+Bytes Rx\s+:\s+(\d+)\s+Bytes Tx\s+:\s+(\d+)\s*$`)
 	unicastRegexp := regexp.MustCompile(`\s+Unicast Rx\s+:\s+(\d+)\s+Unicast Tx\s+:\s+(\d+)\s*$`)
-	BandMcastRegexp := regexp.MustCompile(`\s+Bcast\/Mcast Rx\s+:\s+(\d+)\s+Bcast\/Mcast R\Tx\s+:\s+(\d+)\s*$`)
+	BandMcastRegexp := regexp.MustCompile(`\s+Bcast\/Mcast Rx\s+:\s+(\d+)\s+Bcast\/Mcast Tx\s+:\s+(\d+)\s*$`)
 	RxDrops := regexp.MustCompile(`\s+Discard Rx\s+:\s+(\d+)\s+Out Queue Len\s+:\s+(\d+)\s*$`)
 	TxDrops := regexp.MustCompile(`\s+FCS Rx\s+:\s+(\d+)\s+Drops Tx\s+:\s+(\d+)\s*$`)
 	RxErrors := regexp.MustCompile(`\s+Total Rx Errors\s+:\s+(\d+)\s+Deferred Tx\s+:\s+(\d+)\s*$`)
