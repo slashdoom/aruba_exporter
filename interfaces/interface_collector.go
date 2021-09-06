@@ -105,7 +105,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		if err != nil {
 			return err
 		}
-		items, err := c.Parse(client.OSType, out)
+		items, err = c.Parse(client.OSType, out)
 		if err != nil {
 			log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
 			return nil
