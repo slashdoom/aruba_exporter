@@ -88,12 +88,8 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		}
 
 		if matches := bytesRegexp.FindStringSubmatch(line); matches != nil {
-			log.Debugf("RxBytes S: %s\n", matches[1])
-			log.Debugf("TxBytes S: %s\n", matches[2])
 			current.RxBytes += util.Str2float64(matches[1])
 			current.TxBytes += util.Str2float64(matches[2])
-			log.Debugf("RxBytes F: %v\n", current.RxBytes)
-			log.Debugf("TxBytes F: %v\n", current.TxBytes)
 			continue
 		}
 

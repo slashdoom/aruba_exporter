@@ -105,7 +105,7 @@ func (c *SSHConnection) Connect() error {
 	c.BlindSend([]string{"", ""})
 	output, err = c.RunCommand([]string{""})
 	output, err = c.RunCommand([]string{"no page"})
-	output, err = c.RunCommand([]string{"no page"})
+	output, err = c.RunCommand([]string{"no paging"})
 	output, err = c.RunCommand([]string{""})
 	log.Debugln(output, err)
 
