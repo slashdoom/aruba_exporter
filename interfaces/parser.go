@@ -30,11 +30,13 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 	RxDrops := regexp.MustCompile(`\s+Discard Rx\s+:\s+(\d+)\s+Out Queue Len\s+:\s+(\d+)\s*$`)
 	TxDrops := regexp.MustCompile(`\s+FCS Rx\s+:\s+(\d+)\s+Drops Tx\s+:\s+(\d+)\s*$`)
 	RxErrors := regexp.MustCompile(`\s+Total Rx Errors\s+:\s+(\d+)\s+Deferred Tx\s+:\s+(\d+)\s*$`)
+	TxLateColln := regexp.MustCompile(`\s+Runts Rx\s+:\s+(\d+)\s+Late Colln Tx\s+:\s+(\d+)\s*$`)
+	TxExcessColln := regexp.MustCompile(`\s+Giants Rx\s+:\s+(\d+)\s+Excessive Colln\s+:\s+(\d+)\s*$`)
 	
 	current := Interface{}
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
-		if newIfRegexp.MatchString(line) {
+		if matches := newIfRegexp.FindStringSubmatch(line); matches != nil {
 			if current != (Interface{}) {
 				items = append(items, current)
 			}
@@ -119,41 +121,16 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 			continue
 		}
 
-	}
-	return append(items, current), nil
-}
-
-// ParseVlans parses cli output and tries to find vlans with related traffic stats
-func (c *interfaceCollector) ParseVlans(ostype string, output string) ([]Interface, error) {
-	log.Debugf("OS: %s\n", ostype)
-	log.Debugf("output: %s\n", output)
-	if ostype != rpc.ArubaSwitch {
-		return nil, errors.New("'show vlans' is not implemented for " + ostype)
-	}
-	items := []Interface{}
-	deviceNameRegexp, _ := regexp.Compile(`^([a-zA-Z0-9\/-]+\.[a-zA-Z0-9\/-]+) \(:?\d+\).*$`)
-	inputBytesRegexp, _ := regexp.Compile(`^\s+Total \d+ packets, (\d+) bytes input.*$`)
-	outputBytesRegexp, _ := regexp.Compile(`^\s+Total \d+ packets, (\d+) bytes output.*$`)
-
-	current := Interface{}
-	lines := strings.Split(output, "\n")
-	for _, line := range lines {
-		if matches := deviceNameRegexp.FindStringSubmatch(line); matches != nil {
-			if current != (Interface{}) {
-				items = append(items, current)
-			}
-			current = Interface{
-				Name: matches[1],
-			}
-		}
-		if current == (Interface{}) {
+		if matches := TxLateColln.FindStringSubmatch(line); matches != nil {
+			current.TxErrors += util.Str2float64(matches[2])
 			continue
 		}
-		if matches := inputBytesRegexp.FindStringSubmatch(line); matches != nil {
-			current.InputBytes = util.Str2float64(matches[1])
-		} else if matches := outputBytesRegexp.FindStringSubmatch(line); matches != nil {
-			current.OutputBytes = util.Str2float64(matches[1])
+
+		if matches := TxExcessColln.FindStringSubmatch(line); matches != nil {
+			current.TxErrors += util.Str2float64(matches[2])
+			continue
 		}
+
 	}
 	return append(items, current), nil
 }

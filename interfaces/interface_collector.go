@@ -134,7 +134,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		ch <- prometheus.MustNewConstMetric(rxBytesDesc, prometheus.GaugeValue, item.RxBytes, l...)
 		ch <- prometheus.MustNewConstMetric(rxErrorsDesc, prometheus.GaugeValue, item.RxErrors, l...)
 		ch <- prometheus.MustNewConstMetric(rxDropsDesc, prometheus.GaugeValue, item.RxDrops, l...)
-		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.GaugeValue, item.rxUnicast, l...)
+		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.GaugeValue, item.RxUnicast, l...)
 		ch <- prometheus.MustNewConstMetric(rxBcastDesc, prometheus.GaugeValue, item.RxBcast, l...)
 		ch <- prometheus.MustNewConstMetric(rxMcastDesc, prometheus.GaugeValue, item.RxMcast, l...)
 		ch <- prometheus.MustNewConstMetric(rxBandMcastDesc, prometheus.GaugeValue, item.RxBandMcast, l...)
