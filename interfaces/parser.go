@@ -41,6 +41,10 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 			}
 			current = Interface{
 				Name: matches[1],
+				Description: "",
+				MacAddress: "",
+				OperStatus: "down",
+				AdminStatus: "down",
 				RxBytes: 0,
 				TxBytes: 0,
 				RxUnicast: 0,
@@ -72,8 +76,6 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		if matches := linkStatusRegexp.FindStringSubmatch(line); matches != nil {
 			if strings.ToLower(matches[1]) == "up" {
 				current.OperStatus = "up"
-			} else {
-				current.OperStatus = "down"
 			}
 			continue
 		}
@@ -81,8 +83,6 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		if matches := portEnabledRegexp.FindStringSubmatch(line); matches != nil {
 			if strings.ToLower(matches[1]) == "up" {
 				current.AdminStatus = "up"
-			} else {
-				current.AdminStatus = "down"
 			}
 			continue
 		}
