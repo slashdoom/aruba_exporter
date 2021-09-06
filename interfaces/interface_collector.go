@@ -96,6 +96,7 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
 	var (
 		out string
+		items []Interface
 		err error
 	)
 	switch client.OSType {
@@ -104,15 +105,17 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		if err != nil {
 			return err
 		}
+		items, err := c.Parse(client.OSType, out)
+		if err != nil {
+			log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
+			return nil
+		}
 	default:
 		out, err = client.RunCommand([]string{"show interfaces"})
 		if err != nil {
 			return err
 		}
-	}
-	items, err := c.Parse(client.OSType, out)
-	if err != nil {
-		log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
+		log.Warnf("Interfaces parsing not available for %s\n", client.OSType)
 		return nil
 	}
 
