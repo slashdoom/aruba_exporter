@@ -81,7 +81,7 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 		}
 
 		if matches := portEnabledRegexp.FindStringSubmatch(line); matches != nil {
-			if strings.ToLower(matches[1]) == "up" {
+			if strings.ToLower(matches[1]) == "yes" {
 				current.AdminStatus = "up"
 			}
 			continue
