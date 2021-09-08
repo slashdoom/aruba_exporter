@@ -12,6 +12,7 @@ const prefix string = "aruba_interface_"
 
 var (
 	rxBytesDesc     *prometheus.Desc
+	rxPacketsDesc   *prometheus.Desc
 	rxErrorsDesc    *prometheus.Desc
 	rxDropsDesc     *prometheus.Desc
 	rxUnicastDesc   *prometheus.Desc
@@ -20,6 +21,7 @@ var (
 	rxBandMcastDesc *prometheus.Desc
 
 	txBytesDesc     *prometheus.Desc
+	txPacketsDesc   *prometheus.Desc
 	txErrorsDesc    *prometheus.Desc
 	txDropsDesc     *prometheus.Desc
 	txUnicastDesc   *prometheus.Desc
@@ -36,6 +38,7 @@ func init() {
 	l := []string{"target", "name", "description", "mac"}
 
 	rxBytesDesc = prometheus.NewDesc(prefix+"rx_bytes", "Received data in bytes", l, nil)
+	rxPacketsDesc = prometheus.NewDesc(prefix+"rx_packets", "Number of incoming packets", l, nil)
 	rxErrorsDesc = prometheus.NewDesc(prefix+"rx_errors", "Number of errors caused by incoming packets", l, nil)
 	rxDropsDesc = prometheus.NewDesc(prefix+"rx_drops", "Number of dropped incoming packets", l, nil)
 	rxUnicastDesc = prometheus.NewDesc(prefix+"rx_unicast", "Received unicast packets", l, nil)
@@ -44,6 +47,7 @@ func init() {
 	rxBandMcastDesc = prometheus.NewDesc(prefix+"rx_broadcast_and_multicast", "Received number of combined broadcast and multicast packets", l, nil)
 
 	txBytesDesc = prometheus.NewDesc(prefix+"tx_bytes", "Transmitted data in bytes", l, nil)
+	txPacketsDesc = prometheus.NewDesc(prefix+"rx_bytes", "Number of outgoing packets", l, nil)
 	txErrorsDesc = prometheus.NewDesc(prefix+"tx_errors", "Number of errors caused by outgoing packets", l, nil)
 	txDropsDesc = prometheus.NewDesc(prefix+"tx_drops", "Number of dropped outgoing packets", l, nil)
 	txUnicastDesc = prometheus.NewDesc(prefix+"tx_unicast", "Transmitted unicast packets", l, nil)
@@ -72,6 +76,7 @@ func (*interfaceCollector) Name() string {
 // Describe describes the metrics
 func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- rxBytesDesc
+	ch <- rxPacketsDesc
 	ch <- rxErrorsDesc
 	ch <- rxDropsDesc
 	ch <- rxUnicastDesc
@@ -80,6 +85,7 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- rxBandMcastDesc
 
 	ch <- txBytesDesc
+	ch <- txPacketsDesc
 	ch <- txDropsDesc
 	ch <- txErrorsDesc
 	ch <- txUnicastDesc
@@ -105,17 +111,17 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		if err != nil {
 			return err
 		}
-		items, err = c.Parse(client.OSType, out)
-		if err != nil {
-			log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
-			return nil
-		}
 	default:
 		out, err = client.RunCommand([]string{"show interfaces"})
 		if err != nil {
 			return err
 		}
 		log.Warnf("Interfaces parsing not available for %s\n", client.OSType)
+		return nil
+	}
+	items, err = c.Parse(client.OSType, out)
+	if err != nil {
+		log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
 		return nil
 	}
 
@@ -135,6 +141,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 			operStatus = 1
 		}
 		ch <- prometheus.MustNewConstMetric(rxBytesDesc, prometheus.CounterValue, item.RxBytes, l...)
+		ch <- prometheus.MustNewConstMetric(rxPacketsDesc, prometheus.CounterValue, item.RxPackets, l...)
 		ch <- prometheus.MustNewConstMetric(rxErrorsDesc, prometheus.CounterValue, item.RxErrors, l...)
 		ch <- prometheus.MustNewConstMetric(rxDropsDesc, prometheus.CounterValue, item.RxDrops, l...)
 		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.CounterValue, item.RxUnicast, l...)
@@ -143,6 +150,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		ch <- prometheus.MustNewConstMetric(rxBandMcastDesc, prometheus.CounterValue, item.RxBandMcast, l...)
 
 		ch <- prometheus.MustNewConstMetric(txBytesDesc, prometheus.CounterValue, item.TxBytes, l...)
+		ch <- prometheus.MustNewConstMetric(txPacketsDesc, prometheus.CounterValue, item.TxPackets, l...)
 		ch <- prometheus.MustNewConstMetric(txErrorsDesc, prometheus.CounterValue, item.TxErrors, l...)
 		ch <- prometheus.MustNewConstMetric(txDropsDesc, prometheus.CounterValue, item.TxDrops, l...)
 		ch <- prometheus.MustNewConstMetric(txUnicastDesc, prometheus.CounterValue, item.TxUnicast, l...)

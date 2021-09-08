@@ -9,13 +9,16 @@ type Interface struct {
 	AdminStatus string
 	OperStatus  string
 
-	RxErrors  float64
+	RxPackets float64
+	TxPackets float64
+
+	RxErrors float64
 	TxErrors float64
 
-	RxDrops  float64
+	RxDrops float64
 	TxDrops float64
 
-	RxBytes  float64
+	RxBytes float64
 	TxBytes float64
 
 	RxUnicast float64
