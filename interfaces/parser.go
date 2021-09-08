@@ -153,13 +153,15 @@ func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([
 	items := []Interface{}
 	newIfRegexp := regexp.MustCompile(`^(?:Interface|Aggregate) ((?:vlan|lag)?\d+\/?\d*\/?\d*) is (up|down)`)
 	descRegexp := regexp.MustCompile(`^\s+Description:\s+(.*?)\s*$`)
-	macRegexp := regexp.MustCompile(`^\s+Hardware: Ethernet, MAC Address:\s+(.*?)\s*$`)
+	macRegexp := regexp.MustCompile(`^(?:\s+Hardware: Ethernet,)?\s+MAC Address\s*:\s+(.*?)\s*$`)
 	adminStateRegexp := regexp.MustCompile(`^\s+Admin state is (up|down)\s*$`)
 	packetsRegexp := regexp.MustCompile(`^\s+Packets\s+(\d+)\s+(\d+)\s+(\d+)\s*$`)
+	l3packetsRegexp := regexp.MustCompile(`^\s+L3 Packets\s+(\d+)\s+(\d+)\s+(\d+)\s*$`)
 	unicastRegexp := regexp.MustCompile(`^\s+Unicast\s+(\d+)\s+(\d+)\s+(\d+)\s*$`)
 	McastRegexp := regexp.MustCompile(`^\s+Multicast\s+(\d+)\s+(\d+)\s+(\d+)\s*$`)
 	BcastRegexp := regexp.MustCompile(`^\s+Broadcast\s+(\d+)\s+(\d+)\s+(\d+)\s*$`)
 	bytesRegexp := regexp.MustCompile(`\s+Bytes\s+(\d+)\s+(\d+)\s+(\d+)`)
+	l3bytesRegexp := regexp.MustCompile(`\s+L3 Bytes\s+(\d+)\s+(\d+)\s+(\d+)`)
 	dropsRegexp := regexp.MustCompile(`\s+Dropped\s+(\d+)\s+(\d+)\s+(\d+)`)
 	errorsRegexp := regexp.MustCompile(`\s+Errors\s+(\d+)\s+(\d+)\s+(\d+)`)
 	
@@ -223,6 +225,12 @@ func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([
 			continue
 		}
 
+		if matches := l3packetsRegexp.FindStringSubmatch(line); matches != nil {
+			current.RxPackets += util.Str2float64(matches[1])
+			current.TxPackets += util.Str2float64(matches[2])
+			continue
+		}
+
 		if matches := unicastRegexp.FindStringSubmatch(line); matches != nil {
 			current.RxUnicast += util.Str2float64(matches[1])
 			current.TxUnicast += util.Str2float64(matches[2])
@@ -242,6 +250,12 @@ func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([
 		}
 
 		if matches := bytesRegexp.FindStringSubmatch(line); matches != nil {
+			current.RxBytes += util.Str2float64(matches[1])
+			current.TxBytes += util.Str2float64(matches[2])
+			continue
+		}
+
+		if matches := l3bytesRegexp.FindStringSubmatch(line); matches != nil {
 			current.RxBytes += util.Str2float64(matches[1])
 			current.TxBytes += util.Str2float64(matches[2])
 			continue
