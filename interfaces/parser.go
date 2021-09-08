@@ -10,13 +10,19 @@ import (
 	
 	"github.com/prometheus/common/log"
 )
-
 // Parse parses cli output and tries to find interfaces with related stats
 func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
-	if ostype != rpc.ArubaSwitch {
+	switch ostype {
+	case rpc.ArubaSwitch:
+		return c.ParseArubaSwitch(ostype, output)
+	default:
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
 	}
+}
+
+// Parse parses cli output and tries to find interfaces with related stats
+func (c *interfaceCollector) ParseArubaSwitch(ostype string, output string) ([]Interface, error) {
 	items := []Interface{}
 	newIfRegexp := regexp.MustCompile(`^\s+Status and Counters - Port Counters for (?:trunk|port) ((?:Trk)?\d+\/?\d*)\s*$`)
 	descRegexp := regexp.MustCompile(`^\s+Name\s+:\s+(.*?)\s*$`)
