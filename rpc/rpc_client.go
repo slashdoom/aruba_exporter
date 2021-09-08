@@ -37,7 +37,7 @@ func (c *Client) Identify() error {
 		return err
 	}
 	
-	log.Infof("show version output: %s\n", output)
+	log.Debugf("show version output: %s\n", output)
 	
 	switch {
 	case strings.Contains(output, "ArubaOS (MODEL: Aruba"):

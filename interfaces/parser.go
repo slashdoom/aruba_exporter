@@ -17,7 +17,7 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 	case rpc.ArubaSwitch:
 		return c.ParseArubaSwitch(ostype, output)
 	case rpc.ArubaCXSwitch:
-		return c.ParseArubaSwitch(ostype, output)
+		return c.ParseArubaCXSwitch(ostype, output)
 	default:
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
 	}

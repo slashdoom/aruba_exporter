@@ -87,10 +87,10 @@ func (c *arubaCollector) collectForHost(device *connector.Device, ch chan<- prom
 		return
 	}
 
-	log.Infof("collectors: %+v", c.collectors.collectorsForDevice(device))
+	log.Debugf("collectors: %+v", c.collectors.collectorsForDevice(device))
 	for _, col := range c.collectors.collectorsForDevice(device) {
 		ct := time.Now()
-		log.Infof("collector: %v", col)
+		log.Debugf("collector: %v", col)
 		err := col.Collect(client, ch, l)
 
 		if err != nil && err.Error() != "EOF" {
