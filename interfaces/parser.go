@@ -151,7 +151,7 @@ func (c *interfaceCollector) ParseArubaSwitch(ostype string, output string) ([]I
 // Parse parses ArubaCXSwitch cli output and tries to find interfaces with related stats
 func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([]Interface, error) {
 	items := []Interface{}
-	newIfRegexp := regexp.MustCompile(`^Interface ((?:vlan|lag)?\d+\/?\d*\/?\d*) is (up|down)\s*$`)
+	newIfRegexp := regexp.MustCompile(`^(?:Interface|Aggregate) ((?:vlan|lag)?\d+\/?\d*\/?\d*) is (up|down)`)
 	descRegexp := regexp.MustCompile(`^\s+Description:\s+(.*?)\s*$`)
 	macRegexp := regexp.MustCompile(`^\s+Hardware: Ethernet, MAC Address:\s+(.*?)\s*$`)
 	adminStateRegexp := regexp.MustCompile(`^\s+Admin state is (up|down)\s*$`)
