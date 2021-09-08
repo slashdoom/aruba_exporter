@@ -47,7 +47,7 @@ func init() {
 	rxBandMcastDesc = prometheus.NewDesc(prefix+"rx_broadcast_and_multicast", "Received number of combined broadcast and multicast packets", l, nil)
 
 	txBytesDesc = prometheus.NewDesc(prefix+"tx_bytes", "Transmitted data in bytes", l, nil)
-	txPacketsDesc = prometheus.NewDesc(prefix+"rx_bytes", "Number of outgoing packets", l, nil)
+	txPacketsDesc = prometheus.NewDesc(prefix+"tx_packets", "Number of outgoing packets", l, nil)
 	txErrorsDesc = prometheus.NewDesc(prefix+"tx_errors", "Number of errors caused by outgoing packets", l, nil)
 	txDropsDesc = prometheus.NewDesc(prefix+"tx_drops", "Number of dropped outgoing packets", l, nil)
 	txUnicastDesc = prometheus.NewDesc(prefix+"tx_unicast", "Transmitted unicast packets", l, nil)
