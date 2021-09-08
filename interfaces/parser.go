@@ -170,6 +170,7 @@ func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([
 			if current != (Interface{}) {
 				items = append(items, current)
 			}
+			log.Infoln(matches[1])
 			current = Interface{
 				Name: matches[1],
 				Description: "",
