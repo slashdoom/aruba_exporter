@@ -111,6 +111,11 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		if err != nil {
 			return err
 		}
+	case "ArubaCXSwitch":
+		out, err = client.RunCommand([]string{"show interface"})
+		if err != nil {
+			return err
+		}
 	default:
 		out, err = client.RunCommand([]string{"show interfaces"})
 		if err != nil {
