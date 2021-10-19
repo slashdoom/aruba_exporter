@@ -101,10 +101,11 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 // Collect collects metrics from Aruba
 func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
 	var (
-		out string
-		items []Interface
-		err error
+		out   string
+		items map[string]Interface
+		err   error
 	)
+
 	switch client.OSType {
 	case "ArubaSwitch":
 		out, err = client.RunCommand([]string{"show interfaces ethernet all"})
@@ -124,44 +125,45 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		log.Warnf("Interfaces parsing not available for %s\n", client.OSType)
 		return nil
 	}
+
 	items, err = c.Parse(client.OSType, out)
 	if err != nil {
 		log.Warnf("Parse interfaces failed for %s: %s\n", labelValues[0], err.Error())
 		return nil
 	}
 
-	for _, item := range items {
-		l := append(labelValues, item.Name, item.Description, item.MacAddress)
+	for intName, intData := range items {
+		l := append(labelValues, intName, intData.Description, intData.MacAddress)
 
 		errorStatus := 0
-		if item.AdminStatus != item.OperStatus {
+		if intData.AdminStatus != intData.OperStatus {
 			errorStatus = 1
 		}
 		adminStatus := 0
-		if item.AdminStatus == "up" {
+		if intData.AdminStatus == "up" {
 			adminStatus = 1
 		}
 		operStatus := 0
-		if item.OperStatus == "up" {
+		if intData.OperStatus == "up" {
 			operStatus = 1
 		}
-		ch <- prometheus.MustNewConstMetric(rxBytesDesc, prometheus.CounterValue, item.RxBytes, l...)
-		ch <- prometheus.MustNewConstMetric(rxPacketsDesc, prometheus.CounterValue, item.RxPackets, l...)
-		ch <- prometheus.MustNewConstMetric(rxErrorsDesc, prometheus.CounterValue, item.RxErrors, l...)
-		ch <- prometheus.MustNewConstMetric(rxDropsDesc, prometheus.CounterValue, item.RxDrops, l...)
-		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.CounterValue, item.RxUnicast, l...)
-		ch <- prometheus.MustNewConstMetric(rxBcastDesc, prometheus.CounterValue, item.RxBcast, l...)
-		ch <- prometheus.MustNewConstMetric(rxMcastDesc, prometheus.CounterValue, item.RxMcast, l...)
-		ch <- prometheus.MustNewConstMetric(rxBandMcastDesc, prometheus.CounterValue, item.RxBandMcast, l...)
+		ch <- prometheus.MustNewConstMetric(rxBytesDesc, prometheus.CounterValue, intData.RxBytes, l...)
+		ch <- prometheus.MustNewConstMetric(rxPacketsDesc, prometheus.CounterValue, intData.RxPackets, l...)
+		ch <- prometheus.MustNewConstMetric(rxErrorsDesc, prometheus.CounterValue, intData.RxErrors, l...)
+		ch <- prometheus.MustNewConstMetric(rxDropsDesc, prometheus.CounterValue, intData.RxDrops, l...)
+		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.CounterValue, intData.RxUnicast, l...)
+		ch <- prometheus.MustNewConstMetric(rxBcastDesc, prometheus.CounterValue, intData.RxBcast, l...)
+		ch <- prometheus.MustNewConstMetric(rxMcastDesc, prometheus.CounterValue, intData.RxMcast, l...)
+		ch <- prometheus.MustNewConstMetric(rxBandMcastDesc, prometheus.CounterValue, intData.RxBandMcast, l...)
 
-		ch <- prometheus.MustNewConstMetric(txBytesDesc, prometheus.CounterValue, item.TxBytes, l...)
-		ch <- prometheus.MustNewConstMetric(txPacketsDesc, prometheus.CounterValue, item.TxPackets, l...)
-		ch <- prometheus.MustNewConstMetric(txErrorsDesc, prometheus.CounterValue, item.TxErrors, l...)
-		ch <- prometheus.MustNewConstMetric(txDropsDesc, prometheus.CounterValue, item.TxDrops, l...)
-		ch <- prometheus.MustNewConstMetric(txUnicastDesc, prometheus.CounterValue, item.TxUnicast, l...)
-		ch <- prometheus.MustNewConstMetric(txBcastDesc, prometheus.CounterValue, item.TxBcast, l...)
-		ch <- prometheus.MustNewConstMetric(txMcastDesc, prometheus.CounterValue, item.TxMcast, l...)
-		ch <- prometheus.MustNewConstMetric(txBandMcastDesc, prometheus.CounterValue, item.TxBandMcast, l...)
+		ch <- prometheus.MustNewConstMetric(txBytesDesc, prometheus.CounterValue, intData.TxBytes, l...)
+		ch <- prometheus.MustNewConstMetric(txPacketsDesc, prometheus.CounterValue, intData.TxPackets, l...)
+		ch <- prometheus.MustNewConstMetric(txErrorsDesc, prometheus.CounterValue, intData.TxErrors, l...)
+		ch <- prometheus.MustNewConstMetric(txDropsDesc, prometheus.CounterValue, intData.TxDrops, l...)
+		ch <- prometheus.MustNewConstMetric(txUnicastDesc, prometheus.CounterValue, intData.TxUnicast, l...)
+		ch <- prometheus.MustNewConstMetric(txBcastDesc, prometheus.CounterValue, intData.TxBcast, l...)
+		ch <- prometheus.MustNewConstMetric(txMcastDesc, prometheus.CounterValue, intData.TxMcast, l...)
+		ch <- prometheus.MustNewConstMetric(txBandMcastDesc, prometheus.CounterValue, intData.TxBandMcast, l...)
 
 		ch <- prometheus.MustNewConstMetric(adminStatusDesc, prometheus.GaugeValue, float64(adminStatus), l...)
 		ch <- prometheus.MustNewConstMetric(operStatusDesc, prometheus.GaugeValue, float64(operStatus), l...)

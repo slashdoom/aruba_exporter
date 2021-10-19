@@ -11,12 +11,12 @@ import (
 const prefix string = "aruba_system_"
 
 var (
-	versionDesc        *prometheus.Desc
-	memoryTotalDesc    *prometheus.Desc
-	memoryUsedDesc     *prometheus.Desc
-	memoryFreeDesc     *prometheus.Desc
-	cpuUsedDesc        *prometheus.Desc
-	cpuIdleDesc        *prometheus.Desc
+	versionDesc     *prometheus.Desc
+	memoryTotalDesc *prometheus.Desc
+	memoryUsedDesc  *prometheus.Desc
+	memoryFreeDesc  *prometheus.Desc
+	cpuUsedDesc     *prometheus.Desc
+	cpuIdleDesc     *prometheus.Desc
 )
 
 func init() {
@@ -47,9 +47,11 @@ func (*systemCollector) Name() string {
 // Describe describes the metrics
 func (*systemCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- versionDesc
+
 	ch <- memoryTotalDesc
 	ch <- memoryUsedDesc
 	ch <- memoryFreeDesc
+
 	ch <- cpuUsedDesc
 	ch <- cpuIdleDesc
 }

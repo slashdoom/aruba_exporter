@@ -1,7 +1,6 @@
 package interfaces
 
 type Interface struct {
-	Name        string
 	MacAddress  string
 	Description string
 	Speed       string

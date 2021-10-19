@@ -7,11 +7,12 @@ import (
 
 	"github.com/yankiwi/aruba_exporter/rpc"
 	"github.com/yankiwi/aruba_exporter/util"
-	
+
 	"github.com/prometheus/common/log"
 )
+
 // Parse parses cli output and tries to find interfaces with related stats
-func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, error) {
+func (c *interfaceCollector) Parse(ostype string, output string) (map[string]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
 	switch ostype {
 	case rpc.ArubaSwitch:
@@ -24,8 +25,8 @@ func (c *interfaceCollector) Parse(ostype string, output string) ([]Interface, e
 }
 
 // Parse parses ArubaSwitch cli output and tries to find interfaces with related stats
-func (c *interfaceCollector) ParseArubaSwitch(ostype string, output string) ([]Interface, error) {
-	items := []Interface{}
+func (c *interfaceCollector) ParseArubaSwitch(ostype string, output string) (map[string]Interface, error) {
+	interfaces := make(map[string]Interface)
 	newIfRegexp := regexp.MustCompile(`^\s+Status and Counters - Port Counters for (?:trunk|port) ((?:Trk)?\d+\/?\d*)\s*$`)
 	descRegexp := regexp.MustCompile(`^\s+Name\s+:\s+(.*?)\s*$`)
 	macRegexp := regexp.MustCompile(`^\s+MAC Address\s+:\s+(.*?)\s*$`)
@@ -39,118 +40,123 @@ func (c *interfaceCollector) ParseArubaSwitch(ostype string, output string) ([]I
 	RxErrorsRegexp := regexp.MustCompile(`\s+Total Rx Errors\s+:\s+(.*?)\s+Deferred Tx\s+:\s+(.*?)\s*$`)
 	TxLateCollnRegexp := regexp.MustCompile(`\s+Runts Rx\s+:\s+(.*?)\s+Late Colln Tx\s+:\s+(.*?)\s*$`)
 	TxExcessCollnRegexp := regexp.MustCompile(`\s+Giants Rx\s+:\s+(.*?)\s+Excessive Colln\s+:\s+(.*?)\s*$`)
-	
-	current := Interface{}
+
+	currentInt := Interface{}
+	currentName := ""
+
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
 		if matches := newIfRegexp.FindStringSubmatch(line); matches != nil {
-			if current != (Interface{}) {
-				items = append(items, current)
+			if currentInt != (Interface{}) {
+				interfaces[currentName] = currentInt
 			}
-			current = Interface{
-				Name: matches[1],
+			log.Debugln(matches[1])
+			currentName = matches[1]
+			currentInt = Interface{
 				Description: "",
-				MacAddress: "",
-				OperStatus: "down",
+				MacAddress:  "",
+				OperStatus:  "down",
 				AdminStatus: "down",
-				RxBytes: 0,
-				TxBytes: 0,
-				RxPackets: 0,
-				TxPackets: 0,
-				RxUnicast: 0,
-				TxUnicast: 0,
-				RxBcast: 0,
-				TxBcast: 0,
-				RxMcast: 0,
-				TxMcast: 0,
+				RxBytes:     0,
+				TxBytes:     0,
+				RxPackets:   0,
+				TxPackets:   0,
+				RxUnicast:   0,
+				TxUnicast:   0,
+				RxBcast:     0,
+				TxBcast:     0,
+				RxMcast:     0,
+				TxMcast:     0,
 				RxBandMcast: 0,
 				TxBandMcast: 0,
-				RxDrops: 0,
-				TxDrops: 0,
-				RxErrors: 0,
-				TxErrors: 0,
+				RxDrops:     0,
+				TxDrops:     0,
+				RxErrors:    0,
+				TxErrors:    0,
 			}
 			continue
 		}
 
 		if matches := descRegexp.FindStringSubmatch(line); matches != nil {
-			current.Description = matches[1]
+			currentInt.Description = matches[1]
 			continue
 		}
 
 		if matches := macRegexp.FindStringSubmatch(line); matches != nil {
-			current.MacAddress = util.StandardizeMacAddr(matches[1])
+			currentInt.MacAddress = util.StandardizeMacAddr(matches[1])
 			continue
 		}
 
 		if matches := linkStatusRegexp.FindStringSubmatch(line); matches != nil {
 			if strings.ToLower(matches[1]) == "up" {
-				current.OperStatus = "up"
+				currentInt.OperStatus = "up"
 			}
 			continue
 		}
 
 		if matches := portEnabledRegexp.FindStringSubmatch(line); matches != nil {
 			if strings.ToLower(matches[1]) == "yes" {
-				current.AdminStatus = "up"
+				currentInt.AdminStatus = "up"
 			}
 			continue
 		}
 
 		if matches := bytesRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxBytes += util.Str2float64(matches[1])
-			current.TxBytes += util.Str2float64(matches[2])
+			currentInt.RxBytes += util.Str2float64(matches[1])
+			currentInt.TxBytes += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := unicastRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxUnicast += util.Str2float64(matches[1])
-			current.RxPackets += util.Str2float64(matches[1])
-			current.TxUnicast += util.Str2float64(matches[2])
-			current.TxPackets += util.Str2float64(matches[2])
+			currentInt.RxUnicast += util.Str2float64(matches[1])
+			currentInt.RxPackets += util.Str2float64(matches[1])
+			currentInt.TxUnicast += util.Str2float64(matches[2])
+			currentInt.TxPackets += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := BandMcastRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxBandMcast += util.Str2float64(matches[1])
-			current.RxPackets += util.Str2float64(matches[1])
-			current.TxBandMcast += util.Str2float64(matches[2])
-			current.TxPackets += util.Str2float64(matches[2])
+			currentInt.RxBandMcast += util.Str2float64(matches[1])
+			currentInt.RxPackets += util.Str2float64(matches[1])
+			currentInt.TxBandMcast += util.Str2float64(matches[2])
+			currentInt.TxPackets += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := RxDropsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxDrops += util.Str2float64(matches[1])
+			currentInt.RxDrops += util.Str2float64(matches[1])
 			continue
 		}
 
 		if matches := TxDropsRegexp.FindStringSubmatch(line); matches != nil {
-			current.TxDrops += util.Str2float64(matches[2])
+			currentInt.TxDrops += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := RxErrorsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxErrors += util.Str2float64(matches[1])
+			currentInt.RxErrors += util.Str2float64(matches[1])
 			continue
 		}
 
 		if matches := TxLateCollnRegexp.FindStringSubmatch(line); matches != nil {
-			current.TxErrors += util.Str2float64(matches[2])
+			currentInt.TxErrors += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := TxExcessCollnRegexp.FindStringSubmatch(line); matches != nil {
-			current.TxErrors += util.Str2float64(matches[2])
+			currentInt.TxErrors += util.Str2float64(matches[2])
 			continue
 		}
 
 	}
-	return append(items, current), nil
+	interfaces[currentName] = currentInt
+
+	return interfaces, nil
 }
 
 // Parse parses ArubaCXSwitch cli output and tries to find interfaces with related stats
-func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([]Interface, error) {
-	items := []Interface{}
+func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) (map[string]Interface, error) {
+	interfaces := make(map[string]Interface)
 	newIfRegexp := regexp.MustCompile(`^(?:Interface|Aggregate) ((?:vlan|lag)?\d+\/?\d*\/?\d*) is (up|down)`)
 	descRegexp := regexp.MustCompile(`^\s+Description:\s+(.*?)\s*$`)
 	macRegexp := regexp.MustCompile(`^(?:\s+Hardware: Ethernet,)?\s+MAC Address\s*:\s+(.*?)\s*$`)
@@ -164,115 +170,119 @@ func (c *interfaceCollector) ParseArubaCXSwitch(ostype string, output string) ([
 	l3bytesRegexp := regexp.MustCompile(`\s+L3 Bytes\s+(\d+)\s+(\d+)\s+(\d+)`)
 	dropsRegexp := regexp.MustCompile(`\s+Dropped\s+(\d+)\s+(\d+)\s+(\d+)`)
 	errorsRegexp := regexp.MustCompile(`\s+Errors\s+(\d+)\s+(\d+)\s+(\d+)`)
-	
-	current := Interface{}
+
+	currentInt := Interface{}
+	currentName := ""
+
 	lines := strings.Split(output, "\n")
 	for _, line := range lines {
 		if matches := newIfRegexp.FindStringSubmatch(line); matches != nil {
-			if current != (Interface{}) {
-				items = append(items, current)
+			if currentInt != (Interface{}) {
+				interfaces[currentName] = currentInt
 			}
 			log.Infoln(matches[1])
-			current = Interface{
-				Name: matches[1],
+			currentName = matches[1]
+			currentInt = Interface{
 				Description: "",
-				MacAddress: "",
-				OperStatus: "down",
+				MacAddress:  "",
+				OperStatus:  "down",
 				AdminStatus: "down",
-				RxBytes: 0,
-				TxBytes: 0,
-				RxPackets: 0,
-				TxPackets: 0,
-				RxUnicast: 0,
-				TxUnicast: 0,
-				RxBcast: 0,
-				TxBcast: 0,
-				RxMcast: 0,
-				TxMcast: 0,
+				RxBytes:     0,
+				TxBytes:     0,
+				RxPackets:   0,
+				TxPackets:   0,
+				RxUnicast:   0,
+				TxUnicast:   0,
+				RxBcast:     0,
+				TxBcast:     0,
+				RxMcast:     0,
+				TxMcast:     0,
 				RxBandMcast: 0,
 				TxBandMcast: 0,
-				RxDrops: 0,
-				TxDrops: 0,
-				RxErrors: 0,
-				TxErrors: 0,
+				RxDrops:     0,
+				TxDrops:     0,
+				RxErrors:    0,
+				TxErrors:    0,
 			}
 			if strings.ToLower(matches[2]) == "up" {
-				current.OperStatus = "up"
+				currentInt.OperStatus = "up"
 			}
 			continue
 		}
 
 		if matches := adminStateRegexp.FindStringSubmatch(line); matches != nil {
 			if strings.ToLower(matches[1]) == "yes" {
-				current.AdminStatus = "up"
+				currentInt.AdminStatus = "up"
 			}
 			continue
 		}
 
 		if matches := descRegexp.FindStringSubmatch(line); matches != nil {
-			current.Description = matches[1]
+			currentInt.Description = matches[1]
 			continue
 		}
 
 		if matches := macRegexp.FindStringSubmatch(line); matches != nil {
-			current.MacAddress = util.StandardizeMacAddr(matches[1])
+			currentInt.MacAddress = util.StandardizeMacAddr(matches[1])
 			continue
 		}
 
 		if matches := packetsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxPackets += util.Str2float64(matches[1])
-			current.TxPackets += util.Str2float64(matches[2])
+			currentInt.RxPackets += util.Str2float64(matches[1])
+			currentInt.TxPackets += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := l3packetsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxPackets += util.Str2float64(matches[1])
-			current.TxPackets += util.Str2float64(matches[2])
+			currentInt.RxPackets += util.Str2float64(matches[1])
+			currentInt.TxPackets += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := unicastRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxUnicast += util.Str2float64(matches[1])
-			current.TxUnicast += util.Str2float64(matches[2])
+			currentInt.RxUnicast += util.Str2float64(matches[1])
+			currentInt.TxUnicast += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := McastRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxMcast += util.Str2float64(matches[1])
-			current.TxMcast += util.Str2float64(matches[2])
+			currentInt.RxMcast += util.Str2float64(matches[1])
+			currentInt.TxMcast += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := BcastRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxBcast += util.Str2float64(matches[1])
-			current.TxBcast += util.Str2float64(matches[2])
+			currentInt.RxBcast += util.Str2float64(matches[1])
+			currentInt.TxBcast += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := bytesRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxBytes += util.Str2float64(matches[1])
-			current.TxBytes += util.Str2float64(matches[2])
+			currentInt.RxBytes += util.Str2float64(matches[1])
+			currentInt.TxBytes += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := l3bytesRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxBytes += util.Str2float64(matches[1])
-			current.TxBytes += util.Str2float64(matches[2])
+			currentInt.RxBytes += util.Str2float64(matches[1])
+			currentInt.TxBytes += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := dropsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxDrops += util.Str2float64(matches[1])
-			current.TxDrops += util.Str2float64(matches[2])
+			currentInt.RxDrops += util.Str2float64(matches[1])
+			currentInt.TxDrops += util.Str2float64(matches[2])
 			continue
 		}
 
 		if matches := errorsRegexp.FindStringSubmatch(line); matches != nil {
-			current.RxErrors += util.Str2float64(matches[1])
-			current.TxErrors += util.Str2float64(matches[1])
+			currentInt.RxErrors += util.Str2float64(matches[1])
+			currentInt.TxErrors += util.Str2float64(matches[1])
 			continue
 		}
 
 	}
-	return append(items, current), nil
+	interfaces[currentName] = currentInt
+
+	return interfaces, nil
 }
