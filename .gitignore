@@ -14,6 +14,13 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# Local config
+config.yaml
+
+# Build directory
+build/
+
 # Other
 tmp/
 dist/
+

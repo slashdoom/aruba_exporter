@@ -13,10 +13,10 @@ import (
 
 	"github.com/yankiwi/aruba_exporter/config"
 	"github.com/yankiwi/aruba_exporter/connector"
-	
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	
+
 	"github.com/prometheus/common/log"
 )
 
@@ -27,9 +27,9 @@ var (
 	listenAddress      = flag.String("web.listen-address", ":9909", "Address on which to expose metrics and web interface.")
 	metricsPath        = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
 	sshHosts           = flag.String("ssh.targets", "", "Hosts to scrape")
-	sshUsername        = flag.String("ssh.user", "aruba_exporter", "Username to use when connecting to junos devices using ssh")
-	sshKeyFile         = flag.String("ssh.keyfile", "", "Public key file to use when connecting to junos devices using ssh")
-	sshPassword        = flag.String("ssh.password", "", "Password to use when connecting to junos devices using ssh")
+	sshUsername        = flag.String("ssh.user", "aruba_exporter", "Username to use when connecting to devices using ssh")
+	sshKeyFile         = flag.String("ssh.keyfile", "", "Public key file to use when connecting to devices using ssh")
+	sshPassword        = flag.String("ssh.password", "", "Password to use when connecting to devices using ssh")
 	sshTimeout         = flag.Int("ssh.timeout", 5, "Timeout to use for SSH connection")
 	sshBatchSize       = flag.Int("ssh.batch-size", 10000, "The SSH response batch size")
 	level              = flag.String("level", "info", "Set logging verbose level")
@@ -37,7 +37,7 @@ var (
 	devices            []*connector.Device
 	cfg                *config.Config
 	logger             = log.Base()
-)	
+)
 
 func init() {
 	flag.Usage = func() {
@@ -59,7 +59,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not initialize exporter. %v", err)
 	}
-	
+
 	startServer()
 
 }

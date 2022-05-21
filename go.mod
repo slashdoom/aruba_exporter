@@ -3,6 +3,7 @@ module github.com/yankiwi/aruba_exporter
 go 1.16
 
 require (
+	github.com/githubnemo/CompileDaemon v1.4.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.11.0 // indirect
 	github.com/prometheus/common v0.26.0 // indirect
