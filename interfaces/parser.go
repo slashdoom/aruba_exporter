@@ -15,12 +15,127 @@ import (
 func (c *interfaceCollector) Parse(ostype string, output string) (map[string]Interface, error) {
 	log.Debugf("OS: %s\n", ostype)
 	switch ostype {
+	case rpc.ArubaInstant:
+		return c.ParseArubaInstant(output)
 	case rpc.ArubaSwitch: 
 		return c.ParseArubaSwitch(output)
 	case rpc.ArubaCXSwitch:
 		return c.ParseArubaCXSwitch(output)
 	default:
 		return nil, errors.New("'show interface' is not implemented for " + ostype)
+	}
+}
+
+// Parse parses ArubaInstant cli output and tries to find interfaces with related stats
+func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interface, error) {
+	interfaces := make(map[string]Interface)
+
+	newIfRegexp := regexp.MustCompile(`(eth\d+) is (up|down), line protocol is (up|down)`)
+	macRegexp := regexp.MustCompile(`^Hardware is.*, address is (.*?)\s*$`)
+	RxPacketsRegexp := regexp.MustCompile(`^Received packets\s+(\d+)\s*$`)
+	RxBytesRegexp := regexp.MustCompile(`^Received bytes\s+(\d+)\s*$`)
+	RxDropsRegexp := regexp.MustCompile(`^Receive dropped\s+(\d+)\s*$`)
+	RxErrorsRegexp := regexp.MustCompile(`Receive errors\s+(\d+)\s*$`)
+	TxPacketsRegexp := regexp.MustCompile(`^Transmitted packets\s+(\d+)\s*$`)
+	TxBytesRegexp := regexp.MustCompile(`^Transmitted bytes\s+(\d+)\s*$`)
+	TxDropsRegexp := regexp.MustCompile(`^Transmitted dropped\s+(\d+)\s*$`)
+	TxErrorsRegexp := regexp.MustCompile(`Transmitted errors\s+(\d+)\s*$`)
+
+	currentInt := Interface{}
+	currentName := ""
+
+	lines := strings.Split(output, "\n")
+	for _, line := range lines {
+		if matches := newIfRegexp.FindStringSubmatch(line); matches != nil {
+			if currentInt != (Interface{}) {
+				interfaces[currentName] = currentInt
+			}
+			log.Debugf("interface: %+v", matches[1])
+			currentName = matches[1]
+			currentInt = Interface{
+				Description: "",
+				MacAddress:  "",
+				OperStatus:  "down",
+				AdminStatus: "down",
+				RxBytes:     0,
+				TxBytes:     0,
+				RxPackets:   0,
+				TxPackets:   0,
+				RxUnicast:   0,
+				TxUnicast:   0,
+				RxBcast:     0,
+				TxBcast:     0,
+				RxMcast:     0,
+				TxMcast:     0,
+				RxDrops:     0,
+				TxDrops:     0,
+				RxErrors:    0,
+				TxErrors:    0,
+			}
+			log.Debugf("AdminStatus: %+v", matches[2])
+			if strings.ToLower(matches[1]) == "yes" {
+				currentInt.AdminStatus = "up"
+			}
+			log.Debugf("OperStatus: %+v", matches[3])
+			if strings.ToLower(matches[2]) == "up" {
+				currentInt.OperStatus = "up"
+			}
+			continue
+		}
+
+		if matches := macRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("MacAddress: %+v", matches[1])
+			currentInt.MacAddress = util.StandardizeMacAddr(matches[1])
+			continue
+		}
+
+		if matches := RxPacketsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxPackets: %+v", matches[1])
+			currentInt.RxPackets = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := RxBytesRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxBytes: %+v", matches[1])
+			currentInt.RxBytes = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := RxDropsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxDrops: %+v", matches[1])
+			currentInt.RxDrops = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := RxErrorsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxErrors: %+v", matches[1])
+			currentInt.RxErrors = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxPacketsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxPackets: %+v", matches[1])
+			currentInt.TxPackets = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxBytesRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxBytes: %+v", matches[1])
+			currentInt.TxBytes = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxDropsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxDrops: %+v", matches[1])
+			currentInt.TxDrops = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxErrorsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxErrors: %+v", matches[1])
+			currentInt.TxErrors = util.Str2float64(matches[1])
+			continue
+		}
 	}
 }
 
@@ -245,7 +360,7 @@ func (c *interfaceCollector) ParseArubaCXSwitch(output string) (map[string]Inter
 			if currentInt != (Interface{}) {
 				interfaces[currentName] = currentInt
 			}
-			log.Debugf("pass 1 interface: %+v", matches[1])
+			log.Debugf("interface: %+v", matches[1])
 			currentName = matches[1]
 			currentInt = Interface{
 				Description: "",
