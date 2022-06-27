@@ -12,7 +12,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/config"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh"
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 // SSHConnection encapsulates the connection to the device
@@ -105,9 +105,9 @@ func (c *SSHConnection) Connect() error {
 	c.BlindSend([]string{"", ""})
 	output, err = c.RunCommand([]string{""})
 	output, err = c.RunCommand([]string{"no page"})
-	log.Debugln(output, err)
+	log.Traceln(output, err)
 	output, err = c.RunCommand([]string{"no paging"})
-	log.Debugln(output, err)
+	log.Traceln(output, err)
 	output, err = c.RunCommand([]string{""})
 
 	return nil
@@ -117,7 +117,7 @@ func (c *SSHConnection) Connect() error {
 func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 	buf := bufio.NewReader(c.stdout)
 	for i := 0; i < len(cmds); i++ {
-		log.Infof("Running command on %s: %s\n", c.Host, cmds[i])
+		log.Debugf("Running command on %s: %s\n", c.Host, cmds[i])
 		io.WriteString(c.stdin, fmt.Sprintf("%s", cmds[i])+"\n")
 	}
 
@@ -136,10 +136,10 @@ func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 // BlindSend sends commands to a device and doesn't wait for output
 func (c *SSHConnection) BlindSend(cmds []string) {
 	for i := 0; i < len(cmds); i++ {
-		log.Infof("Blind sending command on %s: %s\n", c.Host, cmds[i])
+		log.Debugf("Blind sending command on %s: %s\n", c.Host, cmds[i])
 		io.WriteString(c.stdin, fmt.Sprintf("%s", cmds[i])+"\n")
 	}
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 }
 
 // Close closes connection

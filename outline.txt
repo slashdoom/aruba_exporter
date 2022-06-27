@@ -1,0 +1,48 @@
+main.go/main()
+|
+ - main.go/initialize()
+   |
+    - main.go/loadConfig()
+      |
+       - main.go/loadConfigFromFlags()
+         |
+          - config/config.go/DevicesFromTargets()
+       OR
+       - config/config.go/Load()
+    - devices.go/devicesForConfig()
+      |
+       - config/config.go/deviceFromDeviceConfig()
+         |
+          - config/config.go/authForDevice()
+            |
+             - config/config.go/authForKeyFile()
+             OR
+             - config/config.go/AuthByPassword()
+|
+ - main.go/startServer()
+   |
+    - route /
+      |
+       - output about
+    - route metric
+      |
+       - main.go/handleMetricsRequest()
+         |
+          - aruba_collector.go/newArubaCollector()
+            |
+             - collectors.go/collectorsForDevices()
+               |
+                - collectors.go/initCollectorsForDevice()
+                  |
+                   - config/config.go/FeaturesForDevice()
+                     |
+                      - config/config.go/findDeviceConfig()
+                  |
+                   - collectors.go/addCollectorIfEnabledForDevice()
+                     |
+                      - [feature]/[feature]_collector.go/NewCollector()
+                        - Name()
+                        - Describe()
+                        - Collect()
+                        |
+                         - [feature]/[feature]_collector.go/init()

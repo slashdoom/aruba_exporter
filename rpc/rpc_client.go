@@ -6,7 +6,7 @@ import (
 
 	"github.com/yankiwi/aruba_exporter/connector"
 	
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 const (

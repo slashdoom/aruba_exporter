@@ -5,7 +5,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/rpc"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 const prefix string = "aruba_interface_"
@@ -18,7 +18,6 @@ var (
 	rxUnicastDesc   *prometheus.Desc
 	rxBcastDesc     *prometheus.Desc
 	rxMcastDesc     *prometheus.Desc
-	rxBandMcastDesc *prometheus.Desc
 
 	txBytesDesc     *prometheus.Desc
 	txPacketsDesc   *prometheus.Desc
@@ -27,7 +26,6 @@ var (
 	txUnicastDesc   *prometheus.Desc
 	txBcastDesc     *prometheus.Desc
 	txMcastDesc     *prometheus.Desc
-	txBandMcastDesc *prometheus.Desc
 
 	adminStatusDesc *prometheus.Desc
 	operStatusDesc  *prometheus.Desc
@@ -44,7 +42,6 @@ func init() {
 	rxUnicastDesc = prometheus.NewDesc(prefix+"rx_unicast", "Received unicast packets", l, nil)
 	rxBcastDesc = prometheus.NewDesc(prefix+"rx_broadcast", "Received broadcast packets", l, nil)
 	rxMcastDesc = prometheus.NewDesc(prefix+"rx_multicast", "Received multicast packets", l, nil)
-	rxBandMcastDesc = prometheus.NewDesc(prefix+"rx_broadcast_and_multicast", "Received number of combined broadcast and multicast packets", l, nil)
 
 	txBytesDesc = prometheus.NewDesc(prefix+"tx_bytes", "Transmitted data in bytes", l, nil)
 	txPacketsDesc = prometheus.NewDesc(prefix+"tx_packets", "Number of outgoing packets", l, nil)
@@ -53,7 +50,6 @@ func init() {
 	txUnicastDesc = prometheus.NewDesc(prefix+"tx_unicast", "Transmitted unicast packets", l, nil)
 	txBcastDesc = prometheus.NewDesc(prefix+"tx_broadcast", "Transmitted broadcast packets", l, nil)
 	txMcastDesc = prometheus.NewDesc(prefix+"tx_multicast", "Transmitted multicast packets", l, nil)
-	txBandMcastDesc = prometheus.NewDesc(prefix+"tx_broadcast_and_multicast", "Transmitted number of combined broadcast and multicast packets", l, nil)
 
 	adminStatusDesc = prometheus.NewDesc(prefix+"admin_up", "Admin operational status", l, nil)
 	operStatusDesc = prometheus.NewDesc(prefix+"up", "Interface operational status", l, nil)
@@ -82,7 +78,6 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- rxUnicastDesc
 	ch <- rxBcastDesc
 	ch <- rxMcastDesc
-	ch <- rxBandMcastDesc
 
 	ch <- txBytesDesc
 	ch <- txPacketsDesc
@@ -91,7 +86,6 @@ func (*interfaceCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- txUnicastDesc
 	ch <- txBcastDesc
 	ch <- txMcastDesc
-	ch <- txBandMcastDesc
 
 	ch <- adminStatusDesc
 	ch <- operStatusDesc
@@ -108,7 +102,7 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 
 	switch client.OSType {
 	case "ArubaSwitch":
-		out, err = client.RunCommand([]string{"show interfaces ethernet all"})
+		out, err = client.RunCommand([]string{"show interfaces ethernet all","display interface"})
 		if err != nil {
 			return err
 		}
@@ -154,7 +148,6 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		ch <- prometheus.MustNewConstMetric(rxUnicastDesc, prometheus.CounterValue, intData.RxUnicast, l...)
 		ch <- prometheus.MustNewConstMetric(rxBcastDesc, prometheus.CounterValue, intData.RxBcast, l...)
 		ch <- prometheus.MustNewConstMetric(rxMcastDesc, prometheus.CounterValue, intData.RxMcast, l...)
-		ch <- prometheus.MustNewConstMetric(rxBandMcastDesc, prometheus.CounterValue, intData.RxBandMcast, l...)
 
 		ch <- prometheus.MustNewConstMetric(txBytesDesc, prometheus.CounterValue, intData.TxBytes, l...)
 		ch <- prometheus.MustNewConstMetric(txPacketsDesc, prometheus.CounterValue, intData.TxPackets, l...)
@@ -163,7 +156,6 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		ch <- prometheus.MustNewConstMetric(txUnicastDesc, prometheus.CounterValue, intData.TxUnicast, l...)
 		ch <- prometheus.MustNewConstMetric(txBcastDesc, prometheus.CounterValue, intData.TxBcast, l...)
 		ch <- prometheus.MustNewConstMetric(txMcastDesc, prometheus.CounterValue, intData.TxMcast, l...)
-		ch <- prometheus.MustNewConstMetric(txBandMcastDesc, prometheus.CounterValue, intData.TxBandMcast, l...)
 
 		ch <- prometheus.MustNewConstMetric(adminStatusDesc, prometheus.GaugeValue, float64(adminStatus), l...)
 		ch <- prometheus.MustNewConstMetric(operStatusDesc, prometheus.GaugeValue, float64(operStatus), l...)

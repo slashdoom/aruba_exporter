@@ -10,7 +10,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/rpc"
 	"github.com/yankiwi/aruba_exporter/util"
 	
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 // ParseVersion parses cli output and tries to find the version number of the running OS

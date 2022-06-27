@@ -8,7 +8,7 @@ import (
 	"github.com/yankiwi/aruba_exporter/rpc"
 	
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 const prefix = "aruba_"

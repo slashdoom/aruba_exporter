@@ -17,7 +17,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 const version string = "0.0.1"
@@ -36,7 +36,6 @@ var (
 	configFile         = flag.String("config.file", "", "Path to config file")
 	devices            []*connector.Device
 	cfg                *config.Config
-	logger             = log.Base()
 )
 
 func init() {
@@ -69,7 +68,10 @@ func initialize() error {
 	if err != nil {
 		return err
 	}
-	logger.SetLevel(c.Level)
+	l, err := log.ParseLevel(c.Level)
+	if err == nil {
+		log.SetLevel(l)
+	}
 
 	devices, err = devicesForConfig(c)
 	if err != nil {
@@ -88,13 +90,17 @@ func printVersion() {
 }
 
 func loadConfig() (*config.Config, error) {
-	logger.SetLevel(*level)
+	l, err := log.ParseLevel(*level)
+	if err == nil {
+		log.SetLevel(l)
+	}
+
 	if len(*configFile) == 0 {
-		logger.Infoln("Loading config flags")
+		log.Infoln("Loading config flags")
 		return loadConfigFromFlags(), nil
 	}
 
-	logger.Infoln("Loading config from", *configFile)
+	log.Infoln("Loading config from", *configFile)
 	b, err := ioutil.ReadFile(*configFile)
 	if err != nil {
 		return nil, err
@@ -151,6 +157,6 @@ func handleMetricsRequest(w http.ResponseWriter, r *http.Request) {
 	reg.MustRegister(a)
 
 	promhttp.HandlerFor(reg, promhttp.HandlerOpts{
-		ErrorLog:      log.NewErrorLogger(),
+		ErrorLog:      log.New(),
 		ErrorHandling: promhttp.ContinueOnError}).ServeHTTP(w, r)
 }

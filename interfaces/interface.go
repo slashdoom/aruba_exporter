@@ -28,7 +28,4 @@ type Interface struct {
 
 	RxMcast float64
 	TxMcast float64
-
-	RxBandMcast float64
-	TxBandMcast float64
 }
