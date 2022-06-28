@@ -101,18 +101,18 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 	)
 
 	switch client.OSType {
+	case "ArubaInstant":
+		out, err = client.RunCommand([]string{"show interface counters"})
+		if err != nil {
+			return err
+		}
 	case "ArubaSwitch":
 		out, err = client.RunCommand([]string{"show interfaces ethernet all","display interface"})
 		if err != nil {
 			return err
 		}
-	case "ArubaCXSwitch":
-		out, err = client.RunCommand([]string{"show interface"})
-		if err != nil {
-			return err
-		}
 	default:
-		out, err = client.RunCommand([]string{"show interfaces"})
+		out, err = client.RunCommand([]string{"show interface"})
 		if err != nil {
 			return err
 		}

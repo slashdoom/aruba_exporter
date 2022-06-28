@@ -137,6 +137,9 @@ func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interf
 			continue
 		}
 	}
+	interfaces[currentName] = currentInt
+
+	return interfaces, nil
 }
 
 // Parse parses ArubaSwitch cli output and tries to find interfaces with related stats

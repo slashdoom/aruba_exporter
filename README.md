@@ -31,7 +31,7 @@ Name     | Description | SwitchOS SSH | SwitchOS API | OS-CX SSH | OS-CX API | I
 ---------|-------------|--------------|--------------|-----------|-----------|---------------|---------------|----------------|----------------|
 system | System metrics (version, CPU (% used/idle), memory (total/used/free)) | X | - | X | - | X | - | X | - |
 environment | Environment metrics (temperatures, state of power supply) | - | - | - | - | - | - | - | - |
-interfaces | Interfaces metrics (transmitted/received: bytes/errors/drops, admin/oper state) | X | - | X | - | - | - | - | - |
+interfaces | Interfaces metrics (transmitted/received: bytes/errors/drops, admin/oper state) | X | - | X | - | X | - | - | - |
 optics | Optical signals metrics (tx/rx) | - | - | - | - | - | - | - | - |
 routes | Router metrics (total, static, dynamic, connected) | - | - | - | - | N/A | N/A | - | - |
 wifi | Wi-Fi metrics (clients, aps, wlans) | N/A | N/A | N/A | N/A | - | - | - | - |
