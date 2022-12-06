@@ -394,7 +394,7 @@ func (c *interfaceCollector) ParseArubaCXSwitch(output string) (map[string]Inter
 
 		if matches := adminStateRegexp.FindStringSubmatch(line); matches != nil {
 			log.Debugf("AdminStatus: %+v", matches[1])
-			if strings.ToLower(matches[1]) == "yes" {
+			if strings.ToLower(matches[1]) == "up" {
 				currentInt.AdminStatus = "up"
 			}
 			continue
