@@ -127,24 +127,18 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 	for intName, intData := range items {
 		l := append(labelValues, intName, intData.Description, intData.MacAddress)
 
-		log.Infof("interface %s admin status: %s\n", intName, intData.AdminStatus)
-		log.Infof("interface %s oper status: %s\n", intName, intData.OperStatus)
-
 		errorStatus := 0
 		if intData.AdminStatus != intData.OperStatus {
 			errorStatus = 1
 		}
-		log.Infof("interface %s error status: %s\n", intName, errorStatus)
 		adminStatus := 0
 		if intData.AdminStatus == "up" {
 			adminStatus = 1
 		}
-		log.Infof("interface %s admin status: %s\n", intName, adminStatus)
 		operStatus := 0
 		if intData.OperStatus == "up" {
 			operStatus = 1
 		}
-		log.Infof("interface %s oper status: %s\n", intName, operStatus)
 
 		ch <- prometheus.MustNewConstMetric(rxBytesDesc, prometheus.CounterValue, intData.RxBytes, l...)
 		ch <- prometheus.MustNewConstMetric(rxPacketsDesc, prometheus.CounterValue, intData.RxPackets, l...)
