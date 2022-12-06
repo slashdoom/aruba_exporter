@@ -116,8 +116,6 @@ func (c *interfaceCollector) Collect(client *rpc.Client, ch chan<- prometheus.Me
 		if err != nil {
 			return err
 		}
-		log.Warnf("Interfaces parsing not available for %s\n", client.OSType)
-		return nil
 	}
 
 	items, err = c.Parse(client.OSType, out)
