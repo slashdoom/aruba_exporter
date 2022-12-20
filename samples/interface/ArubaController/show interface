@@ -1,0 +1,18 @@
+GE 0/0/0 is up, line protocol is up
+Hardware is Gigabit Ethernet, address is 20:4C:03:81:F0:4A (bia 20:4C:03:81:F0:4A)
+Description: TEST Interface
+Encapsulation ARPA, loopback not set
+Configured: Duplex ( AUTO ), speed ( AUTO )
+Negotiated: Duplex (Full), speed (1000 Mbps)
+MTU 1500 bytes, BW is 1000 Mbit
+Last clearing of "show interface" counters 3 day 3 hr 39 min 48 sec
+link status last changed 3 day 3 hr 37 min 24 sec
+    28351787 packets input, 31902670287 bytes
+    Received 0 broadcasts, 0 runts, 0 giants, 0 throttles
+    0 input error bytes, 0 CRC, 0 frame
+    0 multicast, 28351787 unicast
+    9109102 packets output, 2349587587 bytes
+    0 output errors bytes, 0 deferred
+    0 collisions, 0 late collisions, 0 throttles
+This port is TRUSTED
+The L3 Port type is WAN
