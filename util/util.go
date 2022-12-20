@@ -17,6 +17,7 @@ func Str2float64(s string) float64 {
 	return value
 }
 
+// StandardizeMacAddr converts MAC address into IEEE 802 format (e.g. 01-23-45-67-89-AB)
 func StandardizeMacAddr(s string) string {
 	r := regexp.MustCompile(`([0-9A-Fa-f]{2})[\.\-:]?([0-9A-Fa-f]{2})[\.\-:]?([0-9A-Fa-f]{2})[\.\-:]?([0-9A-Fa-f]{2})[\.\-:]?([0-9A-Fa-f]{2})[\.\-:]?([0-9A-Fa-f]{2})`)
 	if matches := r.FindStringSubmatch(s); matches != nil {

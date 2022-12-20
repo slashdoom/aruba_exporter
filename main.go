@@ -85,7 +85,7 @@ func initialize() error {
 func printVersion() {
 	fmt.Println("aruba_exporter")
 	fmt.Printf("Version: %s\n", version)
-	fmt.Println("Author(s): Patrick Ryon")
+	fmt.Println("Author(s): slashdoom (Patrick Ryon)")
 	fmt.Println("Metric exporter for Aruba switches, controllers and instant APs")
 }
 
@@ -139,7 +139,7 @@ func startServer() {
     <h1>Aruba Exporter</h1>
     <p><a href="` + *metricsPath + `">Metrics</a></p>
     <h2>More information:</h2>
-    <p><a href="https://github.com/yankiwi/aruba_exporter">github.com/yankiwi/aruba_exporter</a></p>
+    <p><a href="https://github.com/slashdoom/aruba_exporter">github.com/slashdoom/aruba_exporter</a></p>
   </body>
 </html>
 `))

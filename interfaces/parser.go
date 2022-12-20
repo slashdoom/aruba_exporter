@@ -142,6 +142,118 @@ func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interf
 	return interfaces, nil
 }
 
+// Parses ArubaController cli output and tries to find interfaces with related stats
+func (c *interfaceCollector) ParseArubaController(output string) (map[string]Interface, error) {
+	interfaces := make(map[string]Interface)
+
+	newIfRegexp := regexp.MustCompile(`^GE (\d+\/\d+\/\d+) is (up|down), line protocol is (up|down)`)
+	macRegexp := regexp.MustCompile(`^Hardware is.*, address is (.*?) \(bia (.*?)\)\s*$`)
+	RxPacketsAndBytesRegexp := regexp.MustCompile(`^\s+(\d+)\spackets\sinput,\s(\d+) bytes\s*$`)
+	RxBcastRegexp := regexp.MustCompile(`^\s+Received\s(\d+)\sbroadcasts,\s\d+\srunts,\s\d+\sgiants,\s\d+\sthrottles\s*$`)
+	RxDropsRegexp := regexp.MustCompile(`^Receive dropped\s+(\d+)\s*$`)
+	RxErrorsRegexp := regexp.MustCompile(`Receive errors\s+(\d+)\s*$`)
+	TxPacketsRegexp := regexp.MustCompile(`^Transmitted packets\s+(\d+)\s*$`)
+	TxBytesRegexp := regexp.MustCompile(`^Transmitted bytes\s+(\d+)\s*$`)
+	TxDropsRegexp := regexp.MustCompile(`^Transmitted dropped\s+(\d+)\s*$`)
+	TxErrorsRegexp := regexp.MustCompile(`Transmitted errors\s+(\d+)\s*$`)
+
+	currentInt := Interface{}
+	currentName := ""
+
+	lines := strings.Split(output, "\n")
+	for _, line := range lines {
+		if matches := newIfRegexp.FindStringSubmatch(line); matches != nil {
+			if currentInt != (Interface{}) {
+				interfaces[currentName] = currentInt
+			}
+			log.Debugf("interface: %+v", matches[1])
+			currentName = matches[1]
+			currentInt = Interface{
+				Description: "",
+				MacAddress:  "",
+				OperStatus:  "down",
+				AdminStatus: "down",
+				RxBytes:     0,
+				TxBytes:     0,
+				RxPackets:   0,
+				TxPackets:   0,
+				RxUnicast:   0,
+				TxUnicast:   0,
+				RxBcast:     0,
+				TxBcast:     0,
+				RxMcast:     0,
+				TxMcast:     0,
+				RxDrops:     0,
+				TxDrops:     0,
+				RxErrors:    0,
+				TxErrors:    0,
+			}
+			log.Debugf("AdminStatus: %+v", matches[2])
+			if strings.ToLower(matches[1]) == "yes" {
+				currentInt.AdminStatus = "up"
+			}
+			log.Debugf("OperStatus: %+v", matches[3])
+			if strings.ToLower(matches[2]) == "up" {
+				currentInt.OperStatus = "up"
+			}
+			continue
+		}
+
+		if matches := macRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("MacAddress: %+v", matches[1])
+			currentInt.MacAddress = util.StandardizeMacAddr(matches[1])
+			continue
+		}
+
+		if matches := RxPacketsAndBytesRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxPackets: %+v", matches[1])
+			currentInt.RxPackets = util.Str2float64(matches[1])
+			log.Debugf("RxBytes: %+v", matches[2])
+			currentInt.RxBytes = util.Str2float64(matches[2])
+			continue
+		}
+
+		if matches := RxBcastRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxBcast: %+v", matches[1])
+			currentInt.RxDrops = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := RxErrorsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("RxErrors: %+v", matches[1])
+			currentInt.RxErrors = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxPacketsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxPackets: %+v", matches[1])
+			currentInt.TxPackets = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxBytesRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxBytes: %+v", matches[1])
+			currentInt.TxBytes = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxDropsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxDrops: %+v", matches[1])
+			currentInt.TxDrops = util.Str2float64(matches[1])
+			continue
+		}
+
+		if matches := TxErrorsRegexp.FindStringSubmatch(line); matches != nil {
+			log.Debugf("TxErrors: %+v", matches[1])
+			currentInt.TxErrors = util.Str2float64(matches[1])
+			continue
+		}
+	}
+	interfaces[currentName] = currentInt
+
+	return interfaces, nil
+}
+
 // Parse parses ArubaSwitch cli output and tries to find interfaces with related stats
 func (c *interfaceCollector) ParseArubaSwitch(output string) (map[string]Interface, error) {
 	interfaces := make(map[string]Interface)
