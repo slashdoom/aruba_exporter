@@ -113,12 +113,13 @@ func (c *SSHConnection) Connect() error {
 	return nil
 }
 
-// RunCommand runs a command against the device
+// RunCommand runs a command or commands against the device
 func (c *SSHConnection) RunCommand(cmds []string) (string, error) {
 	buf := bufio.NewReader(c.stdout)
 	for i := 0; i < len(cmds); i++ {
 		log.Debugf("Running command on %s: %s\n", c.Host, cmds[i])
 		io.WriteString(c.stdin, fmt.Sprintf("%s", cmds[i])+"\n")
+		time.Sleep(1 * time.Second)
 	}
 
 	outputChan := make(chan result)

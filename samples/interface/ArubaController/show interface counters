@@ -1,0 +1,9 @@
+Port          InOctets     InUcastPkts     InMcastPkts     InBcastPkts
+GE0/0/0     31917887647        28395617               0               0
+GE0/0/1      4490923054         9755357               0               0
+GE0/0/2      7673986608         6797824               0               0
+
+Port         OutOctets    OutUcastPkts    OutMcastPkts    OutBcastPkts
+GE0/0/0      2360616709         9154150               0               0
+GE0/0/1     31855077953        27878251               0               0
+GE0/0/2      9491860110         8645116               0               0

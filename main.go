@@ -39,6 +39,7 @@ var (
 )
 
 func init() {
+	log.SetOutput(os.Stdout)
 	flag.Usage = func() {
 		fmt.Println("Usage: aruba_exporter [ ... ]\n\nParameters:")
 		fmt.Println()

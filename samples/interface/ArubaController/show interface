@@ -1,6 +1,6 @@
 GE 0/0/0 is up, line protocol is up
 Hardware is Gigabit Ethernet, address is 20:4C:03:81:F0:4A (bia 20:4C:03:81:F0:4A)
-Description: TEST Interface
+Description: Test Interface
 Encapsulation ARPA, loopback not set
 Configured: Duplex ( AUTO ), speed ( AUTO )
 Negotiated: Duplex (Full), speed (1000 Mbps)

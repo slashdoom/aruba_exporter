@@ -1,0 +1,17 @@
+Aruba Operating System Software.
+ArubaOS (MODEL: Aruba9004), Version 8.7.0.0-2.3.0.7
+Website: http://www.arubanetworks.com
+(c) Copyright 2022 Hewlett Packard Enterprise Development LP.
+Compiled on 2022-04-29 at 21:26:39 UTC (build 83952) by p4build
+
+BIOS Version: INSYDE Corp., 9004.0020
+Built: 01/21/2022
+
+Switch uptime is 4 days 2 hours 55 minutes 37 seconds
+Reboot Cause: AC Power Cycle (Intent:cause: 86:50)
+Supervisor Card
+Processor(s):
+Total CPUs :       4,    Sockets : 1,    Cores Per CPU :  4
+        Socket 0: Intel(R) Atom(TM) CPU C3508 @ 1.60GHz
+7573M bytes of memory
+15028M bytes of Supervisor Card system flash.

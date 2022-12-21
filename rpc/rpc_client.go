@@ -57,7 +57,7 @@ func (c *Client) Identify() error {
 	return nil
 }
 
-// RunCommand runs a command on a Aruba device
+// RunCommand runs a command or commands on Aruba devices
 func (c *Client) RunCommand(cmds []string) (string, error) {
 
 	output, err := c.conn.RunCommand(cmds)

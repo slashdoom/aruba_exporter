@@ -52,7 +52,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		memoryRegexp, _ := regexp.Compile(`^.*Memory \(Kb\): total:\s*(\d+), used:\s*(\d+), free:\s*(\d+)\s*$`)
 		
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matches := memoryRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
@@ -78,7 +78,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			usedMem SystemValue
 		)
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			freeMatches := freeMemRegexp.FindStringSubmatch(line)
 			availMatches := availMemRegexp.FindStringSubmatch(line)
@@ -122,7 +122,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 			usedMem SystemValue
 		)
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			totalMatches := totalMemRegexp.FindStringSubmatch(line)
 			usedMatches := usedMemRegexp.FindStringSubmatch(line)
 
@@ -157,7 +157,7 @@ func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMem
 		swapRegexp, _ := regexp.Compile(`^MiB Swap\s*:\s*(\d+\.\d+) total,\s*(\d+\.\d+) free,\s*(\d+\.\d+) used.\s*(\d+\.\d+) avail Mem\s*$`)
 
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matchesMem := memoryRegexp.FindStringSubmatch(line)
 			matchesSwap := swapRegexp.FindStringSubmatch(line)
 			if matchesMem == nil && matchesSwap == nil {
@@ -203,7 +203,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		cpuRegexp, _ := regexp.Compile(`^.*user\s*(\d+\.?\d*)%, system\s*(\d+\.?\d*)%, idle\s*(\d+\.?\d*)%.*$`)
 
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
@@ -222,7 +222,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		cpuRegexp, _ := regexp.Compile(`^\s*(.+): user\s*(\d+)% nice\s*(\d+)% system\s*(\d+)% idle\s*(\d+)% io\s*(\d+)% irq\s*(\d+)% softirq\s*(\d+)%.*$`)                      
 
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
@@ -241,7 +241,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		cpuRegexp, _ := regexp.Compile(`^(\d+) percent busy, from \d+ sec ago$`)
 
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
@@ -260,7 +260,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 		cpuRegexp, _ := regexp.Compile(`^CPU Util \(%\)\s*:\s*(\d+)\s*$`)
 
 		for _, line := range lines {
-			log.Debugf("line: %s\n", line)
+			log.Tracef("line: %s\n", line)
 			matches := cpuRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue

@@ -2,7 +2,7 @@ Interface 1/1/1 is up
  Admin state is up
  Link state: up for 3 days (since Fri Dec 16 23:30:36 UTC 2022)
  Link transitions: 1
- Description: TEST Interface
+ Description: Test Interface
  Persona:
  Hardware: Ethernet, MAC Address: 38:10:f0:38:b2:3f
  MTU 1500

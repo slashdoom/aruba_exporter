@@ -36,14 +36,14 @@ optics | Optical signals metrics (tx/rx) | - | - | - | - |
 routes | Router metrics (total, static, dynamic, connected) | - | - | N/A | - |
 wifi | Wi-Fi metrics (clients, aps, wlans) | N/A | N/A | - | - |
 
-## Install
+# Install
 ```bash
 go get -u github.com/yankiwi/aruba_exporter
 ```
 
-## Usage
+# Usage
 
-### Binary
+## Binary
 ```bash
 ./aruba_exporter -ssh.targets="host1.example.com,host2.example.com:2233,172.16.0.1" -ssh.keyfile=aruba_exporter
 
@@ -84,13 +84,13 @@ features:
   wifi: true
 ```
 
-## Third Party Components
+# Third Party Components
 This software uses components of the following projects
 * Prometheus Go client library (https://github.com/prometheus/client_golang)
 * Logrus Logging library (https://github.com/sirupsen/logrus)
 
-## License
-(c) Patrick Ryon, 2021. Licensed under [MIT](LICENSE) license.
+# License
+(c) slashdoom (Patrick Ryon), 2022. Licensed under [MIT](LICENSE) license.
 
-## Prometheus
+# Prometheus
 see https://prometheus.io/
