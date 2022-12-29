@@ -22,7 +22,7 @@
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": 4,
-    "iteration": 1672277932095,
+    "iteration": 1672351747836,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -77,8 +77,8 @@
         "links": [],
         "maxDataPoints": 100,
         "options": {
-          "colorMode": "background",
-          "graphMode": "none",
+          "colorMode": "value",
+          "graphMode": "area",
           "justifyMode": "auto",
           "orientation": "horizontal",
           "reduceOptions": {
@@ -95,7 +95,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "aruba_interface_up{name=~\"$int_name\"}",
+            "expr": "aruba_interface_up{target=~\"$device_name\",name=~\"$int_name\"}",
             "format": "time_series",
             "instant": false,
             "interval": "",
@@ -202,7 +202,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_bytes{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_bytes{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -212,7 +212,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_bytes{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_bytes{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx",
@@ -272,8 +272,8 @@
         "links": [],
         "maxDataPoints": 100,
         "options": {
-          "colorMode": "background",
-          "graphMode": "none",
+          "colorMode": "value",
+          "graphMode": "area",
           "justifyMode": "auto",
           "orientation": "horizontal",
           "reduceOptions": {
@@ -290,7 +290,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_errors{name=~\"$int_name\"}[$__rate_interval])+rate(aruba_interface_rx_errors{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_errors{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])+rate(aruba_interface_rx_errors{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "instant": false,
             "interval": "5m",
@@ -396,7 +396,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_packets{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_packets{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -406,7 +406,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_packets{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_packets{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx",
@@ -467,8 +467,8 @@
         "links": [],
         "maxDataPoints": 100,
         "options": {
-          "colorMode": "background",
-          "graphMode": "none",
+          "colorMode": "value",
+          "graphMode": "area",
           "justifyMode": "auto",
           "orientation": "horizontal",
           "reduceOptions": {
@@ -485,7 +485,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_drops{name=~\"$int_name\"}[$__rate_interval])+rate(aruba_interface_rx_drops{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_drops{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])+rate(aruba_interface_rx_drops{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "instant": false,
             "interval": "5m",
@@ -592,7 +592,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_unicast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_unicast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -602,7 +602,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_unicast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_unicast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx Ucast",
@@ -611,7 +611,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_broadcast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_broadcast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -621,7 +621,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_broadcast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_broadcast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx Bcast",
@@ -630,7 +630,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_multicast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_multicast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -640,7 +640,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_multicast{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_multicast{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx Mcast",
@@ -746,7 +746,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_errors{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_errors{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -756,7 +756,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_errors{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_errors{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx Errors",
@@ -765,7 +765,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_tx_drops{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_tx_drops{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "format": "time_series",
             "hide": false,
             "interval": "5m",
@@ -775,7 +775,7 @@
           {
             "datasource": "Prometheus",
             "exemplar": true,
-            "expr": "rate(aruba_interface_rx_drops{name=~\"$int_name\"}[$__rate_interval])",
+            "expr": "rate(aruba_interface_rx_drops{target=~\"$device_name\",name=~\"$int_name\"}[$__rate_interval])",
             "hide": false,
             "interval": "5m",
             "legendFormat": "{{name}} - Rx Drops",
@@ -822,7 +822,7 @@
         },
         {
           "current": {
-            "selected": false,
+            "selected": true,
             "text": [
               "0/0/0"
             ],
@@ -854,7 +854,7 @@
       ]
     },
     "time": {
-      "from": "now-24h",
+      "from": "now-3h",
       "to": "now"
     },
     "timepicker": {
@@ -874,6 +874,6 @@
     "timezone": "",
     "title": "Aruba Interface",
     "uid": "3lbwI0tVz",
-    "version": 3,
+    "version": 7,
     "weekStart": ""
   }

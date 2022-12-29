@@ -1,747 +1,749 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
           "type": "dashboard"
-        },
-        "type": "dashboard"
-      }
-    ]
-  },
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1672277880832,
-  "links": [],
-  "liveNow": false,
-  "panels": [
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "displayMode": "auto",
-            "filterable": false
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 1,
-                  "text": "Down"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 0,
-                  "text": "Up"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Status"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "color-text"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Device Name"
-            },
-            "properties": [
-              {
-                "id": "custom.filterable"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Version"
-            },
-            "properties": [
-              {
-                "id": "custom.filterable",
-                "value": false
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 20,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "8.4.7",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": false,
-          "expr": "aruba_system_version{target=~\"$device_name\"}",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "5m",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": "Prometheus",
-          "exemplar": false,
-          "expr": "aruba_up{target=~\"$device_name\"}",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "5m",
-          "legendFormat": "",
-          "refId": "B"
         }
-      ],
-      "title": "Device Type and Version",
-      "transformations": [
-        {
-          "id": "seriesToColumns",
-          "options": {
-            "byField": "target"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Time 1": true,
-              "Time 2": true,
-              "Value": true,
-              "Value #A": true,
-              "Value #B": false,
-              "__name__": true,
-              "__name__ 1": true,
-              "__name__ 2": true,
-              "instance": true,
-              "instance 1": true,
-              "instance 2": true,
-              "job": true,
-              "job 1": true,
-              "job 2": true,
-              "version": false
-            },
-            "indexByName": {},
-            "renameByName": {
-              "Value #B": "Status",
-              "job 1": "",
-              "target": "Device Name",
-              "version": "Version"
-            }
-          }
-        }
-      ],
-      "type": "table"
+      ]
     },
-    {
-      "datasource": "Prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 3
-      },
-      "id": 14,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.4.7",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "aruba_system_cpu_used_percent{target=~\"$device_name\"}",
-          "interval": "5m",
-          "legendFormat": "{{type}} ",
-          "refId": "A"
-        }
-      ],
-      "title": "% CPU Used",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 3
-      },
-      "id": 15,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.4.7",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "(aruba_system_memory_used{target=~\"$device_name\"}/aruba_system_memory_total{target=~\"$device_name\"})*100",
-          "interval": "5m",
-          "legendFormat": "{{type}} ",
-          "refId": "A"
-        }
-      ],
-      "title": "% Memory Used",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "Bps"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Rx"
-            },
-            "properties": [
-              {
-                "id": "custom.transform",
-                "value": "negative-Y"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 10
-      },
-      "id": 10,
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean"
-          ],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.4.7",
-      "repeat": "int_desc",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "sum(rate(aruba_interface_tx_bytes{target=~\"$device_name\"}[$__rate_interval]))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "5m",
-          "legendFormat": "Tx",
-          "refId": "A"
-        },
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "sum(rate(aruba_interface_rx_bytes{target=~\"$device_name\"}[$__rate_interval]))",
-          "hide": false,
-          "interval": "5m",
-          "legendFormat": "Rx",
-          "refId": "B"
-        }
-      ],
-      "title": "Overall Traffic Over Time (in Bytes)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "pps"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Rx"
-            },
-            "properties": [
-              {
-                "id": "custom.transform",
-                "value": "negative-Y"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 10
-      },
-      "id": 16,
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean"
-          ],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.4.7",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "sum(rate(aruba_interface_tx_packets{target=~\"$device_name\"}[$__rate_interval]))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "5m",
-          "legendFormat": "Tx",
-          "refId": "A"
-        },
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "sum(rate(aruba_interface_rx_packets{target=~\"$device_name\"}[$__interval]))",
-          "hide": false,
-          "interval": "5m",
-          "legendFormat": "Rx",
-          "refId": "B"
-        }
-      ],
-      "title": "Overall Traffic Over Time (in Packets)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "links": [
-            {
-              "title": "",
-              "url": "/d/3lbwI0tVz/aruba-interface?orgId=1&var-device_name=${device_name}&var-int_name=${__field.labels.name}&${__url_time_range}"
-            }
-          ],
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Down"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "Up"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 17
-      },
-      "id": 18,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.4.7",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "exemplar": true,
-          "expr": "aruba_interface_up{target=~\"$device_name\"}",
-          "interval": "",
-          "legendFormat": "{{name}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Interface Status",
-      "type": "stat"
-    }
-  ],
-  "refresh": false,
-  "schemaVersion": 35,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": [
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "iteration": 1672356824118,
+    "links": [],
+    "liveNow": false,
+    "panels": [
       {
-        "current": {
-          "selected": false,
-          "text": "192.168.100.1",
-          "value": "192.168.100.1"
-        },
         "datasource": "Prometheus",
-        "definition": "aruba_up",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Device",
-        "multi": false,
-        "name": "device_name",
-        "options": [],
-        "query": {
-          "query": "aruba_up",
-          "refId": "StandardVariableQuery"
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "filterable": false
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "red",
+                    "index": 1,
+                    "text": "Down"
+                  },
+                  "1": {
+                    "color": "green",
+                    "index": 0,
+                    "text": "Up"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "color-text"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Device Name"
+              },
+              "properties": [
+                {
+                  "id": "custom.filterable"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Version"
+              },
+              "properties": [
+                {
+                  "id": "custom.filterable",
+                  "value": false
+                }
+              ]
+            }
+          ]
         },
-        "refresh": 1,
-        "regex": "/.*target=\"([^\"]*).*/",
-        "skipUrlSync": false,
-        "sort": 3,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "gridPos": {
+          "h": 3,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 20,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "8.4.7",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": false,
+            "expr": "aruba_system_version{target=~\"$device_name\"}",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "5m",
+            "intervalFactor": 1,
+            "legendFormat": "",
+            "refId": "A"
+          },
+          {
+            "datasource": "Prometheus",
+            "exemplar": false,
+            "expr": "aruba_up{target=~\"$device_name\"}",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "5m",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "title": "Device Type and Version",
+        "transformations": [
+          {
+            "id": "seriesToColumns",
+            "options": {
+              "byField": "target"
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "Time 1": true,
+                "Time 2": true,
+                "Value": true,
+                "Value #A": true,
+                "Value #B": false,
+                "__name__": true,
+                "__name__ 1": true,
+                "__name__ 2": true,
+                "instance": true,
+                "instance 1": true,
+                "instance 2": true,
+                "job": true,
+                "job 1": true,
+                "job 2": true,
+                "version": false
+              },
+              "indexByName": {},
+              "renameByName": {
+                "Value #B": "Status",
+                "job 1": "",
+                "target": "Device Name",
+                "version": "Version"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "links": [
+              {
+                "title": "",
+                "url": "/d/3lbwI0tVz/aruba-interface?orgId=1&var-device_name=${device_name}&var-int_name=${__field.labels.name}&${__url_time_range}"
+              }
+            ],
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "red",
+                    "index": 1,
+                    "text": "Down"
+                  },
+                  "1": {
+                    "color": "green",
+                    "index": 0,
+                    "text": "Up"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 24,
+          "x": 0,
+          "y": 3
+        },
+        "id": 18,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "8.4.7",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "aruba_interface_up{target=~\"$device_name\"}",
+            "instant": false,
+            "interval": "5m",
+            "legendFormat": "{{name}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Interface Status",
+        "transformations": [],
+        "type": "stat"
+      },
+      {
+        "datasource": "Prometheus",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 14,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.7",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "aruba_system_cpu_used_percent{target=~\"$device_name\"}",
+            "interval": "5m",
+            "legendFormat": "{{type}} ",
+            "refId": "A"
+          }
+        ],
+        "title": "% CPU Used",
+        "type": "timeseries"
+      },
+      {
+        "datasource": "Prometheus",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 15,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.7",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "(aruba_system_memory_used{target=~\"$device_name\"}/aruba_system_memory_total{target=~\"$device_name\"})*100",
+            "interval": "5m",
+            "legendFormat": "{{type}} ",
+            "refId": "A"
+          }
+        ],
+        "title": "% Memory Used",
+        "type": "timeseries"
+      },
+      {
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 2,
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Rx"
+              },
+              "properties": [
+                {
+                  "id": "custom.transform",
+                  "value": "negative-Y"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 15
+        },
+        "id": 10,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.7",
+        "repeat": "int_desc",
+        "repeatDirection": "h",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "sum(rate(aruba_interface_tx_bytes{target=~\"$device_name\"}[$__rate_interval]))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "5m",
+            "legendFormat": "Tx",
+            "refId": "A"
+          },
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "sum(rate(aruba_interface_rx_bytes{target=~\"$device_name\"}[$__rate_interval]))",
+            "hide": false,
+            "interval": "5m",
+            "legendFormat": "Rx",
+            "refId": "B"
+          }
+        ],
+        "title": "Overall Traffic Over Time (in Bytes)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 2,
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "pps"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Rx"
+              },
+              "properties": [
+                {
+                  "id": "custom.transform",
+                  "value": "negative-Y"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 15
+        },
+        "id": 16,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.7",
+        "repeatDirection": "h",
+        "targets": [
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "sum(rate(aruba_interface_tx_packets{target=~\"$device_name\"}[$__rate_interval]))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "5m",
+            "legendFormat": "Tx",
+            "refId": "A"
+          },
+          {
+            "datasource": "Prometheus",
+            "exemplar": true,
+            "expr": "sum(rate(aruba_interface_rx_packets{target=~\"$device_name\"}[$__interval]))",
+            "hide": false,
+            "interval": "5m",
+            "legendFormat": "Rx",
+            "refId": "B"
+          }
+        ],
+        "title": "Overall Traffic Over Time (in Packets)",
+        "type": "timeseries"
       }
-    ]
-  },
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ]
-  },
-  "timezone": "",
-  "title": "Aruba Device",
-  "uid": "cotfzTt4z",
-  "version": 8,
-  "weekStart": ""
-}
+    ],
+    "refresh": false,
+    "schemaVersion": 35,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "192.168.100.1",
+            "value": "192.168.100.1"
+          },
+          "datasource": "Prometheus",
+          "definition": "aruba_up",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Device",
+          "multi": false,
+          "name": "device_name",
+          "options": [],
+          "query": {
+            "query": "aruba_up",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 1,
+          "regex": "/.*target=\"([^\"]*).*/",
+          "skipUrlSync": false,
+          "sort": 3,
+          "tagValuesQuery": "",
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Aruba Device",
+    "uid": "cotfzTt4z",
+    "version": 12,
+    "weekStart": ""
+  }
