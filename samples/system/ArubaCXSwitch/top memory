@@ -1,0 +1,189 @@
+top - 23:48:53 up 13 days, 42 min,  1 user,  load average: 3.81, 2.46, 1.97
+Tasks: 182 total,   1 running, 181 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 64.6 us, 22.9 sy,  0.0 ni, 12.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   3425.2 total,    819.2 free,   1365.2 used,   1240.8 buff/cache
+MiB Swap:   1024.0 total,   1024.0 free,      0.0 used.   1622.4 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 8040 root      20   0 1101916 563276  23552 S   0.0  16.1  47:39.05 /usr/bin/hpe-restd
+ 2204 root      20   0  777824 137284  22264 S   0.0   3.9 822:44.40 /usr/bin/switchd_agent -s 1 -p 1943 -m 1
+ 2641 root      20   0  101628  74680   5860 S   0.0   2.1   1:16.57 /usr/bin/fault-handlerd --detach --pidf+
+ 2656 root      20   0  122152  53280  28796 S   0.0   1.5  44:25.38 /usr/bin/hpe-routing --detach --pidfile+
+ 3245 admin     20   0   89896  41448  23224 S   0.0   1.2   0:04.45 -vtysh
+  562 root      20   0  261524  41048  21156 S   0.0   1.2 177:20.17 /usr/sbin/ops-switchd --no-chdir --pidf+
+ 2378 root      20   0  147784  39908   9064 S   5.9   1.1 227:59.23 /usr/bin/hpe-pvstd --detach --pidfile -+
+ 2605 root      20   0  885388  34252  10052 S   0.0   1.0  88:40.73 /usr/bin/yang-resolverd -ip-address loc+
+ 3690 root      20   0   38232  30296   3528 S   0.0   0.9  36:29.93 python /usr/bin/ops_mgmtintfcfg --detac+
+ 2397 root      20   0  168948  25956  15064 S   0.0   0.7  25:23.45 /usr/bin/port-accessd --detach --pidfil+
+ 2250 root      20   0  901520  23432   8980 S 105.9   0.7  74:51.17 /usr/bin/hpe-config ckptpostcfg
+ 2596 root      20   0  879496  20752   5400 S   0.0   0.6 394:56.69 /usr/bin/smfd -northbound_uri unix:/var+
+ 2381 root      20   0   58208  17240   8500 S   5.9   0.5  19:34.60 /usr/bin/hpe-mvrpd --detach --pidfile -+
+ 2640 root      20   0   51876  17196  13312 S   0.0   0.5  37:12.61 /usr/bin/captiveportald --pidfile -vSYS+
+ 2718 root      20   0  101560  16636  11512 S   0.0   0.5  96:26.20 /usr/bin/mtmd --detach --pidfile -vSYSL+
+ 2369 root      20   0  343532  16460  11108 S   0.0   0.5 196:41.67 /usr/bin/ndmd --pidfile -vSYSLOG:INFO
+ 2402 root      20   0  143312  16040  12372 S   0.0   0.5 134:33.87 /usr/bin/hpe-udldd --detach --pidfile -+
+  605 root      20   0   92196  15612  11600 S   0.0   0.4 102:44.29 /usr/bin/pspod --detach --pidfile -vSYS+
+ 2628 root      20   0   56740  15432  10612 S   0.0   0.4  22:28.90 /usr/bin/l3-resmgrd --pidfile -vSYSLOG:+
+  525 root      20   0   75880  15356  11540 S   0.0   0.4  18:41.99 /usr/bin/hpe-cardd --detach --pidfile -+
+ 2626 root      20   0   56924  15232  11440 S   0.0   0.4  10:40.59 /usr/bin/ipctd --pidfile -vSYSLOG:INFO
+ 2697 root      20   0   96928  14640  11064 S   5.9   0.4 100:08.34 /usr/bin/hpe-mgmdd --detach --pidfile -+
+ 2587 root      20   0   41832  14604   7848 S   0.0   0.4   5:42.55 /usr/bin/ntp-mgrd --pidfile -vSYSLOG:IN+
+  526 root      20   0   58932  14096   8372 S   0.0   0.4 104:24.37 /usr/bin/hpe-profiled --detach --pidfil+
+  653 root      20   0   66940  13976  10304 S   0.0   0.4   4:17.41 /usr/bin/hpe-mgmtmd --detach --pidfile
+ 2374 root      20   0   66216  13944   9784 S   0.0   0.4  16:50.30 /usr/bin/portd --pidfile -vSYSLOG:INFO
+ 2733 root      20   0   73288  13852  10616 S   0.0   0.4 104:52.67 /usr/bin/hpe-ipsecd --pidfile
+ 2379 root      20   0   75684  13824  10288 S   0.0   0.4  51:02.69 /usr/bin/hpe-mstpd --detach --pidfile -+
+ 2382 root      20   0   37096  13608   9748 S   0.0   0.4  23:29.45 /usr/sbin/lldpd --detach --pidfile -vSY+
+  546 root      20   0   49716  13472   9628 S   0.0   0.4 100:54.77 /usr/bin/dot1x-suppd --pidfile -vSYSLOG+
+ 2366 root      20   0   41864  13472   9872 S   0.0   0.4  20:27.37 /usr/bin/l2mac-mgrd --pidfile -vSYSLOG:+
+ 2386 root      20   0   48952  13372   9836 S   0.0   0.4 160:24.70 /usr/bin/poe-hald --detach --pidfile -v+
+ 2712 root      20   0   54680  13280  10120 S   0.0   0.4 158:37.03 /usr/bin/hpe-repld --detach --pidfile -+
+ 2635 root      20   0   45540  13252   9460 S   0.0   0.4   5:47.03 /usr/bin/rmond --pidfile -vSYSLOG:INFO
+  524 root      20   0   41628  13200   9932 S   0.0   0.4   7:59.52 /usr/bin/certmgr --detach --pidfile -vS+
+ 2627 root      20   0   94908  13148   9360 S   0.0   0.4 216:15.81 /usr/bin/ipsavd --pidfile -vSYSLOG:INFO
+ 2356 root      20   0   74752  13092   9048 S   0.0   0.4  16:00.72 /usr/bin/radius-srv-trkd --pidfile
+  527 root      20   0   40248  13048   9192 S   0.0   0.4   0:56.85 /usr/bin/sysd --detach --pidfile -vSYSL+
+  596 root      20   0   48816  12892   9600 S   0.0   0.4   5:54.94 /usr/bin/tempd --detach --pidfile -vSYS+
+ 2377 root      20   0   71136  12812   9080 S   0.0   0.4   6:00.27 /usr/bin/lacpd --detach --pidfile -vSYS+
+  597 root      20   0   58212  12800   9552 S   0.0   0.4  74:49.55 /usr/bin/pmd --detach --pidfile -vSYSLO+
+ 2682 root      20   0   28132  12788   9300 S   0.0   0.4   1:51.44 /usr/bin/hpe-ledarbd --detach --pidfile
+  595 root      20   0   39596  12704   9416 S   0.0   0.4   2:31.69 /usr/bin/powerd --detach --pidfile
+ 2686 root      20   0   37368  12508   9140 S   0.0   0.4   1:31.36 /usr/bin/hpe-entityd --detach --pidfile+
+  594 root      20   0   39692  12332   9096 S   0.0   0.4   0:34.81 /usr/bin/hhmd --detach --pidfile -vSYSL+
+ 2360 root      20   0   36500  12320   8868 S   0.0   0.4   4:02.54 /usr/bin/cdpd --pidfile -vSYSLOG:INFO
+ 2595 root      20   0   55572  12232   8456 S   0.0   0.3 187:38.25 /usr/bin/smartlinkd --pidfile -vSYSLOG:+
+ 2359 root      20   0  336400  12220   8940 S   0.0   0.3  97:50.34 /usr/bin/arpsecured --pidfile -vSYSLOG:+
+ 2677 root      20   0   54056  12216   8564 S   0.0   0.3   2:07.49 /usr/bin/hpe-relay --detach --pidfile -+
+  519 root      20   0   39244  12116   8524 S   0.0   0.3   7:59.22 /usr/bin/aaautilscfgd --pidfile -vSYSLO+
+ 2602 root      20   0   47228  11960   8288 S   0.0   0.3   5:54.98 /usr/bin/ufdd --pidfile -vSYSLOG:INFO
+  591 root      20   0   38732  11952   8756 S   0.0   0.3   0:00.68 /usr/bin/classifierd --detach --pidfile
+  580 root      20   0   39888  11928   8372 S   0.0   0.3   5:33.67 /usr/bin/dpsed --pidfile -vSYSLOG:INFO
+ 2667 root      20   0   72144  11916   8384 S   0.0   0.3  13:26.80 /usr/bin/hpe-lpd --detach --pidfile -vS+
+ 2383 root      20   0   36668  11908   8344 S   0.0   0.3  10:15.01 /usr/bin/poe-protod --detach --pidfile +
+ 2670 root      20   0   61840  11884   8248 S   0.0   0.3   5:43.03 /usr/bin/hpe-rdiscd --detach --pidfile +
+ 2562 root      20   0   38980  11840   8212 S   0.0   0.3   5:45.45 /usr/bin/fault-monitord --pidfile -vSYS+
+  593 root      20   0   27568  11684   8604 S   0.0   0.3   0:53.19 /usr/bin/ledd --detach --pidfile
+  613 root      20   0   35956  11652   8352 S   0.0   0.3   2:15.55 /usr/bin/vland --detach --pidfile -vSYS+
+ 2687 root      16  -4   38332  11592   8080 S   0.0   0.3   0:23.60 /usr/bin/acctd
+ 2487 root      20   0   36872  11564   7980 S   0.0   0.3   4:47.56 /usr/bin/dhcpclient --pidfile -vSYSLOG:+
+ 2557 root      20   0   39264  11560   7816 S   0.0   0.3   5:06.08 /usr/bin/dcmd --pidfile -vSYSLOG:INFO
+ 2717 root      20   0   38732  11556   8056 S   0.0   0.3   8:16.46 /usr/bin/ssh-utild --pidfile -vSYSLOG:I+
+  588 root      20   0   35712  11412   8248 S   0.0   0.3   2:14.34 /usr/bin/intfd --detach --pidfile -vSYS+
+ 2636 root      20   0   38776  11392   7836 S   0.0   0.3   5:14.70 /usr/bin/snmpd_wrapper --pidfile -vSYSL+
+ 2186 root      20   0   53336  11288   7880 S   0.0   0.3  27:23.21 /usr/bin/hpe-credmgr --detach --pidfile
+ 2582 root      20   0   48328  11160   7396 S   0.0   0.3   5:09.97 /usr/bin/log-mgmtd --pidfile
+ 2678 root      20   0   35960  11148   7800 S   0.0   0.3   1:33.32 /usr/bin/vrfmgrd --detach --pidfile -vS+
+ 2610 root      20   0   37068  11116   7640 S   0.0   0.3   4:45.16 /usr/bin/dhcp-options-arbd --pidfile -v+
+ 2642 root      20   0   44616  10656   7312 S   0.0   0.3  14:41.87 /usr/bin/hpe-snmptrapd --pidfile -vSYSL+
+ 2662 root      20   0   36688  10656   7592 S   0.0   0.3  62:15.84 /usr/bin/hpe-buttond --detach --pidfile+
+ 2580 root      20   0   38840  10616   7096 S   0.0   0.3   4:44.74 /usr/bin/job-mgmtd --pidfile -vSYSLOG:I+
+ 2361 root      20   0   38500  10492   7136 S   0.0   0.3   6:39.98 /usr/bin/ops_appsdnsclient --pidfile -v+
+  510 root      20   0   25692  10384   3556 S   0.0   0.3   4377:53 /usr/sbin/ovsdb-server --config-file=/e+
+ 2660 root      20   0   38576  10352   7576 S   0.0   0.3  13:32.50 /usr/bin/fibapp --detach --pidfile -vSY+
+ 2634 root      20   0   38528  10348   7088 S   0.0   0.3   4:46.78 /usr/bin/rbacd --pidfile -vSYSLOG:INFO
+ 2375 root      20   0   35736  10284   7088 S   0.0   0.3   0:03.31 /usr/bin/tacacs-srv-trkd --detach --pid+
+ 2676 root      20   0   35884  10284   6940 S   0.0   0.3   1:00.13 /usr/bin/external_storage --detach --pi+
+ 2594 root      20   0   48072  10272   6724 S   0.0   0.3   4:55.09 /usr/bin/schedulerd --pidfile -vSYSLOG:+
+ 2671 root      20   0   36072  10236   6872 S   0.0   0.3   7:34.36 /usr/bin/ztpd --detach --pidfile -vSYSL+
+ 2630 root      20   0   46808   9812   6476 S   0.0   0.3   4:44.77 /usr/bin/log-persistd --pidfile -vSYSLO+
+  587 root      20   0   44596   9784   6648 S   0.0   0.3 135:15.69 /usr/bin/hpe-sysmond --detach --pidfile+
+ 2249 root      20   0   36276   9392   6204 S   0.0   0.3   4:39.65 /usr/bin/bannerd --pidfile
+ 2655 root      20   0   35572   9092   5880 S   0.0   0.3   7:42.70 /usr/bin/snmp-alarmd --detach --pidfile
+ 3233 root      20   0   35684   8684   7796 S   0.0   0.2   0:00.53 sshd: admin [priv]
+ 3492 root      20   0   36344   7896   4908 S   0.0   0.2   0:00.33 /usr/bin/mcast-debugd --pidfile -vSYSLO+
+    1 root      20   0   28644   7436   5344 S   0.0   0.2  37:19.73 /sbin/init
+ 3619 root      20   0   34560   7152   6408 S   0.0   0.2   0:13.45 sshd: /usr/sbin/sshd -x -m 5 -o PidFile+
+  130 root      20   0   34028   7116   5584 S   0.0   0.2  87:25.49 /lib/systemd/systemd-journald
+  576 root      20   0   23116   6752   3940 S   0.0   0.2   0:01.15 /usr/bin/platformhwd --pidfile -vSYSLOG+
+ 2601 root      20   0   46216   6176   5404 S   0.0   0.2 111:51.49 /usr/bin/tpmd --detach
+ 3166 admin     20   0    9664   5716   5112 S   0.0   0.2   0:01.13 /lib/systemd/systemd --user
+ 2592 root      20   0  836280   5188   3868 S   0.0   0.1   0:02.96 /usr/bin/redirectord
+ 3831 root      20   0   43560   4844   3688 S   0.0   0.1   0:01.13 nginx: master process /usr/sbin/nginx -+
+  550 root      20   0   39568   4336   3856 S   0.0   0.1   3:36.84 /usr/bin/crash-handler --pidfile
+ 2357 systemd+  20   0    8408   4304   4008 S   0.0   0.1   0:02.88 /lib/systemd/systemd-resolved
+  366 root      20   0    8428   4176   3696 S   0.0   0.1   4:04.83 /lib/systemd/systemd-logind
+  286 root      20   0    9520   3852   3448 S   0.0   0.1  20:24.67 /usr/sbin/jitterentropy-rngd
+ 3729 root      20   0   33068   3776   2496 S   0.0   0.1  25:48.98 /usr/sbin/rsyslogd -n -iNONE
+ 3650 root      20   0    7744   3608   3116 S   0.0   0.1   3:37.68 ntpd -n -c /etc/ntp/ntp_mgrd.conf -k /e+
+ 3243 admin     20   0   35684   3352   2468 S   0.0   0.1   0:00.03 sshd: admin@pts/0
+ 8120 www-data  20   0   43560   3136   1828 S   0.0   0.1   0:01.80 nginx: worker process
+ 8121 www-data  20   0   43560   3136   1828 S   0.0   0.1   0:00.00 nginx: worker process
+  174 root      20   0   13760   2912   2380 S   0.0   0.1   0:04.06 /lib/systemd/systemd-udevd
+  398 message+  20   0    3924   2732   2396 S   0.0   0.1  12:12.86 /usr/bin/dbus-daemon --system --address+
+ 3727 www-data  20   0   33068   2576   1584 S   0.0   0.1   0:00.00 nginx: worker process
+ 3728 www-data  20   0   33068   2576   1584 S   0.0   0.1   2:59.69 nginx: worker process
+ 2237 root      20   0   53536   2440   1692 S   0.0   0.1   0:03.14 /usr/bin/hpe-isp server file current da+
+ 3167 admin     20   0   29944   2376    204 S   0.0   0.1   0:00.00 (sd-pam)
+ 2688 root      16  -4    5944   2308   2004 S   0.0   0.1   0:14.31 /usr/bin/acctsyslogd
+ 3726 root      20   0   32924   2048   1200 S   0.0   0.1   0:00.00 nginx: master process /usr/sbin/nginx -+
+ 2552 root      16  -4   11492   1916   1716 S   0.0   0.1   0:09.85 /sbin/auditd -n
+ 3517 admin     20   0    2936   1844   1508 R  35.3   0.1   0:00.16 /usr/bin/top -b -n 2 -c -o %MEM -w 110 +
+ 2645 root      20   0    3300   1804   1636 S   0.0   0.1   0:04.16 /usr/sbin/tac_plus -C /etc/tacacs/tac_p+
+ 2556 root      20   0    2952   1660   1396 S   0.0   0.0   0:04.28 /usr/sbin/crond -n
+ 2658 root      12  -8   11436   1496   1404 S   0.0   0.0   0:12.80 /sbin/audispd
+  339 root      20   0    3008   1420   1288 S   0.0   0.0   0:00.01 /bin/bash /usr/libexec/watchdog-interru+
+ 2279 root      20   0    1872   1328   1252 S   0.0   0.0   0:00.03 /sbin/agetty -8 -L ttyS0 115200 xterm
+  346 root      20   0    3008    856    708 S   0.0   0.0   0:00.00 /bin/bash /usr/libexec/watchdog-interru+
+ 3516 admin     20   0    2916    612    540 S   0.0   0.0   0:00.00 sh -c /usr/bin/top -b -n 2 -c -o %MEM -+
+  348 root      20   0    1764    392    348 S   0.0   0.0   0:00.00 head -c 4 /dev/uio0
+  349 root      20   0    1744    384    340 S   0.0   0.0   0:00.01 xxd -i
+    2 root      20   0       0      0      0 S   0.0   0.0   0:00.85 [kthreadd]
+    3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [rcu_gp]
+    4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [rcu_par_gp]
+    6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [kworker/0:0H-kblockd]
+    8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [mm_percpu_wq]
+    9 root      20   0       0      0      0 S   0.0   0.0  35:38.34 [ksoftirqd/0]
+   10 root      20   0       0      0      0 I   0.0   0.0  77:35.25 [rcu_sched]
+   11 root      rt   0       0      0      0 S   0.0   0.0   0:38.39 [migration/0]
+   13 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [cpuhp/0]
+   14 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [cpuhp/1]
+   15 root      rt   0       0      0      0 S   0.0   0.0   0:39.24 [migration/1]
+   16 root      20   0       0      0      0 S   0.0   0.0  38:04.41 [ksoftirqd/1]
+   19 root      20   0       0      0      0 S   0.0   0.0   0:00.04 [kdevtmpfs]
+   20 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [netns]
+   21 root      20   0       0      0      0 S   0.0   0.0   0:04.23 [kauditd]
+   22 root      20   0       0      0      0 S   0.0   0.0   0:01.77 [khungtaskd]
+   23 root      20   0       0      0      0 S   0.0   0.0   0:16.28 [oom_reaper]
+   24 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [writeback]
+   25 root      20   0       0      0      0 S   0.0   0.0   0:01.40 [kcompactd0]
+   50 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [kblockd]
+   51 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [blkcg_punt_bio]
+   52 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [tpm_dev_wq]
+   53 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [icmp6_unreachab]
+   54 root      rt   0       0      0      0 S   0.0   0.0   0:00.00 [watchdogd]
+   56 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [rpciod]
+   57 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [kworker/u5:0]
+   58 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [xprtiod]
+   59 root      20   0       0      0      0 S   0.0   0.0   0:05.51 [kswapd0]
+   60 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [nfsiod]
+   62 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [bond0]
+   64 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [sdhci]
+   65 root     -51   0       0      0      0 S   0.0   0.0   0:07.33 [irq/141-mmc0]
+   66 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ipv6_addrconf]
+   76 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [mmc_complete]
+   77 root       0 -20       0      0      0 I   0.0   0.0   6:24.57 [kworker/1:1H-kblockd]
+  100 root      20   0       0      0      0 S   0.0   0.0   0:00.01 [jbd2/mmcblk0p5-]
+  101 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ext4-rsv-conver]
+  104 root       0 -20       0      0      0 S   0.0   0.0  67:42.42 [loop0]
+  158 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [spi0]
+  258 root       0 -20       0      0      0 I   0.0   0.0   6:24.85 [kworker/0:2H-kblockd]
+  272 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [jbd2/mmcblk0p3-]
+  273 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ext4-rsv-conver]
+  274 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [jbd2/mmcblk0p2-]
+  275 root      20   0       0      0      0 S   0.0   0.0   0:05.72 [jbd2/mmcblk0p4-]
+  276 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ext4-rsv-conver]
+  277 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ext4-rsv-conver]
+  282 root      20   0       0      0      0 S   0.0   0.0   0:00.00 [jbd2/mmcblk0p1-]
+  285 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [ext4-rsv-conver]
+ 1413 root      20   0       0      0      0 I   0.0   0.0   0:00.31 [kworker/u4:2-events_unbound]
+ 1820 root      20   0       0      0      0 I   0.0   0.0   0:00.01 [kworker/1:0-events]
+ 2172 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [uas]
+ 2335 root      20   0       0      0      0 I   0.0   0.0   0:00.15 [kworker/u4:0-events_unbound]
+ 2480 root      20   0       0      0      0 I   0.0   0.0   0:00.00 [kworker/0:1-events]
+ 2888 root      20   0       0      0      0 I   0.0   0.0   0:00.00 [kworker/1:2-events]
+ 3502 root      20   0       0      0      0 I   0.0   0.0   0:00.01 [kworker/u4:1-events_unbound]
+13353 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 [kworker/1:0H]
+29893 root      20   0       0      0      0 I   0.0   0.0   0:00.52 [kworker/0:2-events]
+30898 root      20   0       0      0      0 I   0.0   0.0   0:00.40 [kworker/0:3-memcg_kmem_cache]
+31547 root      20   0       0      0      0 I   0.0   0.0   0:00.39 [kworker/1:1-events]
+32493 root      20   0       0      0      0 I   0.0   0.0   0:00.04 [kworker/1:3-events]

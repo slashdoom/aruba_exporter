@@ -4,7 +4,7 @@ Interface 1/1/1 is up
  Link transitions: 1
  Description: Test Interface
  Persona:
- Hardware: Ethernet, MAC Address: 38:10:f0:38:b2:3f
+ Hardware: Ethernet, MAC Address: 12:34:56:78:90:ab
  MTU 1500
  Type 1GbT
  Full-duplex
