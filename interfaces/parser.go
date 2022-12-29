@@ -198,7 +198,7 @@ func (c *interfaceCollector) ParseArubaController(output string) (map[string]Int
 func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interface, error) {
 	interfaces := make(map[string]Interface)
 
-	newIfRegexp := regexp.MustCompile(`^(eth\d+) is (up|down), line protocol is (up|down)`)
+	newIfRegexp := regexp.MustCompile(`^\s*(eth\d+) is (up|down), line protocol is (up|down)\s*$`)
 	macRegexp := regexp.MustCompile(`^Hardware is.*, address is (.*?)\s*$`)
 	RxPacketsRegexp := regexp.MustCompile(`^Received packets\s+(\d+)\s*$`)
 	RxBytesRegexp := regexp.MustCompile(`^Received bytes\s+(\d+)\s*$`)
@@ -242,7 +242,7 @@ func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interf
 				TxErrors:    0,
 			}
 			log.Debugf("AdminStatus: %+v", matches[2])
-			if strings.ToLower(matches[2]) == "yes" {
+			if strings.ToLower(matches[2]) == "up" {
 				currentInt.AdminStatus = "up"
 			}
 			log.Debugf("OperStatus: %+v", matches[3])
