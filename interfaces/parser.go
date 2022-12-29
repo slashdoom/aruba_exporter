@@ -72,8 +72,8 @@ func (c *interfaceCollector) ParseArubaController(output string) (map[string]Int
 				TxBcast:     0,
 				RxMcast:     0,
 				TxMcast:     0,
-				RxDrops:     0,
-				TxDrops:     0,
+				RxDrops:     -1, // not supported
+				TxDrops:     -1, // not supported
 				RxErrors:    0,
 				TxErrors:    0,
 			}
@@ -230,12 +230,12 @@ func (c *interfaceCollector) ParseArubaInstant(output string) (map[string]Interf
 				TxBytes:     0,
 				RxPackets:   0,
 				TxPackets:   0,
-				RxUnicast:   0,
-				TxUnicast:   0,
-				RxBcast:     0,
-				TxBcast:     0,
-				RxMcast:     0,
-				TxMcast:     0,
+				RxUnicast:   -1, // not supported
+				TxUnicast:   -1, // not supported
+				RxBcast:     -1, // not supported
+				TxBcast:     -1, // not supported
+				RxMcast:     -1, // not supported
+				TxMcast:     -1, // not supported
 				RxDrops:     0,
 				TxDrops:     0,
 				RxErrors:    0,
