@@ -1,7 +1,7 @@
 # aruba_exporter
 Prometheus exporter for metrics from Aruba devices including ArubaSwitchOS, ArubaOS-CX, ArubaOS (Instant AP and controllers/gateways).
 
-This exporter is in development.  The goal to get a basic set of metrics working on the four major devices types via SSH then work to also make those metrics pollable via the device APIs.  Additional metrics will also be developed as required or requested.
+This exporter is in development.  The goal to get a basic set of metrics working on the four major devices types via SSH.  Additional metrics will be developed as required or requested.
 
 The basic structure is based on:
 
