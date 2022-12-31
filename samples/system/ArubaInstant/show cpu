@@ -1,0 +1,5 @@
+total: user   4% nice   0% system   4% idle  92% io   0% irq   0% softirq   0%
+  cpu0: user   1% nice   0% system   0% idle  99% io   0% irq   0% softirq   0%
+  cpu1: user  14% nice   0% system   8% idle  78% io   0% irq   0% softirq   0%
+  cpu2: user   0% nice   0% system   8% idle  92% io   0% irq   0% softirq   0%
+  cpu3: user   0% nice   1% system   0% idle  99% io   0% irq   0% softirq   0%

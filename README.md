@@ -5,9 +5,9 @@ This exporter is in development.  The goal to get a basic set of metrics working
 
 The basic structure is based on:
 
-https://github.com/czerwonk/junos_exporter
-...and...
-https://github.com/lwlcom/cisco_exporter
+https://github.com/czerwonk/junos_exporter  
+...and...  
+https://github.com/lwlcom/cisco_exporter  
 
 # Flags
 Name     | Description | Default
@@ -31,14 +31,14 @@ Name     | Description | SwitchOS | OS-CX | InstantAP | Controller |
 ---------|-------------|----------|-------|-----------|------------|
 system | System metrics (version, CPU (% used/idle), memory (total/used/free)) | X | X | X | X |
 environment | Environment metrics (temperatures, state of power supply) | - | - | - | - |
-interfaces | Interfaces metrics (transmitted/received: bytes/errors/drops, admin/oper state) | X | X | X | - |
+interfaces | Interfaces metrics (transmitted/received: bytes/errors/drops, admin/oper state) | X | X | X | X |
 optics | Optical signals metrics (tx/rx) | - | - | - | - |
 routes | Router metrics (total, static, dynamic, connected) | - | - | N/A | - |
 wifi | Wi-Fi metrics (clients, aps, wlans) | N/A | N/A | - | - |
 
 # Install
 ```bash
-go get -u github.com/yankiwi/aruba_exporter
+go get -u github.com/slashdoom/aruba_exporter
 ```
 
 # Usage
