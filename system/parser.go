@@ -200,7 +200,7 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 	lines := strings.Split(output, "\n")
 
 	if ostype == rpc.ArubaController {
-		cpuRegexp, _ := regexp.Compile(`^.*user\s*(\d+\.?\d*)%, system\s*(\d+\.?\d*)%, idle\s*(\d+\.?\d*)%.*$`)
+		cpuRegexp, _ := regexp.Compile(`^\s*\d{2}:\d{2}:\d{2}\s+(.+?)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s*$`)
 
 		for _, line := range lines {
 			log.Tracef("line: %s\n", line)
@@ -208,10 +208,22 @@ func (c *systemCollector) ParseCPU(ostype string, output string) ([]SystemCPU, e
 			if matches == nil {
 				continue
 			}
+			cpuName := matches[1]
+			if (cpuName == "all") {
+				cpuName = "total"
+			}
 			item := SystemCPU{
-				Type: "total",
-				Used: (util.Str2float64(matches[1])+util.Str2float64(matches[2])),
-				Idle: util.Str2float64(matches[3]),
+				Type: cpuName,
+				Used: (util.Str2float64(matches[2])+
+				       util.Str2float64(matches[3])+
+					   util.Str2float64(matches[4])+
+					   util.Str2float64(matches[5])+
+					   util.Str2float64(matches[6])+
+					   util.Str2float64(matches[7])+
+					   util.Str2float64(matches[8])+
+					   util.Str2float64(matches[9])+
+					   util.Str2float64(matches[10])),
+				Idle: util.Str2float64(matches[11]),
 			}
 			log.Debugf("item: %+v\n", item)
 			items = append(items, item)

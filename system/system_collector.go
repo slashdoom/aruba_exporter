@@ -114,6 +114,11 @@ func (c *systemCollector) CollectCPU(client *rpc.Client, ch chan<- prometheus.Me
 		err error
 	)
 	switch client.OSType {
+	case "ArubaController":
+		out, err = client.RunCommand([]string{"show cpuload per-cpu"})
+		if err != nil {
+			return err
+		}
 	case "ArubaCXSwitch":
 		out, err = client.RunCommand([]string{"show system"})
 		if err != nil {
