@@ -54,11 +54,11 @@ func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptim
 	s := "0"
 
 	if ostype == rpc.ArubaController {
-		versionRegexp, _ := regexp.Compile(`^\s*Switch uptime is (.*)`)
+		uptimeRegexp, _ := regexp.Compile(`^\s*Switch uptime is (.*)`)
 
 		for _, line := range lines {
 			log.Tracef("line: %s\n", line)
-			matches := versionRegexp.FindStringSubmatch(line)
+			matches := uptimeRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
 			}
@@ -88,11 +88,11 @@ func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptim
 		return uptime, nil
 	}
 	if ostype == rpc.ArubaInstant {
-		versionRegexp, _ := regexp.Compile(`^\s*AP uptime is (.*)`)
+		uptimeRegexp, _ := regexp.Compile(`^\s*AP uptime is (.*)`)
 
 		for _, line := range lines {
 			log.Tracef("line: %s\n", line)
-			matches := versionRegexp.FindStringSubmatch(line)
+			matches := uptimeRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
 			}
@@ -126,11 +126,11 @@ func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptim
 		return uptime, nil
 	}
 	if ostype == rpc.ArubaSwitch {
-		versionRegexp, _ := regexp.Compile(`^\s*(\d+)\:(\d+)\:(\d+)\:(\d+.?\d+)\s*$`)
+		uptimeRegexp, _ := regexp.Compile(`(\d+)\:(\d+)\:(\d+)\:(\d+.?\d+)`)
 
 		for _, line := range lines {
 			log.Tracef("line: %s\n", line)
-			matches := versionRegexp.FindStringSubmatch(line)
+			matches := uptimeRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
 			}
@@ -149,11 +149,11 @@ func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptim
 		return uptime, nil
 	}
 	if ostype == rpc.ArubaCXSwitch {
-		versionRegexp, _ := regexp.Compile(`^\s*System has been up (.*)`)
+		uptimeRegexp, _ := regexp.Compile(`^\s*System has been up (.*)`)
 
 		for _, line := range lines {
 			log.Tracef("line: %s\n", line)
-			matches := versionRegexp.FindStringSubmatch(line)
+			matches := uptimeRegexp.FindStringSubmatch(line)
 			if matches == nil {
 				continue
 			}
