@@ -135,10 +135,10 @@ func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptim
 				continue
 			}
 			
-			d = matches[2]
-			h = matches[3]
-			m = matches[4]
-			s = matches[5]
+			d = matches[1]
+			h = matches[2]
+			m = matches[3]
+			s = matches[4]
 
 			uptime = SystemUptime{
 				Type:  "system",
