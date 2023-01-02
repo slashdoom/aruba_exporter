@@ -12,6 +12,7 @@ const prefix string = "aruba_system_"
 
 var (
 	versionDesc     *prometheus.Desc
+	uptimeDesc      *prometheus.Desc
 	memoryTotalDesc *prometheus.Desc
 	memoryUsedDesc  *prometheus.Desc
 	memoryFreeDesc  *prometheus.Desc
@@ -22,6 +23,7 @@ var (
 func init() {
 	l := []string{"target"}
 	versionDesc = prometheus.NewDesc(prefix+"version", "Running OS version", append(l, "version"), nil)
+	uptimeDesc = prometheus.NewDesc(prefix+"uptime", "Device uptime in seconds", append(l, "type"), nil)
 
 	memoryTotalDesc = prometheus.NewDesc(prefix+"memory_total", "Total memory", append(l, "type"), nil)
 	memoryUsedDesc = prometheus.NewDesc(prefix+"memory_used", "Used memory", append(l, "type"), nil)
@@ -47,6 +49,7 @@ func (*systemCollector) Name() string {
 // Describe describes the metrics
 func (*systemCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- versionDesc
+	ch <- uptimeDesc
 
 	ch <- memoryTotalDesc
 	ch <- memoryUsedDesc
@@ -68,6 +71,38 @@ func (c *systemCollector) CollectVersion(client *rpc.Client, ch chan<- prometheu
 	}
 	l := append(labelValues, item.Version)
 	ch <- prometheus.MustNewConstMetric(versionDesc, prometheus.GaugeValue, 1, l...)
+	return nil
+}
+
+// CollectUptime collects uptime informations from Aruba Devices
+func (c *systemCollector) CollectUptime(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
+	var (
+		out string
+		err error
+	)
+	switch client.OSType {
+	case "ArubaSwitch":
+		out, err = client.RunCommand([]string{"show uptime"})
+		if err != nil {
+			return err
+		}
+	case "ArubaCXSwitch":
+		out, err = client.RunCommand([]string{"show uptime"})
+		if err != nil {
+			return err
+		}
+	default:
+		out, err = client.RunCommand([]string{"show version"})
+		if err != nil {
+			return err
+		}
+	}
+	item, err := c.ParseUptime(client.OSType, out)
+	if err != nil {
+		return err
+	}
+	l := append(labelValues, item.Type)
+	ch <- prometheus.MustNewConstMetric(uptimeDesc, prometheus.GaugeValue, item.Uptime, l...)
 	return nil
 }
 
@@ -150,6 +185,10 @@ func (c *systemCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metri
 	err := c.CollectVersion(client, ch, labelValues)
 	if err != nil {
 		log.Debugf("CollectVersion for %s: %s\n", labelValues[0], err.Error())
+	}
+	err = c.CollectUptime(client, ch, labelValues)
+	if err != nil {
+		log.Debugf("CollectUptime for %s: %s\n", labelValues[0], err.Error())
 	}
 	err = c.CollectMemory(client, ch, labelValues)
 	if err != nil {

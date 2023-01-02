@@ -1,9 +1,9 @@
 Aruba Operating System Software.
-ArubaOS (MODEL: 515), Version 8.10.0.5 LSR
+ArubaOS (MODEL: 515), Version 8.7.1.6
 Website: http://www.arubanetworks.com
-(c) Copyright 2022 Hewlett Packard Enterprise Development LP.
-Compiled on 2022-11-14 at 17:25:19 PST (build 85552) by jenkins
+(c) Copyright 2021 Hewlett Packard Enterprise Development LP.
+Compiled on 2021-10-07 at 12:46:54 UTC (build 81786) by p4build
 FIPS Mode :disabled
 
-AP uptime is 2 weeks 4 hours 56 minutes 12 seconds
+AP uptime is 58 weeks 2 days 10 hours 52 minutes 3 seconds
 Reboot Time and Cause: AP Reboot reason:  Power-reset

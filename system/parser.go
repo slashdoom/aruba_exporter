@@ -37,6 +37,155 @@ func (c *systemCollector) ParseVersion(ostype string, output string) (SystemVers
 	return SystemVersion{}, errors.New("Version string not found")
 }
 
+// ParseUptime parses cli output and tries to find the uptime of the running OS
+func (c *systemCollector) ParseUptime(ostype string, output string) (SystemUptime, error) {
+	log.Debugf("OS: %s\n", ostype)
+	log.Debugf("output: %s\n", output)
+	uptime := SystemUptime{}
+	if ostype != rpc.ArubaInstant && ostype != rpc.ArubaController && ostype != rpc.ArubaSwitch && ostype != rpc.ArubaCXSwitch {
+		return uptime, errors.New("'show uptime' is not implemented for " + ostype)
+	}
+
+	lines := strings.Split(output, "\n")
+	w := "0"
+	d := "0"
+	h := "0"
+	m := "0"
+	s := "0"
+
+	if ostype == rpc.ArubaController {
+		versionRegexp, _ := regexp.Compile(`^\s*Switch uptime is (.*)`)
+
+		for _, line := range lines {
+			log.Tracef("line: %s\n", line)
+			matches := versionRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			
+			dRegexp, _ := regexp.Compile(`(\d+) day`)
+			dMatch := dRegexp.FindStringSubmatch(matches[1])
+			if dMatch != nil { d = dMatch[1] }
+
+			hRegexp, _ := regexp.Compile(`(\d+) hour`)
+			hMatch := hRegexp.FindStringSubmatch(matches[1])
+			if hMatch != nil { h = hMatch[1]}
+
+			mRegexp, _ := regexp.Compile(`(\d+) minute`)
+			mMatch := mRegexp.FindStringSubmatch(matches[1])
+			if mMatch != nil { m = mMatch[1]}
+
+			sRegexp, _ := regexp.Compile(`(\d+) second`)
+			sMatch := sRegexp.FindStringSubmatch(matches[1])
+			if sMatch != nil { s = sMatch[1]}
+
+			uptime = SystemUptime{
+				Type:  "system",
+				Uptime: util.Uptime2seconds(w, d, h, m, s),
+			}
+			log.Debugf("uptime: %+v\n", uptime)
+		}
+		return uptime, nil
+	}
+	if ostype == rpc.ArubaInstant {
+		versionRegexp, _ := regexp.Compile(`^\s*AP uptime is (.*)`)
+
+		for _, line := range lines {
+			log.Tracef("line: %s\n", line)
+			matches := versionRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			
+			wRegexp, _ := regexp.Compile(`(\d+) week`)
+			wMatch := wRegexp.FindStringSubmatch(matches[1])
+			if wMatch != nil { w = wMatch[1] }
+
+			dRegexp, _ := regexp.Compile(`(\d+) day`)
+			dMatch := dRegexp.FindStringSubmatch(matches[1])
+			if dMatch != nil { d = dMatch[1] }
+
+			hRegexp, _ := regexp.Compile(`(\d+) hour`)
+			hMatch := hRegexp.FindStringSubmatch(matches[1])
+			if hMatch != nil { h = hMatch[1]}
+
+			mRegexp, _ := regexp.Compile(`(\d+) minute`)
+			mMatch := mRegexp.FindStringSubmatch(matches[1])
+			if mMatch != nil { m = mMatch[1]}
+
+			sRegexp, _ := regexp.Compile(`(\d+) second`)
+			sMatch := sRegexp.FindStringSubmatch(matches[1])
+			if sMatch != nil { s = sMatch[1]}
+
+			uptime = SystemUptime{
+				Type:  "system",
+				Uptime: util.Uptime2seconds(w, d, h, m, s),
+			}
+			log.Debugf("uptime: %+v\n", uptime)
+		}
+		return uptime, nil
+	}
+	if ostype == rpc.ArubaSwitch {
+		versionRegexp, _ := regexp.Compile(`^\s*(\d+)\:(\d+)\:(\d+)\:(\d+.?\d+)\s*$`)
+
+		for _, line := range lines {
+			log.Tracef("line: %s\n", line)
+			matches := versionRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			
+			d = matches[2]
+			h = matches[3]
+			m = matches[4]
+			s = matches[5]
+
+			uptime = SystemUptime{
+				Type:  "system",
+				Uptime: util.Uptime2seconds(w, d, h, m, s),
+			}
+			log.Debugf("uptime: %+v\n", uptime)
+		}
+		return uptime, nil
+	}
+	if ostype == rpc.ArubaCXSwitch {
+		versionRegexp, _ := regexp.Compile(`^\s*System has been up (.*)`)
+
+		for _, line := range lines {
+			log.Tracef("line: %s\n", line)
+			matches := versionRegexp.FindStringSubmatch(line)
+			if matches == nil {
+				continue
+			}
+			
+			wRegexp, _ := regexp.Compile(`(\d+) week`)
+			wMatch := wRegexp.FindStringSubmatch(matches[1])
+			if wMatch != nil { w = wMatch[1] }
+
+			dRegexp, _ := regexp.Compile(`(\d+) day`)
+			dMatch := dRegexp.FindStringSubmatch(matches[1])
+			if dMatch != nil { d = dMatch[1] }
+
+			hRegexp, _ := regexp.Compile(`(\d+) hour`)
+			hMatch := hRegexp.FindStringSubmatch(matches[1])
+			if hMatch != nil { h = hMatch[1]}
+
+			mRegexp, _ := regexp.Compile(`(\d+) minute`)
+			mMatch := mRegexp.FindStringSubmatch(matches[1])
+			if mMatch != nil { m = mMatch[1]}
+
+			uptime = SystemUptime{
+				Type:  "system",
+				Uptime: util.Uptime2seconds(w, d, h, m, s),
+			}
+			log.Debugf("uptime: %+v\n", uptime)
+		}
+		return uptime, nil
+	}
+
+	return SystemUptime{}, errors.New("Uptime string not found")
+}
+
 // ParseMemory parses cli output and tries to find current memory usage
 func (c *systemCollector) ParseMemory(ostype string, output string) ([]SystemMemory, error) {
 	log.Debugf("OS: %s\n", ostype)

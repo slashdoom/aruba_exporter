@@ -4,6 +4,11 @@ type SystemVersion struct {
 	Version string
 }
 
+type SystemUptime struct {
+	Type   string
+	Uptime float64
+}
+
 type SystemMemory struct {
 	Type  string
 	Total float64
