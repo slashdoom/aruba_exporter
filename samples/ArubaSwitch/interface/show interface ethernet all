@@ -1,0 +1,24 @@
+ Status and Counters - Port Counters for port 1
+
+  Name  : TEST Interface
+  MAC Address      : 9020c2-4b2b18
+  Link Status      : Up
+  Port Enabled     : Yes
+  Totals (Since boot or last clear) :
+   Bytes Rx        : 935,893,628          Bytes Tx        : 3,407,463,089
+   Unicast Rx      : 8,110,316            Unicast Tx      : 6,796,306
+   Bcast/Mcast Rx  : 532,030              Bcast/Mcast Tx  : 408,703
+  Errors (Since boot or last clear) :
+   FCS Rx          : 0                    Drops Tx        : 0
+   Alignment Rx    : 0                    Collisions Tx   : 0
+   Runts Rx        : 0                    Late Colln Tx   : 0
+   Giants Rx       : 0                    Excessive Colln : 0
+   Total Rx Errors : 0                    Deferred Tx     : 0
+  Others (Since boot or last clear) :
+   Discard Rx      : 0                    Out Queue Len   : 0
+   Unknown Protos  : 0
+  Rates (5 minute weighted average) :
+   Total Rx (bps) : 9,520                 Total Tx (bps) : 6,584
+   Unicast Rx (Pkts/sec) : 3              Unicast Tx (Pkts/sec) : 3
+   B/Mcast Rx (Pkts/sec) : 2              B/Mcast Tx (Pkts/sec) : 1
+   Utilization Rx  :     0 %              Utilization Tx  :     0 %

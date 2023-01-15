@@ -1,0 +1,40 @@
+ 8 current state: UP
+ IP Packet Frame Type: n/a, Hardware Address: 9020c2-4b2b18
+ Description: 8 interface
+ Loopback is n/a
+ Media type is twisted Pair
+ Port hardware type is 100/1000T
+ 1000Mbps-speed mode,  full-duplex mode
+ Link speed type is autonegotiation, link duplex type is autonegotiation
+ Flow-control is not enabled
+ The Maximum Frame Length is 9216
+ Broadcast MAX-ratio: n/a
+ Unicast MAX-ratio: n/a
+ Multicast MAX-ratio:  n/a
+ Jumbo frame: [ see "show jumbos"]
+ PVID : 1
+ Mdi type: MDIX
+ Link delay is n/a
+ Port link-type: n/a
+  Tagged   VLAN ID : 99-102
+  Untagged VLAN ID : 1
+ Port priority: No-override
+ Last clearing of counters: n/a
+ Peak value of input: n/a
+ Peak value of output: n/a
+ Last 300 seconds input:  6 packets/sec 1314 bytes/sec 0%
+ Last 300 seconds output:  3 packets/sec 996 bytes/sec 0%
+ Input (total):  8642925 packets, 935994681 bytes
+         8110742 unicasts, 465076 broadcasts, 67107 multicasts, 0 pauses
+ Input (normal):  8642925 packets, 935994681 bytes
+         8110742 unicasts, 465076 broadcasts, 67107 multicasts, 0 pauses
+ Input:  0 input errors, 0 runts, 0 giants, n/a throttles
+         0 CRC, 0 frame, n/a overruns, n/a aborts
+         n/a ignored, n/a parity errors
+ Output (total):  7205482 packets, 3407554063 bytes
+         6796669 unicasts, 336777 broadcasts, 72036 multicasts, 0 pauses
+ Output (normal):  7205482 packets, 3407554063 bytes
+         6796669 unicasts, 336777 broadcasts, 72036 multicasts, 0 pauses
+ Output: 0 output errors, n/a underruns, n/a buffer failures
+         n/a aborts, 0 deferred, 0 collisions, 0 late collisions
+         n/a lost carrier, n/a no carrier
