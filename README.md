@@ -52,6 +52,19 @@ go get -u github.com/slashdoom/aruba_exporter
 ./aruba_exporter -config.file=config.yml
 ```
 
+## Docker
+Two examples Docker compose are included, one for a 2 step production build/deploy and one for a dev environment with hot reload.  These examples use the golang:bullseye image.
+
+### Production
+```bash
+docker compose up
+```
+
+### Development
+```bash
+docker compose -f dev.docker-compose.yaml up
+```
+
 ## Config file
 The exporter can be configured with a YAML based config file:
 
