@@ -1,7 +1,7 @@
 package collector
 
 import (
-	"github.com/yankiwi/aruba_exporter/rpc"
+	"github.com/slashdoom/aruba_exporter/rpc"
 
 	"github.com/prometheus/client_golang/prometheus"
 )

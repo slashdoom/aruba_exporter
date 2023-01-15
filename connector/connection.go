@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/yankiwi/aruba_exporter/config"
+	"github.com/slashdoom/aruba_exporter/config"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh"
 	log "github.com/sirupsen/logrus"

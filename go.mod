@@ -1,4 +1,4 @@
-module github.com/yankiwi/aruba_exporter
+module github.com/slashdoom/aruba_exporter
 
 go 1.16
 

@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/yankiwi/aruba_exporter/rpc"
-	"github.com/yankiwi/aruba_exporter/util"
+	"github.com/slashdoom/aruba_exporter/rpc"
+	"github.com/slashdoom/aruba_exporter/util"
 
 	log "github.com/sirupsen/logrus"
 )

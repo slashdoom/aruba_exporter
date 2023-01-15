@@ -4,8 +4,8 @@ import (
 	"time"
 	"sync"
 
-	"github.com/yankiwi/aruba_exporter/connector"
-	"github.com/yankiwi/aruba_exporter/rpc"
+	"github.com/slashdoom/aruba_exporter/connector"
+	"github.com/slashdoom/aruba_exporter/rpc"
 	
 	"github.com/prometheus/client_golang/prometheus"
 	log "github.com/sirupsen/logrus"

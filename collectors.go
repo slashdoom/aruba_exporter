@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/yankiwi/aruba_exporter/collector"
-	"github.com/yankiwi/aruba_exporter/config"
-	"github.com/yankiwi/aruba_exporter/connector"
+	"github.com/slashdoom/aruba_exporter/collector"
+	"github.com/slashdoom/aruba_exporter/config"
+	"github.com/slashdoom/aruba_exporter/connector"
 	
-	"github.com/yankiwi/aruba_exporter/system"
-	"github.com/yankiwi/aruba_exporter/interfaces"
+	"github.com/slashdoom/aruba_exporter/system"
+	"github.com/slashdoom/aruba_exporter/interfaces"
 )
 
 type collectors struct {

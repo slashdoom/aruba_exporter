@@ -11,8 +11,8 @@ import (
 //	"strings"
 //	"time"
 
-	"github.com/yankiwi/aruba_exporter/config"
-	"github.com/yankiwi/aruba_exporter/connector"
+	"github.com/slashdoom/aruba_exporter/config"
+	"github.com/slashdoom/aruba_exporter/connector"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

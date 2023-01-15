@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  aruba_exporter:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - "9909:9909"

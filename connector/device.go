@@ -3,7 +3,7 @@ package connector
 import (
 	"io"
 
-	"github.com/yankiwi/aruba_exporter/config"
+	"github.com/slashdoom/aruba_exporter/config"
 	"golang.org/x/crypto/ssh"
 )
 

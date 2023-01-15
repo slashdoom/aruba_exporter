@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"github.com/yankiwi/aruba_exporter/collector"
-	"github.com/yankiwi/aruba_exporter/rpc"
+	"github.com/slashdoom/aruba_exporter/collector"
+	"github.com/slashdoom/aruba_exporter/rpc"
 
 	"github.com/prometheus/client_golang/prometheus"
 	log "github.com/sirupsen/logrus"

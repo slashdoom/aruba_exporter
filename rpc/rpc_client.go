@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/yankiwi/aruba_exporter/connector"
+	"github.com/slashdoom/aruba_exporter/connector"
 	
 	log "github.com/sirupsen/logrus"
 )

@@ -4,8 +4,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/yankiwi/aruba_exporter/config"
-	"github.com/yankiwi/aruba_exporter/connector"
+	"github.com/slashdoom/aruba_exporter/config"
+	"github.com/slashdoom/aruba_exporter/connector"
 	"github.com/pkg/errors"
 )
 
