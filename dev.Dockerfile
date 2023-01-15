@@ -4,13 +4,14 @@ FROM golang:bullseye
 # set work directory
 WORKDIR /usr/src/app
 
-# check go version
-RUN go version
+# copy project from local
+COPY . /usr/src/app/
+
+# get modules
+RUN go mod download
 
 # install application for hot-reloading capability.
 RUN go install github.com/githubnemo/CompileDaemon@latest
 
-# copy project
-COPY . /usr/src/app/
-
-ENTRYPOINT /go/bin/CompileDaemon -polling -build="go build ./build/aruba_exporter" -command="./build/aruba_exporter -config.file ./config.yaml" -directory="./"
+# run app in CompileDaemon
+ENTRYPOINT /go/bin/CompileDaemon -polling -directory="./" -build="go build ." -command="./aruba_exporter -config.file ./config.yaml"

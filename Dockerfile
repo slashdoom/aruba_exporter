@@ -3,31 +3,32 @@
 ##
 
 # pull official base image
-FROM golang:bullseye
+FROM golang:bullseye as build-env
 
-# copy project
+# set work directory
+WORKDIR /usr/src/app
+
+# copy project from local
 COPY . /usr/src/app/
 
-# Copy application data into image
-COPY . /go/src/bartmika/mullberry-backend
-WORKDIR /go/src/bartmika/mullberry-backend
-
-COPY go.mod ./
-COPY go.sum ./
+# get modules
 RUN go mod download
 
-# Copy only `.go` files, if you want all files to be copied then replace `with `COPY . .` for the code below.
-COPY *.go .
-
-# Build our application.
-# RUN go build -o /go/src/bartmika/mullberry-backend/bin/mullberry-backend
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "all=-N -l" -o /server
+# build aruba_exporter binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "all=-N -l" -o ./build/aruba_exporter
 
 ##
 ## Deploy
 ##
-FROM alpine:latest
-RUN mkdir /data
 
-COPY --from=dev-env /server ./
-CMD ["./server"]
+# pull official base image
+FROM golang:bullseye
+
+# set work directory
+WORKDIR /usr/src/app
+
+# copy binary from build-env container
+COPY --from=build-env /usr/src/app/build/aruba_exporter ./
+
+# run binary
+CMD ["./aruba_exporter", "-config.file", "./config.yaml"]

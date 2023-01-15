@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  aruba_exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./config.yaml:/usr/src/app/config.yaml
+    ports:
+      - "9909:9909"
