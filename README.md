@@ -34,7 +34,7 @@ environment | Environment metrics (temperatures, state of power supply) | - | - 
 interfaces | Interfaces metrics (transmitted/received: bytes/packets/errors/drops, admin/oper state) | X | X | X | X |
 optics | Optical signals metrics (tx/rx) | - | - | - | - |
 routes | Router metrics (total, static, dynamic, connected) | - | - | N/A | - |
-wifi | Wi-Fi metrics (clients, aps, wlans) | N/A | N/A | - | - |
+wireless | wireless metrics (clients, aps, wlans) | N/A | N/A | - | - |
 
 # Install
 ```bash
@@ -53,7 +53,7 @@ go get -u github.com/slashdoom/aruba_exporter
 ```
 
 ## Docker
-Two examples Docker compose are included, one for a 2 step production build/deploy and one for a dev environment with hot reload.  These examples use the golang:bullseye image.
+Two example Docker compose files are included. One for a 2 step production build/deploy and one for a dev environment with hot reload.  These examples use the golang:bullseye image.
 
 ### Production
 ```bash
@@ -94,7 +94,7 @@ features:
   interfaces: true
   optics: true
   routes: true
-  wifi: true
+  wireless: true
 ```
 
 # Third Party Components

@@ -40,6 +40,7 @@ type FeatureConfig struct {
 	Interfaces  *bool `yaml:"interfaces,omitempty"`
 	Optics      *bool `yaml:"optics,omitempty"`
 	System      *bool `yaml:"system,omitempty"`
+	Wireless	*bool `yaml:"wireless,omitempty"`
 }
 
 // New creates a new config
@@ -85,6 +86,8 @@ func (c *Config) setDefaultValues() {
 	f.Optics = &optics
 	system := true
 	f.System = &system
+	wireless := true
+	f.Wireless = &wireless
 }
 
 // DevicesFromTargets creates devices configs from targets list
