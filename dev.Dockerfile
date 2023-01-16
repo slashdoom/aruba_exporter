@@ -1,3 +1,7 @@
+##
+## Development
+##
+
 # pull official base image
 FROM golang:bullseye
 
@@ -5,10 +9,10 @@ FROM golang:bullseye
 WORKDIR /usr/src/app
 
 # copy project from local
-COPY . /usr/src/app/
+#COPY . /usr/src/app/
 
 # get modules
-RUN go mod download
+#RUN go mod download
 
 # install application for hot-reloading capability.
 RUN go install github.com/githubnemo/CompileDaemon@latest

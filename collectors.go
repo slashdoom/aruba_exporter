@@ -36,7 +36,7 @@ func (c *collectors) initCollectorsForDevice(device *connector.Device) {
 	c.devices[device.Host] = make([]collector.RPCCollector, 0)
 	c.addCollectorIfEnabledForDevice(device, "system", f.System, system.NewCollector)
 	c.addCollectorIfEnabledForDevice(device, "interfaces", f.Interfaces, interfaces.NewCollector)
-    c.addCollectorIfEnabledForDevice(device, "wireless", f.wireless, wireless.NewCollector)
+    c.addCollectorIfEnabledForDevice(device, "wireless", f.Wireless, wireless.NewCollector)
 }
 
 func (c *collectors) addCollectorIfEnabledForDevice(device *connector.Device, key string, enabled *bool, newCollector func() collector.RPCCollector) {

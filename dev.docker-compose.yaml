@@ -6,6 +6,6 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     volumes:
-      - ./config.yaml:/usr/src/app/config.yaml
+      - ./:/usr/src/app/
     ports:
       - "9909:9909"
