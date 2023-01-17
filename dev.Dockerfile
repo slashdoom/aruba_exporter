@@ -8,12 +8,6 @@ FROM golang:bullseye
 # set work directory
 WORKDIR /usr/src/app
 
-# copy project from local
-#COPY . /usr/src/app/
-
-# get modules
-#RUN go mod download
-
 # install application for hot-reloading capability.
 RUN go install github.com/githubnemo/CompileDaemon@latest
 
