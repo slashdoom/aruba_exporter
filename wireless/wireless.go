@@ -2,10 +2,8 @@ package wireless
 
 type WirelessAccessPoint struct {
 	Name string
-
-    Controller bool
-	CrashInfo  bool
-
+	Up bool
+	Controller bool
 	Clients float64
 }
 
@@ -39,9 +37,10 @@ type WirelessRadio struct {
 }
 
 type WirelessChannel struct {
-	Channel     float64
+	AccessPoint string
+
 	Band        float64
-	Noise       float64
+	NoiseFloor  float64
 	ChUtil      float64
 	ChQual      float64
 	CovrIndex   float64

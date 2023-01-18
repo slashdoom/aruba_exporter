@@ -182,11 +182,11 @@ func (c *SSHConnection) readln(ch chan result, cmd string, r io.Reader) {
 		}
 		cleanStr := escSequence.ReplaceAllString(string(buf[:n]), "")
 		loadStr += cleanStr
-		log.Debugln(loadStr)
+		log.Tracef(loadStr)
 		if strings.Contains(loadStr, cmd) {
-			log.Debugln("command match")
-		    if endPrompt.MatchString(loadStr) {
-				log.Debugln("prompt match")
+			log.Debugf("command match: %v", cmd)
+			if matches := endPrompt.FindStringSubmatch(loadStr); matches != nil {
+				log.Debugf("prompt match: %v", matches[0])
 			    break
 			}
 		}

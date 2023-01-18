@@ -61,7 +61,6 @@ func main() {
 	}
 
 	startServer()
-
 }
 
 func initialize() error {
