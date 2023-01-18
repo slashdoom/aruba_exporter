@@ -6,10 +6,10 @@
 FROM golang:bullseye as build-env
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /go/aruba_exporter
 
 # copy project from local
-COPY . /usr/src/app/
+COPY . /go/aruba_exporter/
 
 # get modules
 RUN go mod download
@@ -27,10 +27,10 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "all=-N -l" -o ./bui
 FROM golang:bullseye
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /go/aruba_exporter
 
 # copy binary from build-env container
-COPY --from=build-env /usr/src/app/build/aruba_exporter ./
+COPY --from=build-env /go/aruba_exporter/build/aruba_exporter ./
 
 # run binary
 CMD ["./aruba_exporter", "-config.file", "./config.yaml"]

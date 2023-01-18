@@ -6,6 +6,6 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     volumes:
-      - ./:/usr/src/app/
+      - ./:/go/aruba_exporter
     ports:
       - "9909:9909"
