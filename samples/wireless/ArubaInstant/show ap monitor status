@@ -1,0 +1,155 @@
+
+
+AP Info
+--------
+key           value
+---           -----
+Uptime        76808
+AP Name       TESTap01
+LMS IP        0.0.0.0
+Conductor IP  0.0.0.0
+AP Type       515
+Country Code  15
+
+Wired Interface
+----------------
+interface               ip               gw-ip          gw-mac             ipv6     gw6-ip   gw6-mac            status
+---------               --               -----          ------             ----     ------   -------            ------
+cc:88:c7:c8:18:66(br0)  192.168.100.102  192.168.100.1  20:4c:03:81:f0:4a  0.0.0.0  0.0.0.0  00:00:00:00:00:00  enable
+
+Wired packet counters
+----------------------
+interface               pkts   macs  gw-macs  dot1q-pkts  ipv6-pkts  vlans  DoS
+---------               ----   ----  -------  ----------  ---------  -----  ---
+cc:88:c7:c8:18:66(br0)  27383  5     2        2503        0          3      128
+
+WLAN Interface
+---------------
+bssid              scan    monitor  probe-type  band/chan/ch-width/ht-type  task   pkts     max-ap-cl-delay  max-sta-cl-delay  reinit-cnt  last-reinit-time  is_mz
+-----              ----    -------  ----------  --------------------------  ----   ----     ---------------  ----------------  ----------  ----------------  -----
+cc:88:c7:01:86:70  enable  enable   sap         5GHz/100+/40MHz/HE          tuned  3092891  supp             -                 2           34                N
+cc:88:c7:01:86:60  enable  enable   sap         2.4GHz/6/20MHz/HE           tuned  1299967  supp             -                 2           34                N
+
+WLAN packet counters
+---------------------
+Interface                 Packets Read  Bytes Read  Interrupts  Buffer Overflows  Max PPS  Cur PPS  Max PPI  Cur PPI
+---------                 ------------  ----------  ----------  ----------------  -------  -------  -------  -------
+cc:88:c7:01:86:70(wifi0)  3092891       1089403487  2754283     0                 4021     35       20       1
+cc:88:c7:01:86:60(wifi1)  1299967       335123871   1061607     0                 200      5        20       1
+
+WLAN packet stats
+------------------
+Interface                 Inv OTA  Inv VBR  Low SNR  Zero Len  NF/Chutil/CCA      Inv Len  Inv LB Pkts  OLPC dropped Packets
+---------                 -------  -------  -------  --------  -------------      -------  -----------  --------------------
+cc:88:c7:01:86:70(wifi0)  0        0        0        0         93102/77261/85478  0        0            162043
+cc:88:c7:01:86:60(wifi1)  0        0        0        0         95067/77339/86330  0        0            0
+
+WLAN packet counters for DATA
+------------------------------
+Interface                 Data Pkts  Data Bytes  Data Max PPS  Data Cur PPS  Data Max BPS  Data Cur BPS
+---------                 ---------  ----------  ------------  ------------  ------------  ------------
+cc:88:c7:01:86:70(wifi0)  259306     23851920    2330          0             232960        0
+cc:88:c7:01:86:60(wifi1)  166679     8619628     56            1             2828          28
+
+WLAN packet counters for MGMT
+------------------------------
+Interface                 MGMT Pkts  MGMT Bytes  MGMT Max PPS  MGMT Cur PPS  MGMT Max BPS  MGMT Cur BPS
+---------                 ---------  ----------  ------------  ------------  ------------  ------------
+cc:88:c7:01:86:70(wifi0)  2190315    769914512   2274          32            609456        11284
+cc:88:c7:01:86:60(wifi1)  741638     232823632   98            1             19016         276
+
+WLAN packet counters for CTRL
+------------------------------
+Interface                 CTRL Pkts  CTRL Bytes  CTRL Max PPS  CTRL Cur PPS  CTRL Max BPS  CTRL Cur BPS
+---------                 ---------  ----------  ------------  ------------  ------------  ------------
+cc:88:c7:01:86:70(wifi0)  225386     4007312     1912          0             32976         0
+cc:88:c7:01:86:60(wifi1)  132914     2205856     188           0             4240          0
+
+RX WLAN packet counters for AGGR
+---------------------------------
+Interface                 FIRST AGGR  MIDDLE AGGR  LAST AGGR  NON AGGR  FILTERED AGGR
+---------                 ----------  -----------  ---------  --------  -------------
+cc:88:c7:01:86:70(wifi0)  0           0            103492     25990     110851
+cc:88:c7:01:86:60(wifi1)  304         0            168        142120    121
+
+TX WLAN packet counters for AGGR
+---------------------------------
+Interface                 FIRST AGGR  MIDDLE AGGR  LAST AGGR  NON AGGR  FILTERED AGGR
+---------                 ----------  -----------  ---------  --------  -------------
+cc:88:c7:01:86:70(wifi0)  0           0            0          291867    0
+cc:88:c7:01:86:60(wifi1)  0           0            0          24087     0
+
+Data Structures
+----------------
+ap  sta  pap  psta-5ghz  psta-2.4ghz  psta-6ghz  ch  msg-hash
+--  ---  ---  ---------  -----------  ---------  --  --------
+26  37   2    1          3            0          37  5
+
+Other Parameters
+-----------------
+key                    value
+---                    -----
+Classification         enable
+Wireless Containment   enable
+Wired Containment      enable
+Rogue Containment      enable
+Stats Update Interval  30
+
+System OUI Table
+-----------------
+oui
+---
+
+RTLS Configuration and State
+-----------------------------
+Type       Server IP  Port  Freq  Active  Rpt-Tags  Tag-Mcast-Addr     Tags-Sent  Rpt-Sta  Incl-Unassoc-Sta  Sta-Sent  Cmpd-Msgs-Sent  CM
+----       ---------  ----  ----  ------  --------  --------------     ---------  -------  ----------------  --------  --------------  --
+MMS        N/A        N/A   30            disable   01:0c:cc:00:00:00  N/A        disable  N/A               N/A       N/A             N/A
+Aeroscout  N/A        N/A   N/A           disable   00:00:00:00:00:00  N/A        disable  N/A               N/A       N/A             N/A
+RTLS       N/A        N/A   30            disable   01:18:8e:00:00:00  N/A        disable  N/A               N/A       N/A             enable
+
+AM Timer States
+----------------
+Name              State  Last Tick  Function                      Line
+----              -----  ---------  --------                      ----
+SPEC_MILLI_TIMER  Added  0          am_internal_init              4822
+STATS_V2_TIMER    Added  76806      am_set_stats_v2_update_timer  4784
+AM_TIMER          Added  0          am_internal_init              4796
+
+PAPI max message size
+----------------------
+size  caller
+----  ------
+5189  publish_swarm_stats
+
+AM Parser Size Mismatch Counters (wifi0)
+-----------------------------------------
+Parameter  Value
+---------  -----
+
+AM Parser Size Mismatch Counters (wifi1)
+-----------------------------------------
+Parameter  Value
+---------  -----
+
+Zero Wait DFS Hardware Capabilities
+-----------------------------------
+Capability  Support
+----------  -------
+Look-ahead  No
+Pre-CAC     Yes
+
+
+AM AWDL Counters (wifi0)
+-------------------------
+Parameter             Value
+---------             -----
+Dropped AWDL frames   275
+Detected AWDL frames  275
+
+AM AWDL Counters (wifi1)
+-------------------------
+Parameter             Value
+---------             -----
+Dropped AWDL frames   5463
+Detected AWDL frames  5463

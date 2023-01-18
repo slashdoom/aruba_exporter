@@ -9,8 +9,8 @@ type WirelessAccessPoint struct {
 
 type WirelessRadio struct {
 	AccessPoint string
+	Id          float64
 
-	Id    float64
 	Bssid string
 
 	Band    float64
@@ -48,6 +48,8 @@ type WirelessChannel struct {
 }
 
 type WirelessBssid struct {
+	AccessPoint string
+	
 	RadioId float64
 
 	Bssid string
@@ -57,12 +59,14 @@ type WirelessBssid struct {
 }
 
 type WirelessClient struct {
+	AccessPoint string
+
 	Mac   string
 	Name  string
 	Bssid string
 	Essid string
 
-	AssocTime float64
+	Up float64
 
 	Band    float64
 	Channel float64

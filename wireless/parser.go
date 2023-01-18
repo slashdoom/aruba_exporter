@@ -146,3 +146,11 @@ func (c *wirelessCollector) ParseChannels(ostype string, output string) (map[str
                                    
 	return make(map[string]WirelessChannel), make(map[string]WirelessRadio), errors.New("Channel info not found")
 }
+
+// ParseRadios parses cli output and tries to find AP radio stats
+func (c *wirelessCollector) ParseRadios(ostype string, radios map[string]WirelessRadio, output string) (map[string]WirelessRadio, error) {
+	log.Debugf("OS: %s\n", ostype)
+	log.Tracef("output: %s\n", output)
+
+	return make(map[string]WirelessRadio), nil
+}

@@ -34,7 +34,7 @@ environment | Environment metrics (temperatures, state of power supply) | - | - 
 interfaces | Interfaces metrics (transmitted/received: bytes/packets/errors/drops, admin/oper state) | X | X | X | X |
 optics | Optical signals metrics (tx/rx) | - | - | - | - |
 routes | Router metrics (total, static, dynamic, connected) | - | - | N/A | - |
-wireless | wireless metrics (clients, aps, wlans) | N/A | N/A | - | - |
+wireless | wireless metrics (clients, aps, radios, wlans) | N/A | N/A | - | - |
 
 # Install
 ```bash
@@ -106,4 +106,4 @@ This software uses components of the following projects
 (c) slashdoom (Patrick Ryon), 2022. Licensed under [MIT](LICENSE) license.
 
 # Prometheus
-see https://prometheus.io/
+See https://prometheus.io/

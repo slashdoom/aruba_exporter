@@ -150,6 +150,46 @@ func (c *wirelessCollector) CollectChannels(client *rpc.Client, ch chan<- promet
 	return radios, nil
 }
 
+func (c *wirelessCollector) CollectRadios(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string, radios map[string]WirelessRadio) (error) {
+	log.Debugf("client: %+v", client)
+	log.Debugf("labelValues: %+v", labelValues)
+	var (
+		out string
+		err error
+	)
+
+	switch client.OSType {
+	case "ArubaController":
+		out, err = client.RunCommand([]string{"show interface"})
+		if err != nil {
+			return err
+		}
+		radios, err = c.ParseRadios(client.OSType, radios, out)
+	case "ArubaInstant":
+		out, err = client.RunCommand([]string{"show ap monitor status"})
+		if err != nil {
+			return err
+		}
+		radios, err = c.ParseRadios(client.OSType, radios, out)
+	default:
+		err = errors.New("'CollectRadios' is not implemented for " + client.OSType)
+	}
+	if err != nil {
+		return err
+	}
+	for radioId, radioData := range radios {
+		log.Debugf("radio data: %+v", radioData)
+		l := append(labelValues, fmt.Sprintf("%v", radioData.AccessPoint), fmt.Sprintf("%v",radioId), fmt.Sprintf("%v", radioData.Bssid))
+		log.Debugf("channel labels: %+v", l)
+		//ch <- prometheus.MustNewConstMetric(channelNoiseDesc, prometheus.GaugeValue, chData.NoiseFloor, l...)
+		//ch <- prometheus.MustNewConstMetric(channelUtilDesc, prometheus.GaugeValue, chData.ChUtil, l...)
+		//ch <- prometheus.MustNewConstMetric(channelQualDesc, prometheus.GaugeValue, chData.ChQual, l...)
+		//ch <- prometheus.MustNewConstMetric(channelCovrDesc, prometheus.GaugeValue, chData.CovrIndex, l...)
+		//ch <- prometheus.MustNewConstMetric(channelIntfDesc, prometheus.GaugeValue, chData.IntfIndex, l...)
+	}
+	return nil
+}
+
 // Collect collects metrics from Aruba Devices
 func (c *wirelessCollector) Collect(client *rpc.Client, ch chan<- prometheus.Metric, labelValues []string) error {
 	log.Debugf("client: %+v", client)
